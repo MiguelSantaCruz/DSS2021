@@ -1,4 +1,6 @@
-package CentroReparacoesLN.GestReparacao;
+package business.CentroReparacoesLN.GestReparacao;
+
+import java.util.Map;
 
 public class Reparacao {
 

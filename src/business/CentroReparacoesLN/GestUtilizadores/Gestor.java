@@ -1,4 +1,6 @@
-package CentroReparacoesLN.GestUtilizadores;
+package business.CentroReparacoesLN.GestUtilizadores;
+
+import java.util.List;
 
 public class Gestor {
 

@@ -1,4 +1,4 @@
-package CentroReparacoesLN.GestReparacao;
+package business.CentroReparacoesLN.GestReparacao;
 
 public class Pecas {
 

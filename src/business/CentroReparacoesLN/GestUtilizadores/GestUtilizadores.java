@@ -1,8 +1,9 @@
-package CentroReparacoesLN.GestUtilizadores;
+package business.CentroReparacoesLN.GestUtilizadores;
 
-import CentroReparacoesLN.GestEquipamentos.*;
+import business.CentroReparacoesLN.IUtilizadores;
+import business.CentroReparacoesLN.GestEquipamentos.*;
 
-public class GestUtilizadoresFacade implements IGestUtilizadoresFacade {
+public class GestUtilizadores implements IUtilizadores{
 
 	private Gestor Gestores;
 	private Tecnico Tecnicos;

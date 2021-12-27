@@ -1,7 +1,9 @@
-package CentroReparacoesLN.GestUtilizadores;
+package business.CentroReparacoesLN.GestUtilizadores;
 
-import CentroReparacoesLN.GestEquipamentos.*;
-import CentroReparacoesLN.GestReparacao.*;
+import java.util.List;
+
+import business.CentroReparacoesLN.GestEquipamentos.*;
+import business.CentroReparacoesLN.GestReparacao.*;
 
 public class Tecnico {
 

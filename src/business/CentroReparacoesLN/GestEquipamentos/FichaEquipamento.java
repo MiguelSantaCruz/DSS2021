@@ -1,4 +1,8 @@
-package CentroReparacoesLN.GestEquipamentos;
+package business.CentroReparacoesLN.GestEquipamentos;
+
+import java.time.LocalDateTime;
+
+import business.CentroReparacoesLN.GestReparacao.Reparacao;
 
 public class FichaEquipamento {
 
@@ -7,7 +11,7 @@ public class FichaEquipamento {
 	private String idEquipamento;
 	private Orcamento orcamento;
 	private Equipamento equipamento;
-	private Reparação reparacao;
+	private Reparacao reparacao;
 	private LocalDateTime date;
 
 }

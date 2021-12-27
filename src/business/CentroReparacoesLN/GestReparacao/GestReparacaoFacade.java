@@ -1,4 +1,8 @@
-package CentroReparacoesLN.GestReparacao;
+package business.CentroReparacoesLN.GestReparacao;
+
+import java.util.Map;
+
+import business.CentroReparacoesLN.IGestReparacao;
 
 public class GestReparacaoFacade implements IGestReparacao {
 

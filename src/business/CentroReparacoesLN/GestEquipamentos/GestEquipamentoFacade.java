@@ -1,4 +1,4 @@
-package CentroReparacoesLN.GestEquipamentos;
+package business.CentroReparacoesLN.GestEquipamentos;
 
 public class GestEquipamentoFacade implements IGestEquipamento {
 
