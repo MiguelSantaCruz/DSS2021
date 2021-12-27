@@ -1,5 +1,4 @@
-# DSS2021
-## Desenvolvimento de Sistemas de Software - 2021/2022
+# Desenvolvimento de Sistemas de Software - 2021/2022
 ### Equipa
 ```
 Benjamim Miranda Costa (a87985)
