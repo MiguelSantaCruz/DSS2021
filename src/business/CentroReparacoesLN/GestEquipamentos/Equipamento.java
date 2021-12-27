@@ -12,6 +12,10 @@ public class Equipamento {
 		return this.id;
 	}
 
+	/**
+	 * 
+	 * @param id
+	 */
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -20,6 +24,10 @@ public class Equipamento {
 		return this.descricao;
 	}
 
+	/**
+	 * 
+	 * @param descricao
+	 */
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
@@ -28,8 +36,36 @@ public class Equipamento {
 		return this.nome;
 	}
 
+	/**
+	 * 
+	 * @param nome
+	 */
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public FichaEquipamento getFichaDeEquimento() {
+		return fichaDeEquimento;
+	}
+
+	/**
+	 * 
+	 * @param fichaDeEquipamento
+	 */
+	public void setFichaDeEquimento(FichaEquipamento fichaDeEquimento) {
+		this.fichaDeEquimento = fichaDeEquimento;
+	}
+
+	public String getIdCliente() {
+		return idCliente;
+	}
+
+	/**
+	 * 
+	 * @param idCliente
+	 */
+	public void setIdCliente(String idCliente) {
+		this.idCliente = idCliente;
 	}
 
 }
