@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+import business.CentroReparacoesLN.IGestEquipamento;
+
 public class GestEquipamentoFacade implements IGestEquipamento {
 
 	private Map<String,FichaEquipamento> fichaEquipamentos = new HashMap<>();
