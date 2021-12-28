@@ -3,12 +3,13 @@ package business.CentroReparacoesLN.GestUtilizadores;
 import java.util.HashMap;
 import java.util.Map;
 
-import business.CentroReparacoesLN.IUtilizadores;
+import business.CentroReparacoesLN.IGestReparacao;
+import business.CentroReparacoesLN.IGestUtilizadores;
 import business.CentroReparacoesLN.GestReparacao.GestReparacaoFacade;
 import business.CentroReparacoesLN.GestReparacao.Reparacao;
 import business.CentroReparacoesLN.GestReparacao.ServicoExpresso;
 
-public class GestUtilizadores implements IUtilizadores{
+public class GestUtilizadores implements IGestUtilizadores{
 
 	private Map<String,Gestor> gestores;
 	private Map<String,Tecnico> tecnicos;
@@ -154,7 +155,7 @@ public class GestUtilizadores implements IUtilizadores{
 	 * Consultar uma listagem exaustiva, para cada técnico, de todas as intervenções (passos de reparação e reparações expresso) realizadas.
 	 * @param idTecnico - Identificador do Técnico
 	 */
-	public void consultaDetalhesIntervencoesTecnico(String idTecnico,GestReparacaoFacade gestReparacao){
+	public void consultaDetalhesIntervencoesTecnico(String idTecnico,IGestReparacao gestReparacao){
 		if(!this.tecnicos.containsKey(idTecnico)) return ;
 		Tecnico tecnico = this.tecnicos.get(idTecnico);
 		for (String idReparacao : tecnico.getListaIdsReparacao()) {
@@ -172,7 +173,7 @@ public class GestUtilizadores implements IUtilizadores{
 	 * o número de intervenções e horas gastas.
 	 *
 	 */
-	public void consultaEstatisticasReparacoes(GestReparacaoFacade gestReparacao) {
+	public void consultaEstatisticasReparacoes(IGestReparacao gestReparacao) {
 		int numeroReparacoes = 0;
 		int horasGastas = 0;
 		int horasPrevistas = 0;

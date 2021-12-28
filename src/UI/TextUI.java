@@ -68,7 +68,7 @@ public class TextUI {
         menu.run();
     }
 
-    private void menuProcuraFuncionario() {
+    private void menuFuncionario() {
         Menu menu = new Menu(new String[]{
                 "Procurar Equipamento",
                 "Procurar Ficha de Equipamento",
@@ -78,7 +78,18 @@ public class TextUI {
         menu.run();
     }
 
-    private void menuProcuraTecnico() {
+    private void menuTecnico() {
+        Menu menu = new Menu(new String[]{
+                "Procurar Equipamento",
+                "Procurar Ficha de Equipamento",
+                "Procurar Peça",
+                "Procurar Orçamento",
+                "Procurar Reparação",
+        });
+        menu.run();
+    }
+
+    private void menuGestor() {
         Menu menu = new Menu(new String[]{
                 "Procurar Equipamento",
                 "Procurar Ficha de Equipamento",
