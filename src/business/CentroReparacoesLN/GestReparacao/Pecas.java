@@ -14,4 +14,20 @@ public class Pecas {
 		this.valor = valor;
 	}
 
+	public ServicoExpresso getPecas() {
+		return pecas;
+	}
+
+	public void setPecas(ServicoExpresso pecas) {
+		this.pecas = pecas;
+	}
+
+	public String getIdPeca() {
+		return idPeca;
+	}
+
+	public void setIdPeca(String idPeca) {
+		this.idPeca = idPeca;
+	}
+
 }

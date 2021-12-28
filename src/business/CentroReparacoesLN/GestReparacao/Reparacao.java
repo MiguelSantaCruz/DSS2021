@@ -1,12 +1,50 @@
 package business.CentroReparacoesLN.GestReparacao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Reparacao {
 
-	private Pecas pecas;
+	private ArrayList<Pecas> pecas;
+	private Map<String, Passo> passo = new HashMap<>();
 	private String idReparacao;
 	private boolean concluido;
+	
+
+	
+
+	public Map<String, Passo> getPasso() {
+		return passo;
+	}
+
+	public void setPasso(Map<String, Passo> passo) {
+		this.passo = passo;
+	}
+
+	public ArrayList<Pecas> getPecas() {
+		return pecas;
+	}
+
+	public void setPecas(ArrayList<Pecas> pecas) {
+		this.pecas = pecas;
+	}
+
+	public String getIdReparacao() {
+		return idReparacao;
+	}
+
+	public void setIdReparacao(String idReparacao) {
+		this.idReparacao = idReparacao;
+	}
+
+	public boolean isConcluido() {
+		return concluido;
+	}
+
+	public void setConcluido(boolean concluido) {
+		this.concluido = concluido;
+	}
 
 	/**
 	 * 

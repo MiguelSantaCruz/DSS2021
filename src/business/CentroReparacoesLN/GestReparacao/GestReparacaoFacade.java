@@ -1,21 +1,23 @@
 package business.CentroReparacoesLN.GestReparacao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import business.CentroReparacoesLN.IGestReparacao;
 
 public class GestReparacaoFacade implements IGestReparacao {
 
-	private Pecas pecas;
-	private Reparacao reparacoes;
+	private Map<String,Pecas> pecas = new HashMap<>();
+	private Map<String,Reparacao> reparacoes = new HashMap<>();
+	private Map<String,ServicoExpresso> servicos = new HashMap<>();
 
 	/**
 	 * 
 	 * @param reparacao
 	 */
 	public void adicionaReparacoes(Reparacao reparacao) {
-		// TODO - implement GestReparacaoFacade.adicionaReparacoes
-		throw new UnsupportedOperationException();
+		reparacoes.put(reparacao.getIdReparacao(), reparacao);
 	}
 
 	/**
@@ -23,8 +25,8 @@ public class GestReparacaoFacade implements IGestReparacao {
 	 * @param idReparacoes
 	 */
 	public void removeReparacoes(String idReparacoes) {
-		// TODO - implement GestReparacaoFacade.removeReparacoes
-		throw new UnsupportedOperationException();
+		if(reparacoes.containsKey(idReparacoes))
+			reparacoes.remove(idReparacoes);
 	}
 
 	/**
@@ -32,8 +34,9 @@ public class GestReparacaoFacade implements IGestReparacao {
 	 * @param idReparacao
 	 */
 	public void marcarReparacoesComoConcluidas(String idReparacao) {
-		// TODO - implement GestReparacaoFacade.marcarReparacoesComoConcluidas
-		throw new UnsupportedOperationException();
+		//ArrayList<Passo> passos = reparacoes.get(idReparacao).getPasso();
+		//falta percorrer a lista de passos aqui e marcar true;
+		reparacoes.get(idReparacao).setConcluido(true);
 	}
 
 	/**
@@ -42,8 +45,9 @@ public class GestReparacaoFacade implements IGestReparacao {
 	 * @param passo
 	 */
 	public void adicionarPasso(String idReparacao, Passo passo) {
-		// TODO - implement GestReparacaoFacade.adicionarPasso
-		throw new UnsupportedOperationException();
+		if(reparacoes.containsKey(idReparacao)){
+			reparacoes.get(idReparacao).getPasso().put(getIdPasso(passo), passo);
+		}
 	}
 
 	/**
@@ -52,8 +56,10 @@ public class GestReparacaoFacade implements IGestReparacao {
 	 * @param idPasso
 	 */
 	public void removePasso(String idReparacao, String idPasso) {
-		// TODO - implement GestReparacaoFacade.removePasso
-		throw new UnsupportedOperationException();
+		/*if(reparacoes.containsKey(idReparacao) && reparacoes.get(idReparacao).getPasso().contains(getPasso(idReparacao, idPasso))){ 
+			reparacoes.get(idReparacao).getPasso().remove(getPasso(idReparacao, idPasso));
+		}*/
+		
 	}
 
 	/**
@@ -62,8 +68,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 	 * @param idReparacao
 	 */
 	public void marcarPassoComoConcluido(String idPasso, String idReparacao) {
-		// TODO - implement GestReparacaoFacade.marcarPassoComoConcluido
-		throw new UnsupportedOperationException();
+		//reparacoes.get(idReparacao).getPasso().
 	}
 
 	/**
