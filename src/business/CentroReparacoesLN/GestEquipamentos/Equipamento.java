@@ -6,7 +6,6 @@ public class Equipamento {
 	private FichaEquipamento fichaDeEquimento;
 	private String descricao;
 	private String nome;
-	private String idCliente;
 
 	public String getId() {
 		return this.id;
@@ -55,17 +54,4 @@ public class Equipamento {
 	public void setFichaDeEquimento(FichaEquipamento fichaDeEquimento) {
 		this.fichaDeEquimento = fichaDeEquimento;
 	}
-
-	public String getIdCliente() {
-		return idCliente;
-	}
-
-	/**
-	 * 
-	 * @param idCliente
-	 */
-	public void setIdCliente(String idCliente) {
-		this.idCliente = idCliente;
-	}
-
 }

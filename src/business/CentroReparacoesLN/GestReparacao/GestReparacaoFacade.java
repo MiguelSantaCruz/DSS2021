@@ -1,8 +1,8 @@
 package business.CentroReparacoesLN.GestReparacao;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import business.CentroReparacoesLN.IGestReparacao;
 
@@ -46,7 +46,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 	 */
 	public void adicionarPasso(String idReparacao, Passo passo) {
 		if(reparacoes.containsKey(idReparacao)){
-			reparacoes.get(idReparacao).getPasso().put(getIdPasso(passo), passo);
+			reparacoes.get(idReparacao).getPasso().put(passo.getIdPasso(), passo);
 		}
 	}
 
@@ -165,4 +165,78 @@ public class GestReparacaoFacade implements IGestReparacao {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * 
+	 * @param idReparacao
+	 */
+	public float calcularCustoTotal(String idReparacao){
+		// TODO - implement GestReparacaoFacade.reparacaoToString
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param idReparacaoGastas
+	 */
+	public int calcularHorasGastasTotais(String idReparacao){
+		// TODO - implement GestReparacaoFacade.reparacaoToString
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param idReparacao
+	 */
+	public int calcularHorasPrevistasTotais(String idReparacao){
+		// TODO - implement GestReparacaoFacade.reparacaoToString
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param servicoExpresso
+	 */
+    public void servicoToString(ServicoExpresso servicoExpresso) {
+		//TODO
+    }
+
+	/**
+	 * 
+	 * @param descricao
+	 * @return
+	 */
+	public Reparacao criarReparacao(String descricao){
+		//Gerar um identificador aleatório
+		String id;
+		do {
+			id = UUID.randomUUID().toString().substring(0, 8);
+		} while (this.reparacoes.containsKey(id));
+		Reparacao reparacao = new Reparacao(id,descricao,false);
+		return reparacao;
+	}
+
+	/**
+	 * 
+	 * @param descricao
+	 * @return
+	 */
+	public ServicoExpresso criarServicoExpresso(String descricao){
+		//Gerar um identificador aleatório
+		String id;
+		do {
+			id = UUID.randomUUID().toString().substring(0, 8);
+		} while (this.servicos.containsKey(id));
+		ServicoExpresso servico = new ServicoExpresso(id,descricao,false);
+		return servico;
+	}
+
+	/**
+	 * 
+	 * @param idReparacao
+	 * @return
+	 */
+	public boolean existeReparacao(String idReparacao){
+		if(this.reparacoes.containsKey(idReparacao)) return true;
+		else return false;
+	}
 }

@@ -1,179 +1,208 @@
 package business.CentroReparacoesLN.GestUtilizadores;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import business.CentroReparacoesLN.IUtilizadores;
-import business.CentroReparacoesLN.GestEquipamentos.*;
+import business.CentroReparacoesLN.GestReparacao.GestReparacaoFacade;
+import business.CentroReparacoesLN.GestReparacao.Reparacao;
+import business.CentroReparacoesLN.GestReparacao.ServicoExpresso;
 
 public class GestUtilizadores implements IUtilizadores{
 
-	private Gestor Gestores;
-	private Tecnico Tecnicos;
-	private Funcionario Funcionarios;
+	private Map<String,Gestor> gestores;
+	private Map<String,Tecnico> tecnicos;
+	private Map<String,Funcionario> funcionarios;
 
 	/**
-	 * 
-	 * @param tecnico
+	 * Construtor vazio de GestUtilizadores
+	 */
+	public GestUtilizadores(){
+		this.gestores = new HashMap<>();
+		this.funcionarios = new HashMap<>();
+		this.tecnicos = new HashMap<>();
+	}
+
+	/**
+	 * Adiciona ao Map de técnicos o técnico em questão
+	 * @param tecnico - O técnico a adicionar
 	 */
 	public void adicionarTecnico(Tecnico tecnico) {
-		// TODO - implement GestUtilizadoresFacade.adicionarTecnico
-		throw new UnsupportedOperationException();
+		this.tecnicos.put(tecnico.getId(), tecnico);
 	}
 
 	/**
-	 * 
-	 * @param funcionario
+	 * Adiciona ao Map de funcionários o funcionário em questão
+	 * @param funcionario - O funcionário a adicionar
 	 */
 	public void adicionarFuncionario(Funcionario funcionario) {
-		// TODO - implement GestUtilizadoresFacade.adicionarFuncionario
-		throw new UnsupportedOperationException();
+		this.funcionarios.put(funcionario.getId(), funcionario);
 	}
 
 	/**
-	 * 
-	 * @param gestor
+	 * Adiciona ao Map de gestores o gestor em questão
+	 * @param gestor - O gestor a adicionar
 	 */
 	public void adicionarGestor(Gestor gestor) {
-		// TODO - implement GestUtilizadoresFacade.adicionarGestor
-		throw new UnsupportedOperationException();
+		this.gestores.put(gestor.getId(), gestor);
 	}
 
 	/**
-	 * 
-	 * @param id
+	 * Remove ao Map de técnicos o técnico em questão
+	 * @param id - O identificador do técnico a remover
 	 */
 	public void removerTecnico(String id) {
-		// TODO - implement GestUtilizadoresFacade.removerTecnico
-		throw new UnsupportedOperationException();
+		this.tecnicos.remove(id);
 	}
 
 	/**
-	 * 
-	 * @param id
+	 * Remove ao Map de funcionários o funcionário em questão
+	 * @param id - O identificador do funcionário a remover
 	 */
 	public void removerFuncionario(String id) {
-		// TODO - implement GestUtilizadoresFacade.removerFuncionario
-		throw new UnsupportedOperationException();
+		this.funcionarios.remove(id);
 	}
 
 	/**
-	 * 
-	 * @param id
+	 * Remove ao Map de gestores o gestor em questão
+	 * @param id - O identificador do gestor a remover
 	 */
 	public void removerGestor(String id) {
-		// TODO - implement GestUtilizadoresFacade.removerGestor
-		throw new UnsupportedOperationException();
+		this.gestores.remove(id);
 	}
 
-	/**
-	 * 
-	 * @param idFuncionario
-	 * @param id
-	 * @param nome
-	 * @param descricao
-	 * @param idCliente
-	 * @param orcamento
-	 */
-	public FichaEquipamento criaFichaEquipamento(String idFuncionario, String id, String nome, String descricao, String idCliente, Orcamento orcamento) {
-		// TODO - implement GestUtilizadoresFacade.criaFichaEquipamento
-		throw new UnsupportedOperationException();
-	}
 
 	/**
-	 * 
-	 * @param id
-	 * @param password
+	 * Verifica se a palavra passe fornecida corresponde á palavra passe do técnico com o identificador especificado
+	 * @param id - O identificador do técnico
+	 * @param password - Palavra passe a verificar
+	 * @return {@code true} se a password recebida como argumento estiver correta, {@code false} caso contrário
 	 */
 	public boolean autenticaTecnico(String id, String password) {
-		// TODO - implement GestUtilizadoresFacade.autenticaTecnico
-		throw new UnsupportedOperationException();
+		boolean isCorrectPassword = false; 
+		if (this.tecnicos.containsKey(id)) {
+			Tecnico tecnico = this.tecnicos.get(id);
+			if (tecnico.getPalavraPasse().equals(password))isCorrectPassword = true;
+			else isCorrectPassword = false;
+		}
+		return isCorrectPassword;
 	}
 
 	/**
-	 * 
-	 * @param id
-	 * @param password
+	 * Verifica se a palavra passe fornecida corresponde á palavra passe do funcionário com o identificador especificado
+	 * @param id - O identificador do funcionário
+	 * @param password - Palavra passe a verificar
+	 * @return {@code true} se a password recebida como argumento estiver correta, {@code false} caso contrário
 	 */
 	public boolean autenticaFuncionario(String id, String password) {
-		// TODO - implement GestUtilizadoresFacade.autenticaFuncionario
-		throw new UnsupportedOperationException();
+		boolean isCorrectPassword = false; 
+		if (this.funcionarios.containsKey(id)) {
+			Funcionario funcionario = this.funcionarios.get(id);
+			if (funcionario.getPalavraPasse().equals(password))isCorrectPassword = true;
+			else isCorrectPassword = false;
+		}
+		return isCorrectPassword;
 	}
 
 	/**
-	 * 
-	 * @param id
-	 * @param password
+	 * Verifica se a palavra passe fornecida corresponde á palavra passe do gestor com o identificador especificado
+	 * @param id - Identificador do gestor
+	 * @param password - Palavra passe a verificar
+	 * @return {@code true} se a password recebida como argumento estiver correta, {@code false} caso contrário
 	 */
 	public boolean autenticaGestor(String id, String password) {
-		// TODO - implement GestUtilizadoresFacade.autenticaGestor
-		throw new UnsupportedOperationException();
+		boolean isCorrectPassword = false; 
+		if (this.gestores.containsKey(id)) {
+			Gestor gestor = this.gestores.get(id);
+			if (gestor.getPalavraPasse().equals(password))isCorrectPassword = true;
+			else isCorrectPassword = false;
+		}
+		return isCorrectPassword;
 	}
 
 	/**
-	 * 
-	 * @param id
+	 * Dado um identificador de um técnico devolve o técnico associado
+	 * @return O técnico cujo identificador é igual ao fornecido ou {@code null} caso não exista
+	 * @param id - Identificador do técnico
 	 */
 	public Tecnico getTecnicoById(String id) {
-		// TODO - implement GestUtilizadoresFacade.getTecnicoById
-		throw new UnsupportedOperationException();
+		if(this.tecnicos.containsKey(id)) return this.tecnicos.get(id);
+		else return null;
 	}
 
 	/**
-	 * 
-	 * @param id
+	 * Dado um identificador de um funcionario devolve o funcionario associado
+	 * @return O funcionario cujo identificador é igual ao fornecido ou null caso não exista
+	 * @param id - Identificador do funcionario
 	 */
 	public Funcionario getFuncionarioById(String id) {
-		// TODO - implement GestUtilizadoresFacade.getFuncionarioById
-		throw new UnsupportedOperationException();
+		if(this.funcionarios.containsKey(id)) return this.funcionarios.get(id);
+		else return null;
 	}
 
 	/**
-	 * 
-	 * @param id
+	 * Dado um identificador de um gestor devolve o gestor associado
+	 * @return O gestor cujo identificador é igual ao fornecido ou {@code null} caso não exista
+	 * @param id - Identificador do gestor
 	 */
 	public Gestor getGestorById(String id) {
-		// TODO - implement GestUtilizadoresFacade.getGestorById
-		throw new UnsupportedOperationException();
+		if(this.gestores.containsKey(id)) return this.gestores.get(id);
+		else return null;
 	}
 
 	/**
-	 * 
-	 * @param idTecnico
+	 * Consultar uma listagem exaustiva, para cada técnico, de todas as intervenções (passos de reparação e reparações expresso) realizadas.
+	 * @param idTecnico - Identificador do Técnico
 	 */
-	public void consultaListaReparacoesTecnico(String idTecnico) {
-		// TODO - implement GestUtilizadoresFacade.consultaListaReparacoesTecnico
-		throw new UnsupportedOperationException();
-	}
-
-	public void consultaListaReparacoes() {
-		// TODO - implement GestUtilizadoresFacade.consultaListaReparacoes
-		throw new UnsupportedOperationException();
+	public void consultaDetalhesIntervencoesTecnico(String idTecnico,GestReparacaoFacade gestReparacao){
+		if(!this.tecnicos.containsKey(idTecnico)) return ;
+		Tecnico tecnico = this.tecnicos.get(idTecnico);
+		for (String idReparacao : tecnico.getListaIdsReparacao()) {
+			Reparacao reparacao = gestReparacao.getReparacao(idReparacao);
+			gestReparacao.reparacaoToString(reparacao);
+		}
+		for (String idServico : tecnico.getListaIdsServico()) {
+			ServicoExpresso servicoExpresso = gestReparacao.getServicoExpresso(idServico);
+			gestReparacao.servicoToString(servicoExpresso);
+		}
 	}
 
 	/**
-	 * 
-	 * @param idFuncionario
+	 * Consultar uma listagem em que para cada técnico de reparações são indicadas estatíticas como por exemplo 
+	 * o número de intervenções e horas gastas.
+	 *
+	 */
+	public void consultaEstatisticasReparacoes(GestReparacaoFacade gestReparacao) {
+		int numeroReparacoes = 0;
+		int horasGastas = 0;
+		int horasPrevistas = 0;
+		for(Map.Entry<String, Tecnico> entry : this.tecnicos.entrySet()) {
+			Tecnico tecnico = entry.getValue();
+			System.out.println("Técnico: " + tecnico.getNome() + " ID: " + tecnico.getId());
+			numeroReparacoes = tecnico.getListaIdsReparacao().size();
+			System.out.println("Número de reparações associadas: " + numeroReparacoes);
+			for (String idReparacao : tecnico.getListaIdsReparacao()) {
+				horasGastas = gestReparacao.calcularHorasGastasTotais(idReparacao);
+				horasPrevistas = gestReparacao.calcularHorasPrevistasTotais(idReparacao);
+				System.out.println("Horas gastas: " + horasGastas);
+				System.out.println("Horas previstas: " + horasPrevistas);
+			}
+		}
+		
+	}
+
+	/**
+	 * 	Consultar uma listagem que indica, para cada funcionário de balcão, quantas recepções e entregas de equipamentos realizou.
+	 * @param idFuncionario - O identificador do funcionário
 	 */
 	public void consultaListaEntregasFuncionario(String idFuncionario) {
-		// TODO - implement GestUtilizadoresFacade.consultaListaEntregasFuncionario
-		throw new UnsupportedOperationException();
+		if(!this.funcionarios.containsKey(idFuncionario)) return ;
+		Funcionario funcionario = this.funcionarios.get(idFuncionario);
+		int equipamentosRecebidos = funcionario.getListaEquipamentosRecebidos().size();
+		int equipamentosLevantados = funcionario.getListaEquipamentosLevantados().size();
+		System.out.println("Equipamentos recebidos: " + equipamentosRecebidos);
+		System.out.println("Equipamentos levantados: " + equipamentosLevantados);
 	}
 
-	public void consultaListaEntregas() {
-		// TODO - implement GestUtilizadoresFacade.consultaListaEntregas
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param idTecnico
-	 */
-	public void consultaEstatisticasTecnico(String idTecnico) {
-		// TODO - implement GestUtilizadoresFacade.consultaEstatisticasTecnico
-		throw new UnsupportedOperationException();
-	}
-
-	public void consultaEstatisticasTecnicos() {
-		// TODO - implement GestUtilizadoresFacade.consultaEstatisticasTecnicos
-		throw new UnsupportedOperationException();
-	}
 
 }

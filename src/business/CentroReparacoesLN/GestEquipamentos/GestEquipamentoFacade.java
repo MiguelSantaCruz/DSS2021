@@ -6,7 +6,8 @@ import java.util.Map;
 
 public class GestEquipamentoFacade implements IGestEquipamento {
 
-	private Map<String,FichaEquipamento> equipamentos = new HashMap<>();
+	private Map<String,FichaEquipamento> fichaEquipamentos = new HashMap<>();
+	private Map<String,Equipamento> equipamentos = new HashMap<>();
 	private Map<String, Cliente> clientes = new HashMap<>();
 	private Map<String, Orcamento> orcamentos = new HashMap<>();
 
@@ -14,9 +15,9 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 	 * 
 	 * @param equipamento
 	 */
-	public void adicionarFichaEquipamento(FichaEquipamento equipamento) {
-		String key = equipamento.getIdEquipamento();
-		equipamentos.put(key, equipamento);
+	public void adicionarFichaEquipamento(FichaEquipamento fichaEquipamento) {
+		String key = fichaEquipamento.getIdFicha();
+		fichaEquipamentos.put(key, fichaEquipamento);
 	}
 
 	/**
@@ -24,26 +25,58 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 	 * @param id
 	 */
 	public void removerFichaEquipamento(String id) {
-		if(equipamentos.containsKey(id))
-			equipamentos.remove(id);
+		if(fichaEquipamentos.containsKey(id))
+		fichaEquipamentos.remove(id);
+	}
+
+	/**
+	 * 
+	 * @param equipamento
+	 */
+	public void adicionarEquipamento(Equipamento equipamento) {
+		String key = equipamento.getId();
+		equipamentos.put(key, equipamento);
 	}
 
 	/**
 	 * 
 	 * @param id
 	 */
+	public void removerEquipamento(String id) {
+		if(equipamentos.containsKey(id))
+		equipamentos.remove(id);
+	}
+
+
+
+	/**
+	 * 
+	 * @param id
+	 */
 	public FichaEquipamento getFichaEquipamento(String id) {
+		if(fichaEquipamentos.containsKey(id))
+			return fichaEquipamentos.get(id);
+		else return null;
+	}
+
+	/**
+	 * 
+	 * @param id
+	 */
+	public Equipamento getEquipamento(String id) {
 		if(equipamentos.containsKey(id))
 			return equipamentos.get(id);
 		else return null;
 	}
+
+
 
 	/**
 	 * 
 	 * @param idEquipamento
 	 */
 	public Cliente getCliente(String idEquipamento) {
-		String c = equipamentos.get(idEquipamento).getEquipamento().getIdCliente();
+		String c = equipamentos.get(idEquipamento).getFichaDeEquimento().getIdCliente();
 		if(clientes.containsKey(c))
 			return clientes.get(c);
 		else return null;
@@ -58,6 +91,7 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 			return clientes.get(nif);
 		else return clientes.get(nif);
 	}
+
 
 	/**
 	 * 
@@ -100,6 +134,46 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 		if(orcamentos.containsKey(idOrcamento))
 			orcamentos.remove(idOrcamento);
 		
+	}
+
+	/**
+	 * Verifica se determinado identificador já está associado a uma ficha
+	 * @param id - O identificador da ficha
+	 * @return {@code true} se a ficha existe, {@code false} caso contrário
+	 */
+	public boolean fichaExiste(String id){
+		if(this.fichaEquipamentos.containsKey(id)) return true;
+		else return false;
+	}
+
+	/**
+	 * Verifica se determinado identificador já está associado a um equipamento
+	 * @param id - O identificador do equipamento
+	 * @return {@code true} se o equipamento existe, {@code false} caso contrário
+	 */
+	public boolean equipamentoExiste(String id){
+		if(this.equipamentos.containsKey(id)) return true;
+		else return false;
+	}
+
+	/**
+	 * Verifica se determinado identificador já está associado a um orcamento
+	 * @param id - O identificador do orcamento
+	 * @return {@code true} se o orcamento existe, {@code false} caso contrário
+	 */
+	public boolean orcamentoExiste(String id){
+		if(this.orcamentos.containsKey(id)) return true;
+		else return false;
+	}
+
+	/**
+	 * Verifica se determinado identificador já está associado a um cliente
+	 * @param nif - O numero de identificação fiscal do cliente
+	 * @return {@code true} se o cliente existe, {@code false} caso contrário
+	 */
+	public boolean clienteExiste(String nif){
+		if(this.clientes.containsKey(nif)) return true;
+		else return false;
 	}
 
 }
