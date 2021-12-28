@@ -13,6 +13,26 @@ import java.util.stream.Collectors;
  * @version 20210930
  */
 public class TextUI {
+
+
+public void guardaBin(TextUI model) throws FileNotFoundException, IOException {
+    FileOutputStream bf = new FileOutputStream("estado");
+    ObjectOutputStream oos = new ObjectOutputStream(bf);
+    oos.writeObject(model);
+    oos.flush();
+    oos.close();
+}
+
+/**
+ * Função que permite ler um ficheiro binário com um estado da aplicação 
+ */
+public TextUI readBin() throws IOException, ClassNotFoundException{
+    FileInputStream bf = new FileInputStream("estado");
+    ObjectInputStream ois = new ObjectInputStream(bf);
+    TextUI m = (TextUI) ois.readObject();
+    ois.close();
+    return m;
+}
     // O model tem a 'lógica de negócio'.
 
 // private ITurmasFacade model;
