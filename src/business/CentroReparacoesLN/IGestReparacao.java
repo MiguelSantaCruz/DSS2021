@@ -152,4 +152,18 @@ public interface IGestReparacao {
 	 * @return
 	 */
 	public boolean existeReparacao(String idReparacao);
+
+		/**
+	 * Verifica se existe uma determinada peça dado o seu identificador
+	 * @param idPeca - Identificador da peça
+	 * @return {@code true} se existir, {@code false} caso contrário
+	 */
+	public boolean existePeca(String idPeca);
+
+	/**
+	 * Verifica se existe uma determinada peça dado o seu identificador
+	 * @param idPeca - Identificador da peça
+	 * @return a peça com o identificador especificado
+	 */
+	public Pecas getPecaById(String idPeca);
 }

@@ -7,8 +7,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 import business.CentroReparacoesLN.IGestEquipamento;
@@ -164,6 +162,11 @@ public class TextUI {
         menu.setHandler(1, () -> adicionarFuncionario(TiposFuncionarios.TECNICO));
         menu.setHandler(2, () -> adicionarFuncionario(TiposFuncionarios.FUNCIONARIO));
         menu.setHandler(3, () -> adicionarFuncionario(TiposFuncionarios.GESTOR));
+        menu.setHandler(4, () -> procurarEquipamentoPorId());
+        menu.setHandler(5, () -> procurarFichaEquipamentoPorId());
+        menu.setHandler(6, () -> procurarPecaPorId());       
+        menu.setHandler(7, () -> procurarOrcamentoPorId());
+        menu.setHandler(8, () -> procurarReparacaoPorId());
         menu.run();
     }
 
@@ -194,49 +197,54 @@ public class TextUI {
         System.out.println(id+"");
     }
 
-    public Orcamento procurarOrcamentoPorId(){
+    public void procurarOrcamentoPorId(){
         System.out.println("Insira identificador do orçamento:");
         System.out.print("> ");
         String id = scin.nextLine();
         if(this.gestEquipamentos.orcamentoExiste(id)){
-            return this.gestEquipamentos.getOrcamento(id);
-        } else return null;
+            Orcamento orcamento = this.gestEquipamentos.getOrcamento(id);
+            orcamento.toString();
+        }else System.out.println("Orçamento não encontrado");
     }
 
-    public FichaEquipamento procurarFichaEquipamentoPorId(){
+    public void procurarFichaEquipamentoPorId(){
         System.out.println("Insira identificador da ficha de equipamento:");
         System.out.print("> ");
         String id = scin.nextLine();
         if(this.gestEquipamentos.fichaExiste(id)){
-            return this.gestEquipamentos.getFichaEquipamento(id);
-        } else return null;
+           FichaEquipamento fichaEquipamento = this.gestEquipamentos.getFichaEquipamento(id);
+            fichaEquipamento.toString();
+        }else System.out.println("ficha de equipamento não encontrada");
     }
 
-    public Equipamento procurarEquipamentoPorId(){
+    public void procurarEquipamentoPorId(){
         System.out.println("Insira identificador do equipamento:");
         System.out.print("> ");
         String id = scin.nextLine();
         if(this.gestEquipamentos.equipamentoExiste(id)){
-            return this.gestEquipamentos.getEquipamento(id);
-        } else return null;
+            Equipamento equipamento = this.gestEquipamentos.getEquipamento(id);
+            equipamento.toString();
+        }else System.out.println("Equipamento não encontrada");
     }
 
-    public Pecas procurarPecaPorId(){
+    public void procurarPecaPorId(){
         System.out.println("Insira identificador da peça:");
         System.out.print("> ");
         String id = scin.nextLine();
-        //TO DO
-        return null;
+        if(this.gestReparacoes.existePeca(id)){
+            Pecas pecas = this.gestReparacoes.getPecaById(id);
+            pecas.toString();
+        }else System.out.println("Peça não encontrada");
     }
 
-    public Reparacao procurarReparacaoPorId(){
+    public void procurarReparacaoPorId(){
         System.out.println("Insira identificador da reparacao:");
         System.out.print("> ");
         String id = scin.nextLine();
         if(this.gestReparacoes.existeReparacao(id)){
-            return this.gestReparacoes.getReparacao(id);
-        }
-        return null;
+            Reparacao reparacao = this.gestReparacoes.getReparacao(id);
+            reparacao.toString();
+        }else System.out.println("Reparação não encontrada");
     }
 
     public void guardaBin(TextUI model) throws FileNotFoundException, IOException {

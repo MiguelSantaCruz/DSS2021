@@ -239,4 +239,23 @@ public class GestReparacaoFacade implements IGestReparacao {
 		if(this.reparacoes.containsKey(idReparacao)) return true;
 		else return false;
 	}
+
+	/**
+	 * Verifica se existe uma determinada peça dado o seu identificador
+	 * @param idPeca - Identificador da peça
+	 * @return {@code true} se existir, {@code false} caso contrário
+	 */
+	public boolean existePeca(String idPeca){
+		if(this.pecas.containsKey(idPeca)) return true;
+		else return false;
+	}
+
+	/**
+	 * Verifica se existe uma determinada peça dado o seu identificador
+	 * @param idPeca - Identificador da peça
+	 * @return a peça com o identificador especificado
+	 */
+	public Pecas getPecaById(String idPeca){
+		return this.pecas.get(idPeca);
+	}
 }
