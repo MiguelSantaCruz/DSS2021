@@ -10,6 +10,21 @@ public class Cliente {
 	private String nome;
 	private ArrayList<Equipamento> listaEquipamento;
 
+	public Cliente(String nif, String telemovel, String email, String nome, ArrayList<Equipamento> listaEquipamento) {
+		this.nif = nif;
+		this.telemovel = telemovel;
+		this.email = email;
+		this.nome = nome;
+		this.listaEquipamento = listaEquipamento;
+	}
+
+
+	/* Getters and Setters */
+
+	/**
+	 * 
+	 * @return NIF do cliente
+	 */
 	public String getNif() {
 		return nif;
 	}
@@ -22,6 +37,10 @@ public class Cliente {
 		this.nif = nif;
 	}
 
+	/**
+	 * 
+	 * @return telemovel do cliente
+	 */
 	public String getTelemovel() {
 		return telemovel;
 	}
@@ -34,6 +53,10 @@ public class Cliente {
 		this.telemovel = telemovel;
 	}
 
+	/**
+	 * 
+	 * @return email do cliente
+	 */
 	public String getEmail() {
 		return email;
 	}
@@ -45,7 +68,11 @@ public class Cliente {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	
+	/**
+	 * 
+	 * @return nome do cliente
+	 */
 	public String getNome() {
 		return nome;
 	}
@@ -58,16 +85,29 @@ public class Cliente {
 		this.nome = nome;
 	}
 
+	/**
+	 * 
+	 * @return lista de equipamentos do cliente
+	 */
 	public ArrayList<Equipamento> getListaEquipamento() {
 		return listaEquipamento;
 	}
 
 	/**
-	 * 
-	 * @param listaEquipamento
+	 * adiciona um equipamento à lista de equipamentos do cliente
+	 * @param equip
 	 */
-	public void setListaEquipamento(ArrayList<Equipamento> listaEquipamento) {
-		this.listaEquipamento = listaEquipamento;
+	public void adicionarEquipamento(Equipamento equip){
+		listaEquipamento.add(equip);
+	}
+
+	/**
+	 * Remove um equipamento da lista de equipamentos do cliente, se este existir
+	 * @param equip
+	 */
+	public void removerEquipamento(Equipamento equip){
+		if(listaEquipamento.contains(equip))
+			listaEquipamento.remove(equip);
 	}
 
 }

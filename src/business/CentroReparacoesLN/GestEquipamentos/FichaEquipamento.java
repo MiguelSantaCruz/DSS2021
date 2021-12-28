@@ -42,10 +42,12 @@ public class FichaEquipamento {
 	}
 
 
-	
-
 	/* Getters and Setters */
 
+	/**
+	 * 
+	 * @return nome do equipamento
+	 */
 	public String getNome() {
 		return nome;
 	}
@@ -58,6 +60,10 @@ public class FichaEquipamento {
 		this.nome = nome;
 	}
 
+	/**
+	 * 
+	 * @return descricao do equipamento
+	 */
 	public String getDescricao() {
 		return descricao;
 	}
@@ -70,6 +76,10 @@ public class FichaEquipamento {
 		this.descricao = descricao;
 	}
 
+	/**
+	 * 
+	 * @return id do equipamento
+	 */
 	public String getIdFicha() {
 		return idFicha;
 	}
@@ -82,6 +92,10 @@ public class FichaEquipamento {
 		this.idFicha = idFicha;
 	}
 
+	/**
+	 * 
+	 * @return orcamento de reparacao do equipamento
+	 */
 	public Orcamento getOrcamento() {
 		return orcamento;
 	}
@@ -94,6 +108,10 @@ public class FichaEquipamento {
 		this.orcamento = orcamento;
 	}
 
+	/**
+	 * 
+	 * @return equipamento associado à ficha
+	 */
 	public Equipamento getEquipamento() {
 		return equipamento;
 	}
@@ -106,6 +124,10 @@ public class FichaEquipamento {
 		this.equipamento = equipamento;
 	}
 
+	/**
+	 * 
+	 * @return reparacao associada à ficha
+	 */
 	public Reparacao getReparacao() {
 		return reparacao;
 	}
@@ -118,6 +140,10 @@ public class FichaEquipamento {
 		this.reparacao = reparacao;
 	}
 
+	/**
+	 * 
+	 * @return data da ficha de equipamento
+	 */
 	public LocalDateTime getDate() {
 		return date;
 	}
@@ -130,6 +156,10 @@ public class FichaEquipamento {
 		this.date = date;
 	}
 
+	/**
+	 * 
+	 * @return valor da reparacao
+	 */
 	public int getValorPago(){
 		return this.valorPago;
 	}
@@ -142,6 +172,10 @@ public class FichaEquipamento {
 		this.valorPago = valor;
 	}
 
+	/**
+	 * 
+	 * @return valor da reparacao
+	 */
 	public String getIdCliente() {
 		return this.idCliente;
 	}

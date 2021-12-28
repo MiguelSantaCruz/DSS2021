@@ -28,7 +28,7 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 	 */
 	public void removerFichaEquipamento(String id) {
 		if(fichaEquipamentos.containsKey(id))
-		fichaEquipamentos.remove(id);
+			fichaEquipamentos.remove(id);
 	}
 
 	/**
