@@ -119,11 +119,6 @@ public class Reparacao {
 		pecas.remove(peca);
 	}
 
-	
-
-
-	
-
 	/**
 	 * verifica se um passo ou subpasso existe da lista de passos da reparacao
 	 * @param id
