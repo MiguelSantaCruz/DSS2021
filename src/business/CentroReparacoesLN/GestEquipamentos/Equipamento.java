@@ -7,6 +7,20 @@ public class Equipamento {
 	private String descricao;
 	private String nome;
 
+	public Equipamento(String id, FichaEquipamento fichaDeEquimento, String descricao, String nome) {
+		this.id = id;
+		this.fichaDeEquimento = fichaDeEquimento;
+		this.descricao = descricao;
+		this.nome = nome;
+	}
+
+
+	/* Getters and Setters */
+
+	/**
+	 * 
+	 * @return id do equipamento
+	 */
 	public String getId() {
 		return this.id;
 	}
@@ -19,6 +33,10 @@ public class Equipamento {
 		this.id = id;
 	}
 
+	/**
+	 * 
+	 * @return descricao do equipamento
+	 */
 	public String getDescricao() {
 		return this.descricao;
 	}
@@ -31,6 +49,10 @@ public class Equipamento {
 		this.descricao = descricao;
 	}
 
+	/**
+	 * 
+	 * @return nome do equipamento
+	 */
 	public String getNome() {
 		return this.nome;
 	}
@@ -43,6 +65,10 @@ public class Equipamento {
 		this.nome = nome;
 	}
 
+	/**
+	 * 
+	 * @return ficha de equipamento
+	 */
 	public FichaEquipamento getFichaDeEquimento() {
 		return fichaDeEquimento;
 	}

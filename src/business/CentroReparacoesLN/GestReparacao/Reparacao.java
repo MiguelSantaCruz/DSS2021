@@ -13,61 +13,123 @@ public class Reparacao {
 	private boolean concluido;
 	
 
-	public Reparacao(String idReparacao, String descricao, boolean concluido) {
+	public Reparacao(String idReparacao, String descricao) {
+		this.pecas = new ArrayList<>();
+		this.passos = new HashMap<>();
 		this.idReparacao = idReparacao;
 		this.descricao = descricao;
-		this.concluido = concluido;
+		this.concluido = false;
 	}
 
+	/* Getters and Setters*/
 
-	public String getDescricao() {
-		return this.descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public boolean getConcluido() {
-		return this.concluido;
-	}
-
-	
-
-	public Map<String, Passo> getPasso() {
-		return passos;
-	}
-
-	public void setPasso(Map<String, Passo> passos) {
-		this.passos = passos;
-	}
-
-	public ArrayList<Pecas> getPecas() {
-		return pecas;
-	}
-
-	public void setPecas(ArrayList<Pecas> pecas) {
-		this.pecas = pecas;
-	}
-
+	/**
+	 * 
+	 * @return id da reparacao
+	 */
 	public String getIdReparacao() {
 		return idReparacao;
 	}
 
+	/**
+	 * 
+	 * @param idReparacao
+	 */
 	public void setIdReparacao(String idReparacao) {
 		this.idReparacao = idReparacao;
 	}
 
-	public boolean isConcluido() {
-		return concluido;
+	/**
+	 * 
+	 * @return descricao da reparacao
+	 */
+	public String getDescricao() {
+		return this.descricao;
 	}
 
+	/**
+	 * 
+	 * @param descricao
+	 */
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	/**
+	 * 
+	 * @return o estado de conclusao da reparacao
+	 */
+	public boolean isConcluido() {
+		return this.concluido;
+	}
+
+	/**
+	 * 
+	 * @param concluido
+	 */
 	public void setConcluido(boolean concluido) {
 		this.concluido = concluido;
 	}
 
+	/**
+	 * 
+	 * @return lista de passos da reparacao
+	 */
+	public Map<String, Passo> getPasso() {
+		return passos;
+	}
 
-	public boolean exitePassoOrSubpasso(String id){
+	/**
+	 * adiciona um subpasso de um passo
+	 * @param passo
+	 */
+	public void adicionaPasso(Passo passo){
+		this.passos.put(passo.getIdPasso(),passo);
+	}
+
+	/**
+	 * remove um subpasso de um passo
+	 * @param passo
+	 */
+	public void removePasso(Passo passo){
+		this.passos.remove(passo.getIdPasso());
+	}
+
+	/**
+	 * 
+	 * @return lista de pecas da reparacao
+	 */
+	public ArrayList<Pecas> getPecas() {
+		return pecas;
+	}
+
+	/**
+	 * 
+	 * @param peca
+	 */
+	public void adicionaPeca(Pecas peca) {
+		pecas.add(peca);
+	}
+
+	/**
+	 * 
+	 * @param peca
+	 */
+	public void removePeca(Pecas peca) {
+		pecas.remove(peca);
+	}
+
+	
+
+
+	
+
+	/**
+	 * verifica se um passo ou subpasso existe da lista de passos da reparacao
+	 * @param id
+	 * @return lista de passos da reparacao
+	 */
+	public boolean existePassoOrSubpasso(String id){
 		if(this.passos.containsKey(id)) return true;
 		for(Map.Entry<String, Passo> entry : this.passos.entrySet()) {
 			if(entry.getValue().existeSubpasso(id)) return true;
@@ -75,6 +137,11 @@ public class Reparacao {
 		return false;
 	}
 
+	/**
+	 * procura um passo ou subpasso pelo id
+	 * @param id
+	 * @return passo ou subpasso encontrado
+	 */
 	public Passo getPassoOrSubpassoByID(String id){
 		if(this.passos.containsKey(id)) return this.passos.get(id);
 		for(Map.Entry<String, Passo> entry : this.passos.entrySet()) {
@@ -89,61 +156,6 @@ public class Reparacao {
 	 */
 	public boolean verificaConclusaoPasso(String idPasso) {
 		// TODO - implement Reparacao.verificaConclusaoPasso
-		throw new UnsupportedOperationException();
-	}
-
-
-	/**
-	 * 
-	 * @param listaPassos
-	 */
-	public void adicionaListaPassos(Map<String, Passo> listaPassos) {
-		// TODO - implement Reparacao.adicionaListaPassos
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param listaPecas
-	 */
-	public void adicionarListaPecas(Map<String, Pecas> listaPecas) {
-		// TODO - implement Reparacao.adicionarListaPecas
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param peca
-	 */
-	public void adicionaPeca(Pecas peca) {
-		// TODO - implement Reparacao.adicionaPeca
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param peca
-	 */
-	public void removePeca(Pecas peca) {
-		// TODO - implement Reparacao.removePeca
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param passo
-	 */
-	public void adicionaPasso(Passo passo) {
-		// TODO - implement Reparacao.adicionaPasso
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param passo
-	 */
-	public void removePasso(Passo passo) {
-		// TODO - implement Reparacao.removePasso
 		throw new UnsupportedOperationException();
 	}
 

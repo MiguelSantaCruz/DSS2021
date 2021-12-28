@@ -104,7 +104,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 	 * @param idReparacao
 	 * @param listaPecas
 	 */
-	public void adicionarListaPecas(String idReparacao, Map<String, Pecas> listaPecas) {
+	public void adicionarListaPecas(String idReparacao, Map<String, Pecas> pecas) {
 		// TODO - implement GestReparacaoFacade.adicionarListaPecas
 		throw new UnsupportedOperationException();
 	}
@@ -211,7 +211,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 		do {
 			id = UUID.randomUUID().toString().substring(0, 8);
 		} while (this.reparacoes.containsKey(id));
-		Reparacao reparacao = new Reparacao(id,descricao,false);
+		Reparacao reparacao = new Reparacao(id,descricao);
 		return reparacao;
 	}
 
@@ -226,7 +226,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 		do {
 			id = UUID.randomUUID().toString().substring(0, 8);
 		} while (this.servicos.containsKey(id));
-		ServicoExpresso servico = new ServicoExpresso(id,descricao,false);
+		ServicoExpresso servico = new ServicoExpresso(id,descricao);
 		return servico;
 	}
 
