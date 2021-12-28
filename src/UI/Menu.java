@@ -29,6 +29,10 @@ public class Menu {
      private List<PreCondition> disponivel;   //Lista de pré-condições
      private List<Handler> handlers;          //Lista de handlers
 
+     public void setTitulo(String titulo){
+         this.titulo = titulo;
+     }
+
     //Construtor
 
      /**

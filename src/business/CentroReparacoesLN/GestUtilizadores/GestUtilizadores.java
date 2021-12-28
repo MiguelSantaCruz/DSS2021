@@ -2,10 +2,10 @@ package business.CentroReparacoesLN.GestUtilizadores;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import business.CentroReparacoesLN.IGestReparacao;
 import business.CentroReparacoesLN.IGestUtilizadores;
-import business.CentroReparacoesLN.GestReparacao.GestReparacaoFacade;
 import business.CentroReparacoesLN.GestReparacao.Reparacao;
 import business.CentroReparacoesLN.GestReparacao.ServicoExpresso;
 
@@ -26,26 +26,42 @@ public class GestUtilizadores implements IGestUtilizadores{
 
 	/**
 	 * Adiciona ao Map de técnicos o técnico em questão
-	 * @param tecnico - O técnico a adicionar
+	 * @param nome - O nome do técnico a adicionar
+	 * @param palavraPasse - A palavra passe do técnico a adicionar
+	 * @return id - O identificador do técnico
 	 */
-	public void adicionarTecnico(Tecnico tecnico) {
+	public String adicionarTecnico(String nome,String palavraPasse) {
+		String id = geraIdentificadorUnico(this.tecnicos);
+		Tecnico tecnico = new Tecnico(id, nome, palavraPasse);
 		this.tecnicos.put(tecnico.getId(), tecnico);
+		return id;
 	}
+		
 
 	/**
 	 * Adiciona ao Map de funcionários o funcionário em questão
-	 * @param funcionario - O funcionário a adicionar
+	 * @param nome - O nome do funcionário a adicionar
+	 * @param palavraPasse - A palavra passe do funcionário a adicionar
+	 * @return id - O identificador do funcionário
 	 */
-	public void adicionarFuncionario(Funcionario funcionario) {
+	public String adicionarFuncionario(String nome,String palavraPasse) {
+		String id = geraIdentificadorUnico(this.funcionarios);
+		Funcionario funcionario = new Funcionario(id, nome, palavraPasse);
 		this.funcionarios.put(funcionario.getId(), funcionario);
+		return id;
 	}
 
 	/**
 	 * Adiciona ao Map de gestores o gestor em questão
-	 * @param gestor - O gestor a adicionar
+	 * @param nome - O nome do gestor a adicionar
+	 * @param palavraPasse - A palavra passe do gestor a adicionar
+	 * @return id - O identificador do gestor
 	 */
-	public void adicionarGestor(Gestor gestor) {
+	public String adicionarGestor(String nome,String palavraPasse) {
+		String id = geraIdentificadorUnico(this.gestores);
+		Gestor gestor = new Gestor(id, nome, palavraPasse);
 		this.gestores.put(gestor.getId(), gestor);
+		return id;
 	}
 
 	/**
@@ -205,5 +221,34 @@ public class GestUtilizadores implements IGestUtilizadores{
 		System.out.println("Equipamentos levantados: " + equipamentosLevantados);
 	}
 
+	/**
+	 * Verificar se existem funcionários registados
+	 * @return {@code true} se existem funcionários, {@code false} caso contrário
+	 */
+	public boolean existemFuncionarios(){
+		if(this.funcionarios.size() == 0) return false;
+		else return true;
+	}
+
+    /**
+	 * Verificar se existem técnicos registados
+	 * @return {@code true} se existem técnicos, {@code false} caso contrário
+	 */
+	public boolean existemTecnicos(){
+		if(this.tecnicos.size() == 0) return false;
+		else return true;
+	}
+
+	/**
+	 * Gera um identificador de 8 caracteres único
+	 */
+	public String geraIdentificadorUnico(Map m){
+		//Gerar um identificador aleatório
+		String id;
+		do {
+			id = UUID.randomUUID().toString().substring(0, 8);
+		} while (m.containsKey(id));
+		return id;
+	}
 
 }

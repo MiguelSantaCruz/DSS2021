@@ -1,6 +1,7 @@
 package business.CentroReparacoesLN.GestUtilizadores;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,8 +13,16 @@ public class Funcionario {
 	private String id;
 	private String nome;
 	private String palavraPasse;
-	private List<String> listaIdsFichaEquipamentosRecebidos;
-	private List<String> listaIdsFichaEquipamentosLevantados;
+	private List<String> listaIdsFichaEquipamentosRecebidos = new ArrayList<>();
+	private List<String> listaIdsFichaEquipamentosLevantados = new ArrayList<>();
+
+
+	public Funcionario(String id, String nome, String palavraPasse) {
+		this.id = id;
+		this.nome = nome;
+		this.palavraPasse = palavraPasse;
+	}
+
 
 	/* Getters and Setters */
 	public String getId() {

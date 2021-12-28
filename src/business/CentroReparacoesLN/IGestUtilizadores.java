@@ -6,21 +6,27 @@ public interface IGestUtilizadores {
 
 	/**
 	 * Adiciona ao Map de técnicos o técnico em questão
-	 * @param tecnico - O técnico a adicionar
+	 * @param nome - O nome do técnico a adicionar
+	 * @param palavraPasse - A palavra passe do técnico a adicionar
+	 * @return id - O identificador do técnico
 	 */
-	public void adicionarTecnico(Tecnico tecnico);
+	public String adicionarTecnico(String nome,String palavraPasse);
 
-	/**
+    /**
 	 * Adiciona ao Map de funcionários o funcionário em questão
-	 * @param funcionario - O funcionário a adicionar
+	 * @param nome - O nome do funcionário a adicionar
+	 * @param palavraPasse - A palavra passe do funcionário a adicionar
+	 * @return id - O identificador do funcionário
 	 */
-	public void adicionarFuncionario(Funcionario funcionario);
+	public String adicionarFuncionario(String nome,String palavraPasse);
 
 	/**
 	 * Adiciona ao Map de gestores o gestor em questão
-	 * @param gestor - O gestor a adicionar
+	 * @param nome - O nome do gestor a adicionar
+	 * @param palavraPasse - A palavra passe do gestor a adicionar
+	 * @return id - O identificador do gestor
 	 */
-	public void adicionarGestor(Gestor gestor);
+	public String adicionarGestor(String nome,String palavraPasse);
 
 	/**
 	 * Remove ao Map de técnicos o técnico em questão
@@ -104,6 +110,19 @@ public interface IGestUtilizadores {
 	 * @param idFuncionario - O identificador do funcionário
 	 */
 	public void consultaListaEntregasFuncionario(String idFuncionario);
+
+    /**
+	 * Verificar se existem técnicos registados
+	 * @return {@code true} se existem técnicos, {@code false} caso contrário
+	 */
+	public boolean existemTecnicos();
+
+    /**
+	 * Verificar se existem funcionários registados
+	 * @return {@code true} se existem funcionários, {@code false} caso contrário
+	 */
+	public boolean existemFuncionarios();
+
 
 
 }
