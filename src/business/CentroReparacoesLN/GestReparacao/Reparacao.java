@@ -155,6 +155,28 @@ public class Reparacao {
 	}
 
 	/**
+	 * verifica se a reparacao está concluida, ou seja se todos os passos estao concluidos
+	 * @return {@code true} se a reparacao está concluida, {@code false} caso contrário
+	 */
+	public boolean verificaConclusao() {
+		for(Map.Entry<String, Passo> entry : this.passos.entrySet()) {
+			if (!entry.getValue().verificaConclusaoSubpassos())
+				return false;
+		}
+		return true;
+	}
+
+	/**
+	 * marca a reparacao, o passo e respetivos subpassos como concluidos
+	 */
+	public void marcaReparacaoComoConcluida() {
+		for(Map.Entry<String, Passo> entry : this.passos.entrySet()) {
+			entry.getValue().marcaPassoComoConcluido();
+		}
+		this.setConcluido(true);
+	}
+
+	/**
 	 * calcula o custo da reparacao, que corresponde ao custo das pecas utilizadas
 	 * @return o valor do custo total
 	 */

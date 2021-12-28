@@ -30,13 +30,11 @@ public class GestReparacaoFacade implements IGestReparacao {
 	}
 
 	/**
-	 * 
+	 * marca a reparacao como concluida, bem como a sua lista de passos e respetivos subpassos
 	 * @param idReparacao
 	 */
 	public void marcarReparacoesComoConcluidas(String idReparacao) {
-		//ArrayList<Passo> passos = reparacoes.get(idReparacao).getPasso();
-		//falta percorrer a lista de passos aqui e marcar true;
-		reparacoes.get(idReparacao).setConcluido(true);
+		reparacoes.get(idReparacao).marcaReparacaoComoConcluida();
 	}
 
 	/**
@@ -130,17 +128,18 @@ public class GestReparacaoFacade implements IGestReparacao {
 	}
 
 	/**
-	 * 
+	 * verifica se uma reparacao esta concluida, ou seja se todos os passos estao concluidos
 	 * @param idReparacao
+	 * @return {@code true} se a reparacao está concluida, {@code false} caso contrário
 	 */
 	public boolean verificarConclusao(String idReparacao) {
-		// TODO - implement GestReparacaoFacade.verificarConclusao
-		throw new UnsupportedOperationException();
+		return reparacoes.get(idReparacao).verificaConclusao();
 	}
 
 	/**
 	 * 
 	 * @param idReparacao
+	 * @return reparacao
 	 */
 	public Reparacao getReparacao(String idReparacao) {
 		return reparacoes.get(idReparacao);
@@ -149,6 +148,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 	/**
 	 * 
 	 * @param idServico
+	 * @return serviço expresso
 	 */
 	public ServicoExpresso getServicoExpresso(String idServico) {
 		return servicos.get(idServico);
@@ -158,6 +158,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 	 * 
 	 * @param idReparacao
 	 * @param idPasso
+	 * @return passo
 	 */
 	public Passo getPasso(String idReparacao, String idPasso) {
 		if(reparacoes.get(idReparacao).getPasso().containsKey(idPasso))
@@ -168,6 +169,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 	/**
 	 * 
 	 * @param idPeca
+	 * @return peca
 	 */
 	public Pecas getPeca(String idPeca) {
 		if(pecas.containsKey(idPeca))
@@ -178,51 +180,52 @@ public class GestReparacaoFacade implements IGestReparacao {
 	/**
 	 * 
 	 * @param reparacao
+	 * @return string
 	 */
 	public String reparacaoToString(Reparacao reparacao) {
-		// TODO - implement GestReparacaoFacade.reparacaoToString
-		throw new UnsupportedOperationException();
+		return reparacao.toString();
 	}
 
 	/**
-	 * 
+	 * calcula o custo da reparacao, que corresponde ao custo das pecas utilizadas
 	 * @param idReparacao
+	 * @return custo total
 	 */
 	public float calcularCustoTotal(String idReparacao){
-		// TODO - implement GestReparacaoFacade.reparacaoToString
-		throw new UnsupportedOperationException();
+		return reparacoes.get(idReparacao).calcularCustoTotal();
 	}
 
 	/**
-	 * 
-	 * @param idReparacaoGastas
+	 *  calcula o número de horas gastas da reparacao
+	 * @param idReparacao
+	 * @return horas gastas totais
 	 */
 	public int calcularHorasGastasTotais(String idReparacao){
-		// TODO - implement GestReparacaoFacade.reparacaoToString
-		throw new UnsupportedOperationException();
+		return reparacoes.get(idReparacao).calcularHorasGastasTotais();
 	}
 
 	/**
-	 * 
+	 * calcula o número de horas previstas para a conclusao da reparacao
 	 * @param idReparacao
+	 * @return horas previstas totais
 	 */
 	public int calcularHorasPrevistasTotais(String idReparacao){
-		// TODO - implement GestReparacaoFacade.reparacaoToString
-		throw new UnsupportedOperationException();
+		return reparacoes.get(idReparacao).calcularHorasPrevistasTotais();
 	}
 
 	/**
 	 * 
 	 * @param servicoExpresso
+	 * @return string
 	 */
-    public void servicoToString(ServicoExpresso servicoExpresso) {
-		//TODO
+    public String servicoToString(ServicoExpresso servicoExpresso) {
+		return servicoExpresso.toString();
     }
 
 	/**
 	 * 
 	 * @param descricao
-	 * @return
+	 * @return reparacao criada
 	 */
 	public Reparacao criarReparacao(String descricao){
 		//Gerar um identificador aleatório
@@ -237,7 +240,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 	/**
 	 * 
 	 * @param descricao
-	 * @return
+	 * @return serviço criado
 	 */
 	public ServicoExpresso criarServicoExpresso(String descricao){
 		//Gerar um identificador aleatório
@@ -257,5 +260,24 @@ public class GestReparacaoFacade implements IGestReparacao {
 	public boolean existeReparacao(String idReparacao){
 		if(this.reparacoes.containsKey(idReparacao)) return true;
 		else return false;
+	}
+
+
+	/**
+	 * Verifica se existe uma determinada peça dado o seu identificador
+	 * @param idPeca - Identificador da peça
+	 * @return {@code true} se existir, {@code false} caso contrário
+	 */
+	public boolean existePeca(String idPeca){
+		return pecas.containsKey(idPeca);
+	}
+
+	/**
+	 * Verifica se existe uma determinada peça dado o seu identificador
+	 * @param idPeca - Identificador da peça
+	 * @return a peça com o identificador especificado
+	 */
+	public Pecas getPecaById(String idPeca){
+		return pecas.get(idPeca);
 	}
 }

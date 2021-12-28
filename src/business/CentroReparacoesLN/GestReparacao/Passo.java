@@ -181,5 +181,16 @@ public class Passo {
 		return true;
 	}
 
+	/**
+	 * marca o passo e respetivos subpassos como concluidos
+	 */
+	public void marcaPassoComoConcluido(){
+		
+		for(Map.Entry<String, Passo> entry : subpassos.entrySet()) {
+			entry.getValue().setConcluido(true);
+		}
+		this.concluido = true;
+		
+	}
 
 }

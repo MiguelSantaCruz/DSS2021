@@ -5,86 +5,102 @@ import java.util.Map;
 import business.CentroReparacoesLN.GestReparacao.*;
 
 public interface IGestReparacao {
-    	/**
-	 * 
+
+    /**
+	 * adiciona uma reparacao a lista de reparacoes
 	 * @param reparacao
 	 */
 	public void adicionaReparacoes(Reparacao reparacao);
 
 	/**
-	 * 
+	 * remove uma reparacao da lista de reparacoes
 	 * @param idReparacoes
 	 */
 	public void removeReparacoes(String idReparacoes);
 
 	/**
-	 * 
+	 * marca a reparacao como concluida, bem como a sua lista de passos e respetivos subpassos
 	 * @param idReparacao
 	 */
 	public void marcarReparacoesComoConcluidas(String idReparacao);
 
 	/**
-	 * 
+	 * adiciona um passo de uma lista de passos de uma reparacao
 	 * @param idReparacao
 	 * @param passo
 	 */
 	public void adicionarPasso(String idReparacao, Passo passo);
 
 	/**
-	 * 
+	 * remove um passo de uma lista de passos de uma reparacao
 	 * @param idReparacao
 	 * @param idPasso
 	 */
 	public void removePasso(String idReparacao, String idPasso) ;
 
 	/**
-	 * 
+	 * marca um passo de uma reparaçao como concluido 
 	 * @param idPasso
 	 * @param idReparacao
 	 */
 	public void marcarPassoComoConcluido(String idPasso, String idReparacao);
 
 	/**
-	 * 
+	 * adiciona um serviço da lista de serviços expresso
 	 * @param servico
 	 */
 	public void adicionaServicoExpresso(ServicoExpresso servico);
 
 	/**
-	 * 
+	 * remove um serviço da lista de serviços expresso, se este existir
 	 * @param servico
 	 */
 	public void removeServicoExpresso(ServicoExpresso servico);
 
 	/**
-	 * 
+	 * adiciona uma peca a lista de pecas de uma reparacao
 	 * @param idReparacao
-	 * @param listaPassos
+	 * @param peca
 	 */
-	public void adicionaListaPassos(String idReparacao, Map<String, Passo> listaPassos);
+	public void adicionarPecaReparacao(String idReparacao, Pecas peca);
 
 	/**
-	 * 
+	 * remove uma peca da lista de pecas de uma reparacao, se estas existirem
 	 * @param idReparacao
-	 * @param listaPecas
+	 * @param peca
 	 */
-	public void adicionarListaPecas(String idReparacao, Map<String, Pecas> listaPecas);
+	public void removePecaReparacao(String idReparacao, Pecas peca);
 
 	/**
-	 * 
+	 * adiciona peca a lista de pecas da loja
+	 * @param peca
+	 */
+	public void adicionarPeca(Pecas peca);
+
+	/**
+	 * remove peca da lista de pecas da loja
+	 * @param peca
+	 */
+	public void removerPeca(Pecas peca);
+
+	/**
+	 * verifica se uma reparacao esta concluida, ou seja se todos os passos estao concluidos
 	 * @param idReparacao
+	 * @return {@code true} se a reparacao está concluida, {@code false} caso contrário
 	 */
 	public boolean verificarConclusao(String idReparacao);
 
 	/**
 	 * 
 	 * @param idReparacao
+	 * @return reparacao
 	 */
 	public Reparacao getReparacao(String idReparacao);
 
 	/**
 	 * 
 	 * @param idServico
+	 * @return serviço expresso
 	 */
 	public ServicoExpresso getServicoExpresso(String idServico);
 
@@ -92,57 +108,63 @@ public interface IGestReparacao {
 	 * 
 	 * @param idReparacao
 	 * @param idPasso
+	 * @return passo
 	 */
 	public Passo getPasso(String idReparacao, String idPasso);
 
 	/**
 	 * 
-	 * @param idReparacao
 	 * @param idPeca
+	 * @return peca
 	 */
-	public Pecas getPeca(String idReparacao, String idPeca);
+	public Pecas getPeca(String idPeca);
 
 	/**
 	 * 
 	 * @param reparacao
+	 * @return string
 	 */
 	public String reparacaoToString(Reparacao reparacao);
 
 	/**
-	 * 
+	 * calcula o custo da reparacao, que corresponde ao custo das pecas utilizadas
 	 * @param idReparacao
+	 * @return custo total
 	 */
 	public float calcularCustoTotal(String idReparacao);
 
 	/**
-	 * 
-	 * @param idReparacaoGastas
-	 */
+	*  calcula o número de horas gastas da reparacao
+	* @param idReparacao
+	* @return horas gastas totais
+	*/
 	public int calcularHorasGastasTotais(String idReparacao);
 
 	/**
-	 * 
+	 * calcula o número de horas previstas para a conclusao da reparacao
 	 * @param idReparacao
+	 * @return horas previstas totais
 	 */
 	public int calcularHorasPrevistasTotais(String idReparacao);
 
 	/**
 	 * 
 	 * @param servicoExpresso
+	 * @return string
 	 */
-    public void servicoToString(ServicoExpresso servicoExpresso);
+    public String servicoToString(ServicoExpresso servicoExpresso);
 
 	/**
 	 * 
 	 * @param descricao
-	 * @return
+	 * @return reparacao criada
 	 */
 	public Reparacao criarReparacao(String descricao);
 
 	/**
 	 * 
 	 * @param descricao
-	 * @return
+	 * @return serviço criado
 	 */
 	public ServicoExpresso criarServicoExpresso(String descricao);
 
