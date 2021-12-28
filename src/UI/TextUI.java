@@ -10,6 +10,13 @@ import java.io.ObjectOutputStream;
 
 import java.util.Scanner;
 
+import business.CentroReparacoesLN.IGestEquipamento;
+import business.CentroReparacoesLN.IGestReparacao;
+import business.CentroReparacoesLN.IGestUtilizadores;
+import business.CentroReparacoesLN.GestEquipamentos.GestEquipamentoFacade;
+import business.CentroReparacoesLN.GestReparacao.GestReparacaoFacade;
+import business.CentroReparacoesLN.GestUtilizadores.GestUtilizadores;
+
 /**
  * Exemplo de interface em modo texto.
  *
@@ -17,6 +24,13 @@ import java.util.Scanner;
  * @version 20210930
  */
 public class TextUI {
+    
+    public enum TiposFuncionarios{
+        TECNICO, FUNCIONARIO, GESTOR
+    }
+    public IGestEquipamento gestEquipamentos = new GestEquipamentoFacade();
+    public IGestReparacao gestReparacoes = new GestReparacaoFacade();
+    public IGestUtilizadores gestUtilizadores = new GestUtilizadores();
 
     //Scanner para leitura
     private Scanner scin;
@@ -34,6 +48,9 @@ public class TextUI {
      * Executa o menu principal e invoca o método correspondente à opção seleccionada.
     */
     public void run() {
+        String id = this.gestUtilizadores.adicionarGestor("Admin","12345");
+        System.out.println("O identificador do gestor: " + id);
+        System.out.println("Palavra chave do gestor: 12345");
         System.out.println("Centro de Reparações");
         this.menuPrincipal();
         System.out.println("Até breve...");
@@ -59,13 +76,54 @@ public class TextUI {
         });
 
         //Registar pré-condições das transições
-        //Exemplo menu.setPreCondition(3, ()->this.model.haAlunos() && this.model.haTurmas());
+        menu.setPreCondition(1, ()->this.gestUtilizadores.existemTecnicos());
+        menu.setPreCondition(2, ()->this.gestUtilizadores.existemFuncionarios());
 
         //Registar os handlers das transições
-        //menu.setHandler(1, ()->gestaoDeAlunos());
+        menu.setHandler(1,() -> autenticaFuncionarios(TiposFuncionarios.TECNICO));
+        menu.setHandler(2,() -> autenticaFuncionarios(TiposFuncionarios.FUNCIONARIO));
+        menu.setHandler(3,() -> autenticaFuncionarios(TiposFuncionarios.GESTOR));
 
         //Executar o menu
         menu.run();
+    }
+
+    private void autenticaFuncionarios(TiposFuncionarios funcionario){
+        System.out.println("Insira o seu identificador:");
+        System.out.print("> ");
+        String id = this.scin.nextLine();
+        System.out.println("Insira a sua palavra chave:");
+        System.out.print("> ");
+        String password = this.scin.nextLine();
+        switch (funcionario) {
+            case FUNCIONARIO:
+                if(this.gestUtilizadores.autenticaFuncionario(id, password)){
+                    System.out.println("--------- Bem vindo " + this.gestUtilizadores.getFuncionarioById(id).getNome()+ "----------");
+                    menuFuncionario();
+                }
+                else {
+                    System.out.println("Palavra passe incorreta ou funcionário não existente");
+                }
+                break;
+            case TECNICO:
+                if(this.gestUtilizadores.autenticaTecnico(id, password)){
+                    System.out.println("--------- Bem vindo " + this.gestUtilizadores.getTecnicoById(id).getNome()+ "----------");
+                    menuTecnico();
+                }else{
+                    System.out.println("Palavra passe incorreta ou técnico não existente");
+                }
+                break;
+            case GESTOR:
+                if(this.gestUtilizadores.autenticaGestor(id, password)){
+                    System.out.println("--------- Bem vindo " + this.gestUtilizadores.getGestorById(id).getNome() + "----------");
+                    menuGestor();
+                }else{
+                    System.out.println("Palavra passe incorreta ou gestor não existente");
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     private void menuFuncionario() {
@@ -75,6 +133,7 @@ public class TextUI {
                 "Procurar Cliente",
                 "Procurar Orçamento",
         });
+        menu.setTitulo("Funcionário - Área autenticada");
         menu.run();
     }
 
@@ -86,22 +145,53 @@ public class TextUI {
                 "Procurar Orçamento",
                 "Procurar Reparação",
         });
+        menu.setTitulo("Técnico - Área autenticada");
         menu.run();
     }
 
     private void menuGestor() {
         Menu menu = new Menu(new String[]{
+                "Adicionar Técnico",
+                "Adicionar Funcionário",
+                "Adicionar Gestor",
                 "Procurar Equipamento",
                 "Procurar Ficha de Equipamento",
                 "Procurar Peça",
                 "Procurar Orçamento",
                 "Procurar Reparação",
         });
+        menu.setTitulo("Gestor - Área autenticada");
+        menu.setHandler(1, () -> adicionarFuncionario(TiposFuncionarios.TECNICO));
+        menu.setHandler(2, () -> adicionarFuncionario(TiposFuncionarios.FUNCIONARIO));
+        menu.setHandler(3, () -> adicionarFuncionario(TiposFuncionarios.GESTOR));
         menu.run();
     }
 
-    public void autenticaTecnico(){
-
+    public void adicionarFuncionario(TiposFuncionarios funcionario){
+        System.out.println("Insira o nome: ");
+        System.out.print("> ");
+        String nome = scin.nextLine();
+        System.out.println("Insira a palavra passe: ");
+        System.out.print("> ");
+        String palavraPasse= scin.nextLine();
+        String id = "";
+        switch (funcionario) {
+            case TECNICO:
+                id = this.gestUtilizadores.adicionarTecnico(nome, palavraPasse);
+                System.out.print("Adicionado técnico com id: ");
+                break;
+            case FUNCIONARIO:
+                id = this.gestUtilizadores.adicionarFuncionario(nome, palavraPasse);
+                System.out.print("Adicionado funcionário com id: ");
+                break;
+            case GESTOR:
+                id = this.gestUtilizadores.adicionarGestor(nome, palavraPasse);
+                System.out.print("Adicionado gestor com id: ");
+                break;
+            default:
+                break;
+        }
+        System.out.println(id+"");
     }
 
 

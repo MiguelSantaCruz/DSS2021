@@ -15,6 +15,15 @@ public class Tecnico {
 	public List<String> ListaIdsServico = new ArrayList<>();
 	private boolean isAvailable;
 	
+
+	public Tecnico(String id, String nome, String palavraPasse) {
+		this.id = id;
+		this.nome = nome;
+		this.palavraPasse = palavraPasse;
+		this.isAvailable = true;
+	}
+
+
 	/* Getters and Setters */
 
 	public String getId() {

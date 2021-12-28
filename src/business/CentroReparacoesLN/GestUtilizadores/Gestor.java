@@ -8,6 +8,12 @@ public class Gestor {
 
 	/* Getters and setters */
 
+	public Gestor(String id, String nome,String palavraPasse){
+		this.id = id;
+		this.nome = nome;
+		this.palavraPasse = palavraPasse;
+	}
+
 	public String getId() {
 		return this.id;
 	}
@@ -36,20 +42,32 @@ public class Gestor {
 
 	/**
 	 * Adiciona um técnico ao Map de técnicos
-	 * @param tecnico - Técnico a adicionar
+	 * @param nome - Nome do técnico a adicionar
+	 * @param palavraPasse - Palavra passe do técnico a adicionar
 	 * @param gestUtilizadores - Classe que gere os utilizadores
 	 */
-	public void adicionaTecnico(Tecnico tecnico,GestUtilizadores gestUtilizadores) {
-		gestUtilizadores.adicionarTecnico(tecnico);
+	public void adicionaTecnico(String nome,String palavraPasse,GestUtilizadores gestUtilizadores) {
+		gestUtilizadores.adicionarTecnico(nome,palavraPasse);
 	}
 
 	/**
 	 * Adiciona um funcionário ao Map de funcionários
-	 * @param funcionario - funcionśrio a adicionar
+	 * @param nome - Nome do funcionário a adicionar
+	 * @param palavraPasse - Palavra passe do funcionário a adicionar
 	 * @param gestUtilizadores - Classe que gere os utilizadores
 	 */
-	public void adicionaFuncionario(Funcionario funcionario,GestUtilizadores gestUtilizadores) {
-		gestUtilizadores.adicionarFuncionario(funcionario);
+	public void adicionaFuncionario(String nome,String palavraPasse,GestUtilizadores gestUtilizadores) {
+		gestUtilizadores.adicionarFuncionario(nome,palavraPasse);
+	}
+
+	/**
+	 * Adiciona um gestor ao Map de gestores
+	 * @param nome - Nome do gestor a adicionar
+	 * @param palavraPasse - Palavra passe do gestor a adicionar
+	 * @param gestUtilizadores - Classe que gere os utilizadores
+	 */
+	public void adicionaGestor(String nome,String palavraPasse,GestUtilizadores gestUtilizadores) {
+		gestUtilizadores.adicionarGestor(nome,palavraPasse);
 	}
 
 	/**
