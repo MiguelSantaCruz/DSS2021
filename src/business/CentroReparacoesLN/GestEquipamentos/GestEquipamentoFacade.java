@@ -16,20 +16,20 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 
 	/**
 	 * 
-	 * @param equipamento
+	 * @param cliente
 	 */
-	public void adicionarCliente(Cliente c) {
-		String key = c.getNif();
-		clientes.put(key, c);
+	public void adicionarCliente(Cliente cliente) {
+		String key = cliente.getNif();
+		clientes.put(key, cliente);
 	}
 
 	/**
 	 * 
-	 * @param id
+	 * @param nif
 	 */
-	public void removerCliente(Cliente c) {
-		if(clientes.containsKey(c))
-			clientes.remove(c);
+	public void removerCliente(String nif) {
+		if(clientes.containsKey(nif))
+			clientes.remove(nif);
 	}
 
 	/**

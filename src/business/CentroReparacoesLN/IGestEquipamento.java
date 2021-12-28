@@ -5,6 +5,19 @@ import business.CentroReparacoesLN.GestEquipamentos.*;
 
 public interface IGestEquipamento {
 
+
+	/**
+	 * 
+	 * @param cliente
+	 */
+	public void adicionarCliente(Cliente cliente);
+
+	/**
+	 * 
+	 * @param nif
+	 */
+	public void removerCliente(String nif);
+
     /**
 	 * 
 	 * @param equipamento
