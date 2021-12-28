@@ -13,7 +13,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 	private Map<String,ServicoExpresso> servicos = new HashMap<>();
 
 	/**
-	 * 
+	 * adiciona uma reparacao a lista de reparacoes
 	 * @param reparacao
 	 */
 	public void adicionaReparacoes(Reparacao reparacao) {
@@ -21,7 +21,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 	}
 
 	/**
-	 * 
+	 * remove uma reparacao da lista de reparacoes
 	 * @param idReparacoes
 	 */
 	public void removeReparacoes(String idReparacoes) {

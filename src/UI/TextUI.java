@@ -7,18 +7,22 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
 import java.util.Scanner;
 
 import business.CentroReparacoesLN.IGestEquipamento;
 import business.CentroReparacoesLN.IGestReparacao;
 import business.CentroReparacoesLN.IGestUtilizadores;
+import business.CentroReparacoesLN.GestEquipamentos.Equipamento;
+import business.CentroReparacoesLN.GestEquipamentos.FichaEquipamento;
 import business.CentroReparacoesLN.GestEquipamentos.GestEquipamentoFacade;
+import business.CentroReparacoesLN.GestEquipamentos.Orcamento;
 import business.CentroReparacoesLN.GestReparacao.GestReparacaoFacade;
+import business.CentroReparacoesLN.GestReparacao.Pecas;
+import business.CentroReparacoesLN.GestReparacao.Reparacao;
 import business.CentroReparacoesLN.GestUtilizadores.GestUtilizadores;
 
 /**
- * Exemplo de interface em modo texto.
+ * Interface em modo texto.
  *
  * @author JFC
  * @version 20210930
@@ -28,6 +32,10 @@ public class TextUI {
     public enum TiposFuncionarios{
         TECNICO, FUNCIONARIO, GESTOR
     }
+
+    public enum SearchableById{
+        EQUIPAMENTO, FICHA_EQUIPAMENTO, PECA, ORCAMENTO, REPARACAO
+    }
     public IGestEquipamento gestEquipamentos = new GestEquipamentoFacade();
     public IGestReparacao gestReparacoes = new GestReparacaoFacade();
     public IGestUtilizadores gestUtilizadores = new GestUtilizadores();
@@ -36,7 +44,7 @@ public class TextUI {
     private Scanner scin;
 
     /**
-     * Construtor.
+    * Construtor.
     *
     * Cria os menus e a camada de negócio.
     */
@@ -56,18 +64,8 @@ public class TextUI {
         System.out.println("Até breve...");
     }
 
-    //Métodos auxiliares - Estados da UI
+    //Métodos auxiliares 
 
-    /**
-     * Estado - Menu Principal
-    *
-    * Transições para:
-    *      Operações sobre Alunos
-    *      Operações sobre Turmas
-    *      Adicionar Aluno a Turma
-    *      Remover Aluno de Turma
-    *      Listar Alunos de Turma
-    */
     private void menuPrincipal() {
         Menu menu = new Menu(new String[]{
                 "Autenticar Técnico",
@@ -164,6 +162,11 @@ public class TextUI {
         menu.setHandler(1, () -> adicionarFuncionario(TiposFuncionarios.TECNICO));
         menu.setHandler(2, () -> adicionarFuncionario(TiposFuncionarios.FUNCIONARIO));
         menu.setHandler(3, () -> adicionarFuncionario(TiposFuncionarios.GESTOR));
+        menu.setHandler(4, () -> procurarEquipamentoPorId());
+        menu.setHandler(5, () -> procurarFichaEquipamentoPorId());
+        menu.setHandler(6, () -> procurarPecaPorId());       
+        menu.setHandler(7, () -> procurarOrcamentoPorId());
+        menu.setHandler(8, () -> procurarReparacaoPorId());
         menu.run();
     }
 
@@ -194,6 +197,55 @@ public class TextUI {
         System.out.println(id+"");
     }
 
+    public void procurarOrcamentoPorId(){
+        System.out.println("Insira identificador do orçamento:");
+        System.out.print("> ");
+        String id = scin.nextLine();
+        if(this.gestEquipamentos.orcamentoExiste(id)){
+            Orcamento orcamento = this.gestEquipamentos.getOrcamento(id);
+            orcamento.toString();
+        }else System.out.println("Orçamento não encontrado");
+    }
+
+    public void procurarFichaEquipamentoPorId(){
+        System.out.println("Insira identificador da ficha de equipamento:");
+        System.out.print("> ");
+        String id = scin.nextLine();
+        if(this.gestEquipamentos.fichaExiste(id)){
+           FichaEquipamento fichaEquipamento = this.gestEquipamentos.getFichaEquipamento(id);
+            fichaEquipamento.toString();
+        }else System.out.println("ficha de equipamento não encontrada");
+    }
+
+    public void procurarEquipamentoPorId(){
+        System.out.println("Insira identificador do equipamento:");
+        System.out.print("> ");
+        String id = scin.nextLine();
+        if(this.gestEquipamentos.equipamentoExiste(id)){
+            Equipamento equipamento = this.gestEquipamentos.getEquipamento(id);
+            equipamento.toString();
+        }else System.out.println("Equipamento não encontrada");
+    }
+
+    public void procurarPecaPorId(){
+        System.out.println("Insira identificador da peça:");
+        System.out.print("> ");
+        String id = scin.nextLine();
+        if(this.gestReparacoes.existePeca(id)){
+            Pecas pecas = this.gestReparacoes.getPecaById(id);
+            pecas.toString();
+        }else System.out.println("Peça não encontrada");
+    }
+
+    public void procurarReparacaoPorId(){
+        System.out.println("Insira identificador da reparacao:");
+        System.out.print("> ");
+        String id = scin.nextLine();
+        if(this.gestReparacoes.existeReparacao(id)){
+            Reparacao reparacao = this.gestReparacoes.getReparacao(id);
+            reparacao.toString();
+        }else System.out.println("Reparação não encontrada");
+    }
 
     public void guardaBin(TextUI model) throws FileNotFoundException, IOException {
         FileOutputStream bf = new FileOutputStream("estado");

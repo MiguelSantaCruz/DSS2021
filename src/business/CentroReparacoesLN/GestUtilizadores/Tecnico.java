@@ -89,7 +89,7 @@ public class Tecnico {
 	public void executaPasso(String idPasso, String idReparacao, GestReparacaoFacade gestReparacoes) {
 		if(!gestReparacoes.existeReparacao(idReparacao)) return;
 		Reparacao reparacao = gestReparacoes.getReparacao(idReparacao);
-		if(!reparacao.exitePassoOrSubpasso(id)) return;
+		if(!reparacao.existePassoOrSubpasso(id)) return;
 		reparacao.getPassoOrSubpassoByID(id).setConcluido(true);
 	}
 
