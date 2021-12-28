@@ -40,7 +40,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 	}
 
 	/**
-	 * 
+	 * adiciona um passo de uma lista de passos de uma reparacao
 	 * @param idReparacao
 	 * @param passo
 	 */
@@ -51,62 +51,82 @@ public class GestReparacaoFacade implements IGestReparacao {
 	}
 
 	/**
-	 * 
+	 * remove um passo de uma lista de passos de uma reparacao
 	 * @param idReparacao
 	 * @param idPasso
 	 */
 	public void removePasso(String idReparacao, String idPasso) {
-		/*if(reparacoes.containsKey(idReparacao) && reparacoes.get(idReparacao).getPasso().contains(getPasso(idReparacao, idPasso))){ 
-			reparacoes.get(idReparacao).getPasso().remove(getPasso(idReparacao, idPasso));
-		}*/
+		if(reparacoes.containsKey(idReparacao) && reparacoes.get(idReparacao).getPasso().containsKey(idPasso)){ 
+			reparacoes.get(idReparacao).getPasso().remove(idPasso);
+		}
 		
 	}
 
 	/**
-	 * 
+	 * marca um passo de uma reparaçao como concluido 
 	 * @param idPasso
 	 * @param idReparacao
 	 */
 	public void marcarPassoComoConcluido(String idPasso, String idReparacao) {
-		//reparacoes.get(idReparacao).getPasso().
+		if(reparacoes.containsKey(idReparacao) && reparacoes.get(idReparacao).getPasso().containsKey(idPasso)){ 
+			reparacoes.get(idReparacao).getPasso().get(idPasso).setConcluido(true);
+		}
 	}
 
 	/**
-	 * 
+	 * adiciona um serviço da lista de serviços expresso
 	 * @param servico
 	 */
 	public void adicionaServicoExpresso(ServicoExpresso servico) {
-		// TODO - implement GestReparacaoFacade.adicionaServicoExpresso
-		throw new UnsupportedOperationException();
+		servicos.put(servico.getIdServico(), servico);
 	}
 
 	/**
-	 * 
+	 * remove um serviço da lista de serviços expresso, se este existir
 	 * @param servico
 	 */
 	public void removeServicoExpresso(ServicoExpresso servico) {
-		// TODO - implement GestReparacaoFacade.removeServicoExpresso
-		throw new UnsupportedOperationException();
+		if(servicos.containsKey(servico.getIdServico())){
+			servicos.remove(servico.getIdServico());
+		}
+	}
+
+
+	/**
+	 * adiciona uma peca a lista de pecas de uma reparacao
+	 * @param idReparacao
+	 * @param peca
+	 */
+	public void adicionarPecaReparacao(String idReparacao, Pecas peca) {
+		if(pecas.containsKey(peca.getIdPeca()) && reparacoes.containsKey(idReparacao))
+			reparacoes.get(idReparacao).adicionaPeca(peca);
 	}
 
 	/**
-	 * 
+	 * remove uma peca da lista de pecas de uma reparacao, se estas existirem
 	 * @param idReparacao
-	 * @param listaPassos
+	 * @param peca
 	 */
-	public void adicionaListaPassos(String idReparacao, Map<String, Passo> listaPassos) {
-		// TODO - implement GestReparacaoFacade.adicionaListaPassos
-		throw new UnsupportedOperationException();
+	public void removePecaReparacao(String idReparacao, Pecas peca) {
+		if(pecas.containsKey(peca.getIdPeca()) && reparacoes.containsKey(idReparacao))
+			reparacoes.get(idReparacao).removePeca(peca);
 	}
 
 	/**
-	 * 
-	 * @param idReparacao
-	 * @param listaPecas
+	 * adiciona peca a lista de pecas da loja
+	 * @param peca
 	 */
-	public void adicionarListaPecas(String idReparacao, Map<String, Pecas> pecas) {
-		// TODO - implement GestReparacaoFacade.adicionarListaPecas
-		throw new UnsupportedOperationException();
+	public void adicionarPeca(Pecas peca) {
+		pecas.put(peca.getIdPeca(), peca);
+	}
+
+	/**
+	 * remove peca da lista de pecas da loja
+	 * @param peca
+	 */
+	public void removerPeca(Pecas peca) {
+		if(pecas.containsKey(peca.getIdPeca()))
+			pecas.remove(peca.getIdPeca());
 	}
 
 	/**
@@ -123,8 +143,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 	 * @param idReparacao
 	 */
 	public Reparacao getReparacao(String idReparacao) {
-		// TODO - implement GestReparacaoFacade.getReparacao
-		throw new UnsupportedOperationException();
+		return reparacoes.get(idReparacao);
 	}
 
 	/**
@@ -132,8 +151,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 	 * @param idServico
 	 */
 	public ServicoExpresso getServicoExpresso(String idServico) {
-		// TODO - implement GestReparacaoFacade.getServicoExpresso
-		throw new UnsupportedOperationException();
+		return servicos.get(idServico);
 	}
 
 	/**
@@ -142,18 +160,19 @@ public class GestReparacaoFacade implements IGestReparacao {
 	 * @param idPasso
 	 */
 	public Passo getPasso(String idReparacao, String idPasso) {
-		// TODO - implement GestReparacaoFacade.getPasso
-		throw new UnsupportedOperationException();
+		if(reparacoes.get(idReparacao).getPasso().containsKey(idPasso))
+			return reparacoes.get(idReparacao).getPasso().get(idPasso);
+		else return null;
 	}
 
 	/**
 	 * 
-	 * @param idReparacao
 	 * @param idPeca
 	 */
-	public Pecas getPeca(String idReparacao, String idPeca) {
-		// TODO - implement GestReparacaoFacade.getPeca
-		throw new UnsupportedOperationException();
+	public Pecas getPeca(String idPeca) {
+		if(pecas.containsKey(idPeca))
+			return pecas.get(idPeca);
+		else return null;
 	}
 
 	/**

@@ -141,5 +141,45 @@ public class Passo {
 		else return this.subpassos.get(id);
 	}
 
+	/**
+	 * calcula o número de horas gastas da reparacao
+	 * @return horas gastas totais
+	 */
+	public int calculaHorasGastas(){
+		int horas = 0;
+		for(Map.Entry<String, Passo> entry : subpassos.entrySet()) {
+			horas = entry.getValue().horasGastas;
+		}
+
+		return horas;
+	}
+
+	/**
+	 * calcula o número de horas gastas da reparacao
+	 * @return horas gastas totais
+	 */
+	public int calculaHorasPrevistas(){
+		int horas = 0;
+		for(Map.Entry<String, Passo> entry : subpassos.entrySet()) {
+			horas += entry.getValue().horasPrevistas;
+		}
+
+		return horas;
+	}
+
+	/**
+	 * verifica se o subpassos do passo estao concluidos
+	 * @return {@code true} se estao concluidos, {@code false} caso contrário
+	 */
+	public boolean verificaConclusaoSubpassos(){
+		
+		for(Map.Entry<String, Passo> entry : subpassos.entrySet()) {
+			if(!entry.getValue().isConcluido())
+				return false;
+		}
+		this.concluido = true;
+		return true;
+	}
+
 
 }

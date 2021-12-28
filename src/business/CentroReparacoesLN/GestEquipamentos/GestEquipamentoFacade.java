@@ -49,7 +49,24 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 		equipamentos.remove(id);
 	}
 
+	/**
+	 * adiciona orcamento a lista de orcamentos
+	 * @param orcamento
+	 */
+	public void adicionarOrcamento(Orcamento orcamento) {
+		String key = orcamento.getIdOrcamento();
+		orcamentos.put(key, orcamento);
+	}
 
+	/**
+	 * 
+	 * @param idOrcamento
+	 */
+	public void removerOrcamento(String idOrcamento) {
+		if(orcamentos.containsKey(idOrcamento))
+			orcamentos.remove(idOrcamento);
+		
+	}
 
 	/**
 	 * 
@@ -70,8 +87,6 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 			return equipamentos.get(id);
 		else return null;
 	}
-
-
 
 	/**
 	 * 
@@ -105,6 +120,10 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 		else return null;
 	}
 
+	/**
+	 * Calcula o orcamento aprovado mais antigo
+	 * @return o orcamento aprovado mais antigo
+	 */
 	public Orcamento getPedidoOrcamentoMaisAntigo() {
 		LocalDateTime data = LocalDateTime.now();
 		String id = null;
@@ -119,24 +138,7 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 		return orcamentos.get(id);
 	}
 
-	/**
-	 * 
-	 * @param orcamento
-	 */
-	public void adicionarOrcamento(Orcamento orcamento) {
-		String key = orcamento.getIdOrcamento();
-		orcamentos.put(key, orcamento);
-	}
-
-	/**
-	 * 
-	 * @param idOrcamento
-	 */
-	public void removerOrcamento(String idOrcamento) {
-		if(orcamentos.containsKey(idOrcamento))
-			orcamentos.remove(idOrcamento);
-		
-	}
+	
 
 	/**
 	 * Verifica se determinado identificador já está associado a uma ficha

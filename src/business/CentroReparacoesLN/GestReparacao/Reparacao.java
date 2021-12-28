@@ -121,13 +121,10 @@ public class Reparacao {
 
 	
 
-
-	
-
 	/**
 	 * verifica se um passo ou subpasso existe da lista de passos da reparacao
 	 * @param id
-	 * @return lista de passos da reparacao
+	 * @return {@code true} se o passo ou subpasso existe, {@code false} caso contrário
 	 */
 	public boolean existePassoOrSubpasso(String id){
 		if(this.passos.containsKey(id)) return true;
@@ -151,27 +148,50 @@ public class Reparacao {
 	}
 
 	/**
-	 * 
+	 * verifica se o passo está concluido
 	 * @param idPasso
+	 * @return {@code true} se o passo está concluido, {@code false} caso contrário
 	 */
 	public boolean verificaConclusaoPasso(String idPasso) {
-		// TODO - implement Reparacao.verificaConclusaoPasso
-		throw new UnsupportedOperationException();
+		return passos.get(idPasso).verificaConclusaoSubpassos();
 	}
 
+	/**
+	 * calcula o custo da reparacao, que corresponde ao custo das pecas utilizadas
+	 * @return o valor do custo total
+	 */
 	public float calcularCustoTotal() {
-		// TODO - implement Reparacao.calcularCustoTotal
-		throw new UnsupportedOperationException();
+		float valor = 0;
+		for(Pecas p : pecas){
+			valor += p.getValor();
+		}
+		return valor;
 	}
 
+	/**
+	 * calcula o número de horas gastas da reparacao
+	 * @return horas gastas totais
+	 */
 	public int calcularHorasGastasTotais() {
-		// TODO - implement Reparacao.calcularHorasGastasTotais
-		throw new UnsupportedOperationException();
+		int horas = 0;
+		for(Map.Entry<String, Passo> entry : passos.entrySet()) {
+			horas += entry.getValue().calculaHorasGastas();
+		}
+
+		return horas;
 	}
 
+	/**
+	 * calcula o número de horas previstas para a conclusao da reparacao
+	 * @return horas previstas totais
+	 */
 	public int calcularHorasPrevistasTotais() {
-		// TODO - implement Reparacao.calcularHorasPrevistasTotais
-		throw new UnsupportedOperationException();
+		int horas = 0;
+		for(Map.Entry<String, Passo> entry : passos.entrySet()) {
+			horas += entry.getValue().calculaHorasPrevistas();
+		}
+
+		return horas;
 	}
 
 }

@@ -16,6 +16,8 @@ public class Orcamento {
 		this.date = LocalDateTime.now();
 	}
 
+	/* Getters and Setters*/
+
 	/**
 	 * 
 	 * @return id do orcamento
