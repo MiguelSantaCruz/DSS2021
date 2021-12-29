@@ -1,9 +1,10 @@
 package business.CentroReparacoesLN.GestReparacao;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Passo {
+public class Passo implements Serializable{
 
 	private Map<String, Passo> subpassos = new HashMap<>();
 	private String idPasso;
@@ -106,6 +107,10 @@ public class Passo {
 		this.horasPrevistas = horasPrevistas;
 	}
 
+	public Map<String,Passo> getSubpassos(){
+		return this.subpassos;
+	}
+
 	/**
 	 * adiciona um subpasso de um passo
 	 * @param passo
@@ -191,6 +196,19 @@ public class Passo {
 		}
 		this.concluido = true;
 		
+	}
+
+
+	@Override
+	public String toString() {
+		return "{" +
+			" subpassos='" + getSubpassos() + "'" +
+			", idPasso='" + getIdPasso() + "'" +
+			", descricao='" + getDescricao() + "'" +
+			", concluido='" + isConcluido() + "'" +
+			", horasGastas='" + getHorasGastas() + "'" +
+			", horasPrevistas='" + getHorasPrevistas() + "'" +
+			"}";
 	}
 
 }

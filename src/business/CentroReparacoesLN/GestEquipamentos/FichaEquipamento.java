@@ -1,10 +1,11 @@
 package business.CentroReparacoesLN.GestEquipamentos;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import business.CentroReparacoesLN.GestReparacao.Reparacao;
 
-public class FichaEquipamento {
+public class FichaEquipamento implements Serializable{
 
 	private String nome;
 	private String descricao;
@@ -14,7 +15,7 @@ public class FichaEquipamento {
 	private Reparacao reparacao;
 	private LocalDateTime date;
 	private String idCliente;
-	private int valorPago;
+	private float valorPago;
 
 
 	public FichaEquipamento(String nome, String descricao, String idFicha, Orcamento orcamento, Equipamento equipamento, Reparacao reparacao, LocalDateTime date, String idCliente, int valorPago) {
@@ -160,7 +161,7 @@ public class FichaEquipamento {
 	 * 
 	 * @return valor da reparacao
 	 */
-	public int getValorPago(){
+	public float getValorPago(){
 		return this.valorPago;
 	}
 
@@ -168,7 +169,7 @@ public class FichaEquipamento {
 	 * 
 	 * @param valor
 	 */
-	public void setValorPago(int valor) {
+	public void setValorPago(float valor) {
 		this.valorPago = valor;
 	}
 

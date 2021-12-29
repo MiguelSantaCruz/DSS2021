@@ -1,18 +1,21 @@
 package business.CentroReparacoesLN.GestEquipamentos;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Orcamento {
+public class Orcamento implements Serializable{
 
 	private String idOrcamento;
 	private float valor;
 	private boolean aprovado;
+	private String descricao;
 	private LocalDateTime date;
 
-	public Orcamento(String idOrcamento, float valor) {
+	public Orcamento(String idOrcamento, float valor, String descricao) {
 		this.idOrcamento = idOrcamento;
 		this.valor = valor;
 		this.aprovado = false;
+		this.descricao = descricao;
 		this.date = LocalDateTime.now();
 	}
 
@@ -81,5 +84,30 @@ public class Orcamento {
 	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
+
+
+	public boolean getAprovado() {
+		return this.aprovado;
+	}
+
+
+	public String getDescricao() {
+		return this.descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+
+	@Override
+	public String toString() {
+		return " Identificador: " + getIdOrcamento() + "\n" +
+			"Data: " + getDate() + "\n" +
+			"Valor: " + getValor() + "\n"  +
+			"Aprovado pelo cliente" + isAprovado() + "\n"  +
+			"Descrição:\n" + getDescricao() + "\n";
+	}
+
 
 }

@@ -1,12 +1,15 @@
 package business.CentroReparacoesLN.GestUtilizadores;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import business.CentroReparacoesLN.IGestEquipamento;
+import business.CentroReparacoesLN.IGestReparacao;
 import business.CentroReparacoesLN.GestEquipamentos.*;
 import business.CentroReparacoesLN.GestReparacao.*;
 
-public class Tecnico {
+public class Tecnico implements Serializable{
 
 	private String id;
 	private String nome;
@@ -94,41 +97,55 @@ public class Tecnico {
 	}
 
 	/**
-	 * 
-	 * @param idReparacao
+	 * Método que marca uma reparação como concluída
+	 * @param idReparacao - O identificador da reparação
+	 * @param gestReparacao - A classe que gere reparacoes
 	 */
-	public void executaReparacao(String idReparacao) {
-		// TODO - implement Tecnico.executaReparacao
-		throw new UnsupportedOperationException();
+	public void executaReparacao(String idReparacao, IGestReparacao gestReparacao) {
+		if(!gestReparacao.existeReparacao(idReparacao)) return;
+		gestReparacao.getReparacao(idReparacao).setConcluido(true);
 	}
 
 	/**
-	 * 
-	 * @param idServico
+	 * Método que marca um serviço expresso como concluído
+	 * @param idServico - Identificador do serviço
+	 * @param gestReparacao - A classe que gere reparacoes
 	 */
-	public void executaServico(String idServico) {
-		// TODO - implement Tecnico.executaServico
-		throw new UnsupportedOperationException();
-	}
-
-	public Orcamento escolherOrcamentoMaisAntigo() {
-		// TODO - implement Tecnico.escolherOrcamentoMaisAntigo
-		throw new UnsupportedOperationException();
-	}
-
-	public Reparacao escolherReparacaoMaisUrgente() {
-		// TODO - implement Tecnico.escolherReparacaoMaisUrgente
-		throw new UnsupportedOperationException();
+	public void executaServico(String idServico, IGestReparacao gestReparacao) {
+		if(!gestReparacao.existeServico(idServico)) return;
+		gestReparacao.getServicoExpresso(idServico).setConcluido(true);
 	}
 
 	/**
-	 * 
-	 * @param idEquipamento
-	 * @param valor
+	 * Aceder á lista de orçamentos e escolher o mais antigo
+	 * @param gestEquipamentos - Classe de gestão de equipamentos e orçamentos
+	 * @return O orcamento mais antigo
 	 */
-	public Orcamento criarPedidoOrcamento(String idEquipamento, int valor) {
-		// TODO - implement Tecnico.criarPedidoOrcamento
-		throw new UnsupportedOperationException();
+	public Orcamento escolherOrcamentoMaisAntigo(IGestEquipamento gestEquipamentos) {
+		return gestEquipamentos.getPedidoOrcamentoMaisAntigo();
+	}
+
+	/**
+	 * Aceder á lista de reparações e escolher a mais antiga
+	 * @param gestReparacao - Classe de gestão de reparações
+	 * @return A reparação mais antiga
+	 */
+	public Reparacao escolherReparacaoMaisUrgente(IGestReparacao gestReparacao) {
+		return gestReparacao.getReparacaoMaisAntiga();
+	}
+
+	/**
+	 * Cria um novo pedido de orçamento
+	 * @param idFicha - O identificador da ficha de equipamento
+	 * @param valor - O valor estimado
+	 * @param descricao -  Descrição do orçamento
+	 * @param gestEquipamento - Classe de gestão de equipamentos e orçamentos
+	 */
+	public Orcamento criarPedidoOrcamento(String idFicha,String descricao, float valor,IGestEquipamento gestEquipamento) {
+		if(!gestEquipamento.fichaExiste(idFicha)) return null;
+		Orcamento orcamento = gestEquipamento.adicionarOrcamento(valor,descricao);
+		gestEquipamento.getFichaEquipamento(idFicha).setOrcamento(orcamento);
+		return orcamento;
 	}
 
 }

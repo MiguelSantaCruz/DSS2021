@@ -1,4 +1,5 @@
 package UI;
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -7,7 +8,7 @@ import java.util.*;
  * @author José Creissac Campos
  * @version v3.4 (20210930)
  */
-public class Menu {
+public class Menu implements Serializable{
     /** Functional interface para handlers. */
     public interface Handler {
          void execute();

@@ -1,6 +1,8 @@
 package business.CentroReparacoesLN.GestUtilizadores;
 
-public class Gestor {
+import java.io.Serializable;
+
+public class Gestor implements Serializable{
 
 	private String id;
 	private String nome;

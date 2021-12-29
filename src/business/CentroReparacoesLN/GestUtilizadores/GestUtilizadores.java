@@ -240,6 +240,42 @@ public class GestUtilizadores implements IGestUtilizadores{
 	}
 
 	/**
+	 * Devolve um HashMap com os identificadores dos funcionários e os seus nomes
+	 * @return O HashMap com a informação
+	 */
+	public Map<String,String> getAllNamesAndIdsFuncionarios(){
+		HashMap<String,String> idsAndNames = new HashMap<>();
+		for (Map.Entry<String,Funcionario> entry : this.funcionarios.entrySet()) {
+			idsAndNames.put(entry.getKey(), entry.getValue().getNome());
+		}
+		return idsAndNames;
+	}
+
+	/**
+	 * Devolve um HashMap com os identificadores dos técnicos e os seus nomes
+	 * @return O HashMap com a informação
+	 */
+	public Map<String,String> getAllNamesAndIdsTecnicos(){
+		HashMap<String,String> idsAndNames = new HashMap<>();
+		for (Map.Entry<String,Tecnico> entry : this.tecnicos.entrySet()) {
+			idsAndNames.put(entry.getKey(), entry.getValue().getNome());
+		}
+		return idsAndNames;
+	}
+	
+		/**
+	 * Devolve um HashMap com os identificadores dos gestores e os seus nomes
+	 * @return O HashMap com a informação
+	 */
+	public Map<String,String> getAllNamesAndIdsGestores(){
+		HashMap<String,String> idsAndNames = new HashMap<>();
+		for (Map.Entry<String,Gestor> entry : this.gestores.entrySet()) {
+			idsAndNames.put(entry.getKey(), entry.getValue().getNome());
+		}
+		return idsAndNames;
+	}
+
+	/**
 	 * Gera um identificador de 8 caracteres único
 	 */
 	public String geraIdentificadorUnico(Map m){

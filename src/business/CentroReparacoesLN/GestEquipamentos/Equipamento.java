@@ -1,6 +1,8 @@
 package business.CentroReparacoesLN.GestEquipamentos;
 
-public class Equipamento {
+import java.io.Serializable;
+
+public class Equipamento implements Serializable{
 
 	private String id;
 	private FichaEquipamento fichaDeEquimento;

@@ -1,14 +1,17 @@
 package business.CentroReparacoesLN.GestUtilizadores;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import business.CentroReparacoesLN.IGestEquipamento;
+import business.CentroReparacoesLN.IGestReparacao;
 import business.CentroReparacoesLN.GestEquipamentos.*;
 import business.CentroReparacoesLN.GestReparacao.*;
 
-public class Funcionario {
+public class Funcionario implements Serializable{
 
 	private String id;
 	private String nome;
@@ -77,7 +80,7 @@ public class Funcionario {
 	 * @return A ficha de equipamento criada
 	 */
 
-	public FichaEquipamento criaFichaEquipamento(String idEquip, String nome, String descricao,GestEquipamentoFacade gestEquipamentos) {
+	public FichaEquipamento criaFichaEquipamento(String idEquip, String nome, String descricao,IGestEquipamento gestEquipamentos) {
 		//Gerar um identificador aleatório
 		String id;
 		do {
@@ -94,7 +97,7 @@ public class Funcionario {
 	 * @param IdEquipamento - Identificador do equipamento
 	 * @param gestEquipamentos - Classe que gere equipamentos e fichas de equipamentos
 	 */
-	public void registarLevantamento(String IdEquipamento,GestEquipamentoFacade gestEquipamentos) {
+	public void registarLevantamento(String IdEquipamento,IGestEquipamento gestEquipamentos) {
 		if(!gestEquipamentos.equipamentoExiste(IdEquipamento)) return;
 		Equipamento equipamento = gestEquipamentos.getEquipamento(IdEquipamento);
 		FichaEquipamento fichaEquipamento = equipamento.getFichaDeEquimento();
@@ -108,7 +111,7 @@ public class Funcionario {
 	 * @param idFichaEquipamento - Identificador da ficha de equipamento
 	 * @param valor - valor recebido
 	 */
-	public void registarPagamento(String idFichaEquipamento, int valor, GestEquipamentoFacade gestEquipamentos) {
+	public void registarPagamento(String idFichaEquipamento, float valor, IGestEquipamento gestEquipamentos) {
 		if(!gestEquipamentos.fichaExiste(idFichaEquipamento)) return;
 		FichaEquipamento fichaEquipamento = gestEquipamentos.getFichaEquipamento(idFichaEquipamento);
 		fichaEquipamento.setValorPago(valor);
@@ -120,7 +123,7 @@ public class Funcionario {
 	 * @param gestReparacoes - Classe de gestao de Reparacoes
 	 * @return O serviço expresso registado
 	 */
-	public ServicoExpresso registarServicoExpresso(String descricao,GestReparacaoFacade gestReparacoes) {
+	public ServicoExpresso registarServicoExpresso(String descricao,IGestReparacao gestReparacoes) {
 		ServicoExpresso servicoExpresso =  gestReparacoes.criarServicoExpresso(descricao);
 		gestReparacoes.adicionaServicoExpresso(servicoExpresso);
 		return servicoExpresso;
@@ -132,7 +135,7 @@ public class Funcionario {
 	 * @param nifCliente - Identificador do cliente
 	 * @param gestEquipamentos - Classe de gestão de equipamentos
 	 */
-	public void contactarClienteEmail(String mensagem, String nifCliente,GestEquipamentoFacade gestEquipamentos) {
+	public void contactarClienteEmail(String mensagem, String nifCliente,IGestEquipamento gestEquipamentos) {
 		Cliente c = gestEquipamentos.getClienteByNIF(nifCliente);
 		System.out.println(LocalDateTime.now().toString());
 		System.out.println("From: Centro de reparações");
@@ -147,7 +150,7 @@ public class Funcionario {
 	 * @param nifCliente - Identificador do cliente
 	 * @param gestEquipamentos - Classe de gestão de equipamentos
 	 */
-	public void contactarClienteSMS(String mensagem, String nifCliente,GestEquipamentoFacade gestEquipamentos) {
+	public void contactarClienteSMS(String mensagem, String nifCliente,IGestEquipamento gestEquipamentos) {
 		Cliente c = gestEquipamentos.getClienteByNIF(nifCliente);
 		System.out.println(LocalDateTime.now().toString());
 		System.out.println("From: +351 253000001");
@@ -161,7 +164,7 @@ public class Funcionario {
 	 * @param idOrcamento - Identificador do Orcamento
 	 * @param gestEquipamentos - Classe de gestão de equipamentos
 	 */
-	public void confirmaOrcamento(String idOrcamento,GestEquipamentoFacade gestEquipamentos) {
+	public void confirmaOrcamento(String idOrcamento,IGestEquipamento gestEquipamentos) {
 		if(!gestEquipamentos.orcamentoExiste(idOrcamento)) return;
 		gestEquipamentos.getOrcamento(idOrcamento).setAprovado(true);
 	}

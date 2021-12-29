@@ -1,21 +1,19 @@
 package business.CentroReparacoesLN.GestEquipamentos;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Cliente {
+public class Cliente implements Serializable{
 
 	private String nif;
 	private String telemovel;
 	private String email;
 	private String nome;
-	private ArrayList<Equipamento> listaEquipamento;
 
-	public Cliente(String nif, String telemovel, String email, String nome, ArrayList<Equipamento> listaEquipamento) {
+	public Cliente(String nif, String telemovel, String email, String nome) {
 		this.nif = nif;
 		this.telemovel = telemovel;
 		this.email = email;
 		this.nome = nome;
-		this.listaEquipamento = listaEquipamento;
 	}
 
 
@@ -84,30 +82,4 @@ public class Cliente {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	/**
-	 * 
-	 * @return lista de equipamentos do cliente
-	 */
-	public ArrayList<Equipamento> getListaEquipamento() {
-		return listaEquipamento;
-	}
-
-	/**
-	 * adiciona um equipamento à lista de equipamentos do cliente
-	 * @param equip
-	 */
-	public void adicionarEquipamento(Equipamento equip){
-		listaEquipamento.add(equip);
-	}
-
-	/**
-	 * Remove um equipamento da lista de equipamentos do cliente, se este existir
-	 * @param equip
-	 */
-	public void removerEquipamento(Equipamento equip){
-		if(listaEquipamento.contains(equip))
-			listaEquipamento.remove(equip);
-	}
-
 }

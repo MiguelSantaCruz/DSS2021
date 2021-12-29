@@ -1,9 +1,12 @@
 package business.CentroReparacoesLN;
 
+import java.io.Serializable;
+import java.util.Map;
+
 import business.CentroReparacoesLN.GestEquipamentos.*;
 
 
-public interface IGestEquipamento {
+public interface IGestEquipamento extends Serializable {
 
 
 	/**
@@ -11,6 +14,16 @@ public interface IGestEquipamento {
 	 * @param cliente
 	 */
 	public void adicionarCliente(Cliente cliente);
+
+	/**
+	 * Adiciona um cliente
+	 * @param nome - O nome do cliente
+	 * @param nif - O NIF do cliente
+	 * @param tlmv - O número de telemóvel do cliente
+	 * @param email - O endereço de correio eletrónico do cliente
+	 * @return O cliente adicionado
+	 */
+	public Cliente adicionarCliente(String nome,String nif,String tlmv,String email);
 
 	/**
 	 * 
@@ -36,6 +49,18 @@ public interface IGestEquipamento {
 	 */
 	public void adicionarEquipamento(Equipamento equipamento);
 
+
+	/**
+	 * Regista um equipamento criando a sua ficha de equipamento em simultaneo
+	 * @param idCliente - O identificador do cliente
+	 * @param nomeEquip - O nome do equipamento
+	 * @param descricaoEquip - A descricao do equipamento
+	 * @param nomeFicha - O nome da ficha de equipamento
+	 * @param descricaoFicha - A descricao da ficha de equipamento
+	 * @return 
+	 */
+	public FichaEquipamento registarEquipamento(String idCliente,String nomeEquip,String descricaoEquip,String nomeFicha,String descricaoFicha);
+
 	/**
 	 * 
 	 * @param id
@@ -56,7 +81,10 @@ public interface IGestEquipamento {
 	 */
 	public Equipamento getEquipamento(String id);
 
+	
+	public Map<String,Equipamento> getEquipamentos();
 
+	public Map<String,FichaEquipamento> getFichaEquipamentos();
 
 	/**
 	 * 
@@ -66,7 +94,7 @@ public interface IGestEquipamento {
 
 	/**
 	 * 
-	 * @param nif
+	 * @param id
 	 */
 	public Cliente getClienteByNIF(String nif);
 
@@ -77,6 +105,8 @@ public interface IGestEquipamento {
 	 */
 	public Orcamento getOrcamento(String idOrcamento);
 
+	public Map<String,Orcamento> getAllOrcamentos();
+
 	public Orcamento getPedidoOrcamentoMaisAntigo();
 
 	/**
@@ -84,6 +114,14 @@ public interface IGestEquipamento {
 	 * @param orcamento
 	 */
 	public void adicionarOrcamento(Orcamento orcamento);
+
+	/**
+	 * adiciona um orcamento à lista de orcamentos
+	 * @param valor - o valor orçamentado
+	 * @param descricao - Descricao do orçamento
+	 * @return 
+	 */
+	public Orcamento adicionarOrcamento(Float valor,String descricao);
 
 	/**
 	 * 

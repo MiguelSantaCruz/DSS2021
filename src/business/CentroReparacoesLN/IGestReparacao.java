@@ -1,16 +1,23 @@
 package business.CentroReparacoesLN;
-
+import java.io.Serializable;
 import java.util.Map;
 
 import business.CentroReparacoesLN.GestReparacao.*;
 
-public interface IGestReparacao {
+public interface IGestReparacao extends Serializable {
 
     /**
 	 * adiciona uma reparacao a lista de reparacoes
 	 * @param reparacao
 	 */
 	public void adicionaReparacoes(Reparacao reparacao);
+
+		/**
+	 * adiciona uma reparacao a lista de reparacoes
+	 * @param descricao - Descrição da reparação
+	 * @return A reparação criada
+	 */
+	public Reparacao adicionaReparacoes(String descricao);
 
 	/**
 	 * remove uma reparacao da lista de reparacoes
@@ -62,26 +69,26 @@ public interface IGestReparacao {
 	 * @param idReparacao
 	 * @param peca
 	 */
-	public void adicionarPecaReparacao(String idReparacao, Pecas peca);
+	public void adicionarPecaReparacao(String idReparacao, Peca peca);
 
 	/**
 	 * remove uma peca da lista de pecas de uma reparacao, se estas existirem
 	 * @param idReparacao
 	 * @param peca
 	 */
-	public void removePecaReparacao(String idReparacao, Pecas peca);
+	public void removePecaReparacao(String idReparacao, Peca peca);
 
 	/**
 	 * adiciona peca a lista de pecas da loja
 	 * @param peca
 	 */
-	public void adicionarPeca(Pecas peca);
+	public void adicionarPeca(Peca peca);
 
 	/**
 	 * remove peca da lista de pecas da loja
 	 * @param peca
 	 */
-	public void removerPeca(Pecas peca);
+	public void removerPeca(Peca peca);
 
 	/**
 	 * verifica se uma reparacao esta concluida, ou seja se todos os passos estao concluidos
@@ -117,7 +124,21 @@ public interface IGestReparacao {
 	 * @param idPeca
 	 * @return peca
 	 */
-	public Pecas getPeca(String idPeca);
+	public Peca getPeca(String idPeca);
+
+	public Map<String,Peca> getAllPecas();
+
+	/**
+	 * 
+	 * @return 
+	 */
+	public Map<String,Reparacao> getAllReparacoes();
+
+	/**
+	 * 
+	 * @return 
+	 */
+	public Map<String,ServicoExpresso> getAllServicoExpresso();
 
 	/**
 	 * 
@@ -170,12 +191,27 @@ public interface IGestReparacao {
 
 	/**
 	 * 
+	 * @param descricao
+	 * @return serviço criado
+	 */
+	public Peca criarPeca(String nome, Float valor,String descricao);
+
+
+	/**
+	 * 
 	 * @param idReparacao
 	 * @return
 	 */
 	public boolean existeReparacao(String idReparacao);
 
-		/**
+	/**
+	 * Verifica se um serviço expresso existe no sistema
+	 * @param idServico - O identificador do serviço
+	 * @return {@code true} caso exista, {@code false} caso contrário
+	 */
+	public boolean existeServico(String idServico);
+
+	/**
 	 * Verifica se existe uma determinada peça dado o seu identificador
 	 * @param idPeca - Identificador da peça
 	 * @return {@code true} se existir, {@code false} caso contrário
@@ -187,5 +223,11 @@ public interface IGestReparacao {
 	 * @param idPeca - Identificador da peça
 	 * @return a peça com o identificador especificado
 	 */
-	public Pecas getPecaById(String idPeca);
+	public Peca getPecaById(String idPeca);
+
+	/**
+	 * Devolve a reparação que tem a data mais antiga
+	 * @return A reparação mais antiga
+	 */
+	public Reparacao getReparacaoMaisAntiga();
 }

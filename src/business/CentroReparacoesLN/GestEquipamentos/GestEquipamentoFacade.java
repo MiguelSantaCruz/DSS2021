@@ -3,6 +3,7 @@ package business.CentroReparacoesLN.GestEquipamentos;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import business.CentroReparacoesLN.IGestEquipamento;
 
@@ -13,6 +14,13 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 	private Map<String, Cliente> clientes = new HashMap<>();
 	private Map<String, Orcamento> orcamentos = new HashMap<>();
 
+	public Map<String,Equipamento> getEquipamentos(){
+		return this.equipamentos;
+	}
+	public Map<String,FichaEquipamento> getFichaEquipamentos(){
+		return this.fichaEquipamentos;
+	}
+
 
 	/**
 	 * 
@@ -22,6 +30,21 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 		String key = cliente.getNif();
 		clientes.put(key, cliente);
 	}
+
+	/**
+	 * Adiciona um cliente
+	 * @param nome - O nome do cliente
+	 * @param nif - O NIF do cliente
+	 * @param tlmv - O número de telemóvel do cliente
+	 * @param email - O endereço de correio eletrónico do cliente
+	 * @return O cliente adicionado
+	 */
+	public Cliente adicionarCliente(String nome,String nif,String tlmv,String email){
+		Cliente cliente = new Cliente(nif, tlmv, email, nome);
+		this.clientes.put(nif, cliente);
+		return cliente;
+	}
+
 
 	/**
 	 * 
@@ -60,6 +83,24 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 	}
 
 	/**
+	 * Regista um equipamento criando a sua ficha de equipamento em simultaneo
+	 * @param idCliente - O identificador do cliente
+	 * @param nomeEquip - O nome do equipamento
+	 * @param descricaoEquip - A descricao do equipamento
+	 * @param nomeFicha - O nome da ficha de equipamento
+	 * @param descricaoFicha - A descricao da ficha de equipamento
+	 */
+	public FichaEquipamento registarEquipamento(String idCliente,String nomeEquip,String descricaoEquip,String nomeFicha,String descricaoFicha) {
+		String idEquip = geraIdentificadorUnico(this.equipamentos);
+		String idFicha = geraIdentificadorUnico(this.fichaEquipamentos);
+		FichaEquipamento fichaDeEquimento = new FichaEquipamento(idFicha, nomeFicha, descricaoFicha, idCliente);
+		Equipamento equipamento = new Equipamento(idEquip, fichaDeEquimento, descricaoEquip, nomeEquip);
+		this.fichaEquipamentos.put(fichaDeEquimento.getIdFicha(), fichaDeEquimento);
+		this.equipamentos.put(equipamento.getId(), equipamento);
+		return fichaDeEquimento;
+	}
+
+	/**
 	 * 
 	 * @param id
 	 */
@@ -69,12 +110,25 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 	}
 
 	/**
-	 * adiciona orcamento a lista de orcamentos
+	 * adiciona orcamento à lista de orcamentos
 	 * @param orcamento
 	 */
 	public void adicionarOrcamento(Orcamento orcamento) {
 		String key = orcamento.getIdOrcamento();
 		orcamentos.put(key, orcamento);
+	}
+
+	/**
+	 * adiciona um orcamento à lista de orcamentos
+	 * @param valor - o valor orçamentado
+	 * @param descricao - Descricao do orçamento
+	 * @return O orcamento que foi adicionado
+	 */
+	public Orcamento adicionarOrcamento(Float valor,String descricao) {
+		String id = geraIdentificadorUnico(this.orcamentos);
+		Orcamento orcamento = new Orcamento(id, valor,descricao);
+		this.orcamentos.put(id, orcamento);
+		return orcamento;
 	}
 
 	/**
@@ -139,6 +193,15 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 		else return null;
 	}
 
+
+	/**
+	 * 
+	 * 
+	 */
+	public Map<String,Orcamento> getAllOrcamentos() {
+		return this.orcamentos;
+	}
+
 	/**
 	 * Calcula o orcamento aprovado mais antigo
 	 * @return o orcamento aprovado mais antigo
@@ -197,6 +260,18 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 	public boolean clienteExiste(String nif){
 		if(this.clientes.containsKey(nif)) return true;
 		else return false;
+	}
+
+	/**
+	 * Gera um identificador de 8 caracteres único
+	 */
+	public String geraIdentificadorUnico(Map m){
+		//Gerar um identificador aleatório
+		String id;
+		do {
+			id = UUID.randomUUID().toString().substring(0, 8);
+		} while (m.containsKey(id));
+		return id;
 	}
 
 }

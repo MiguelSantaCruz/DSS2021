@@ -1,8 +1,11 @@
 package business.CentroReparacoesLN;
 
+import java.io.Serializable;
+import java.util.Map;
+
 import business.CentroReparacoesLN.GestUtilizadores.*;
 
-public interface IGestUtilizadores {
+public interface IGestUtilizadores extends Serializable{
 
 	/**
 	 * Adiciona ao Map de técnicos o técnico em questão
@@ -123,6 +126,21 @@ public interface IGestUtilizadores {
 	 */
 	public boolean existemFuncionarios();
 
+	/**
+	 * Devolve um HashMap com os identificadores dos funcionários e os seus nomes
+	 * @return O HashMap com a informação
+	 */
+	public Map<String,String> getAllNamesAndIdsFuncionarios();
 
-
+	/**
+	 * Devolve um HashMap com os identificadores dos técnicos e os seus nomes
+	 * @return O HashMap com a informação
+	 */
+	public Map<String,String> getAllNamesAndIdsTecnicos();
+	
+		/**
+	 * Devolve um HashMap com os identificadores dos gestores e os seus nomes
+	 * @return O HashMap com a informação
+	 */
+	public Map<String,String> getAllNamesAndIdsGestores();
 }

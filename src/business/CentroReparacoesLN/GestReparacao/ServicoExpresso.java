@@ -1,15 +1,20 @@
 package business.CentroReparacoesLN.GestReparacao;
 
-public class ServicoExpresso {
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
+public class ServicoExpresso implements Serializable{
 
 	private String idServico;
 	private String descricao;
+	private LocalDateTime date;
 	private boolean concluido;
 
 	
 	public ServicoExpresso(String idServico, String descricao) {
 		this.idServico = idServico;
 		this.descricao = descricao;
+		this.date = LocalDateTime.now();
 		this.concluido = false;
 	}
 
@@ -62,5 +67,20 @@ public class ServicoExpresso {
 	public void setConcluido(boolean concluido) {
 		this.concluido = concluido;
 	}
+
+
+	public LocalDateTime getDate() {
+		return this.date;
+	}
+
+	public void setDate(LocalDateTime date) {
+		this.date = date;
+	}
+
+	public boolean getConcluido() {
+		return this.concluido;
+	}
+
+	
 
 }

@@ -1,23 +1,29 @@
 package business.CentroReparacoesLN.GestReparacao;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
-public class Reparacao {
+public class Reparacao implements Serializable{
 
-	private ArrayList<Pecas> pecas = new ArrayList<>();
+	private Map<String,Peca> pecas = new HashMap<>();
 	private Map<String, Passo> passos = new HashMap<>();
 	private String idReparacao;
 	private String descricao;
+	private int horasGastas;
+	private int horasPrevistas;
+	private LocalDateTime date;
 	private boolean concluido;
 	
 
 	public Reparacao(String idReparacao, String descricao) {
-		this.pecas = new ArrayList<>();
+		this.pecas = new HashMap<>();
 		this.passos = new HashMap<>();
 		this.idReparacao = idReparacao;
 		this.descricao = descricao;
+		this.date = LocalDateTime.now();
 		this.concluido = false;
 	}
 
@@ -87,6 +93,34 @@ public class Reparacao {
 		this.passos.put(passo.getIdPasso(),passo);
 	}
 
+
+	/**
+	 * adiciona um subpasso de um passo
+	 * @param passo
+	 */
+	public void adicionaPasso(String descricao,int horasPrevistas){
+		String id;
+		do {
+			id = UUID.randomUUID().toString().substring(0, 8);
+		} while (this.passos.containsKey(id));
+		Passo passo = new Passo(id, descricao, horasPrevistas);
+		this.passos.put(passo.getIdPasso(),passo);
+	}
+	
+
+	/**
+	 * adiciona um subpasso de um passo
+	 * @param passo
+	 */
+	public void adicionaSubPasso(String idPasso,String descricao,int horasPrevistas){
+		String id;
+		do {
+			id = UUID.randomUUID().toString().substring(0, 8);
+		} while (this.passos.get(idPasso).existeSubpasso(id));
+		Passo passo = new Passo(id, descricao, horasPrevistas);
+		this.passos.get(idPasso).adicionaSubpasso(passo);
+	}
+
 	/**
 	 * remove um subpasso de um passo
 	 * @param passo
@@ -96,10 +130,18 @@ public class Reparacao {
 	}
 
 	/**
+	 * remove um subpasso de um passo
+	 * @param passo
+	 */
+	public void removePassoById(String idPasso){
+		this.passos.remove(idPasso);
+	}
+
+	/**
 	 * 
 	 * @return lista de pecas da reparacao
 	 */
-	public ArrayList<Pecas> getPecas() {
+	public Map<String,Peca> getPecas() {
 		return pecas;
 	}
 
@@ -107,17 +149,48 @@ public class Reparacao {
 	 * 
 	 * @param peca
 	 */
-	public void adicionaPeca(Pecas peca) {
-		pecas.add(peca);
+	public void adicionaPeca(Peca peca) {
+		pecas.put(peca.getIdPeca(),peca);
 	}
 
 	/**
 	 * 
 	 * @param peca
 	 */
-	public void removePeca(Pecas peca) {
-		pecas.remove(peca);
+	public void removePeca(Peca peca) {
+		pecas.remove(peca.getIdPeca());
 	}
+
+	public LocalDateTime getDate() {
+		return this.date;
+	}
+
+	public void setDate(LocalDateTime date) {
+		this.date = date;
+	}
+
+	public boolean getConcluido() {
+		return this.concluido;
+	}
+
+	public int getHorasGastas() {
+		return this.horasGastas;
+	}
+
+	public void setHorasGastas(int horasGastas) {
+		this.horasGastas = horasGastas;
+	}
+
+	public int getHorasPrevistas() {
+		return this.horasPrevistas;
+	}
+
+	public void setHorasPrevistas(int horasPrevistas) {
+		this.horasPrevistas = horasPrevistas;
+	}
+
+
+
 
 	/**
 	 * verifica se um passo ou subpasso existe da lista de passos da reparacao
@@ -182,8 +255,8 @@ public class Reparacao {
 	 */
 	public float calcularCustoTotal() {
 		float valor = 0;
-		for(Pecas p : pecas){
-			valor += p.getValor();
+		for (Map.Entry<String,Peca> entry : this.pecas.entrySet()) {
+			valor += entry.getValue().getValor();
 		}
 		return valor;
 	}
@@ -212,6 +285,18 @@ public class Reparacao {
 		}
 
 		return horas;
+	}
+
+
+	@Override
+	public String toString() {
+		return "ID: "+this.getIdReparacao() +"\n"
+		+ "Data: " + date.toString() + "\n"
+		+ "Descrição: " + descricao + "\n" 
+		+ "Horas gastas: " + horasGastas + "\n"
+		+ "Horas previstas: " + horasPrevistas + "\n"
+		+ "Peças: " + this.pecas.toString() + "\n"
+		+ "Subpassos: " + this.passos.toString();
 	}
 
 }

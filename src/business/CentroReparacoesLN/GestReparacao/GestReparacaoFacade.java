@@ -1,5 +1,6 @@
 package business.CentroReparacoesLN.GestReparacao;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -8,7 +9,7 @@ import business.CentroReparacoesLN.IGestReparacao;
 
 public class GestReparacaoFacade implements IGestReparacao {
 
-	private Map<String,Pecas> pecas = new HashMap<>();
+	private Map<String,Peca> pecas = new HashMap<>();
 	private Map<String,Reparacao> reparacoes = new HashMap<>();
 	private Map<String,ServicoExpresso> servicos = new HashMap<>();
 
@@ -18,6 +19,21 @@ public class GestReparacaoFacade implements IGestReparacao {
 	 */
 	public void adicionaReparacoes(Reparacao reparacao) {
 		reparacoes.put(reparacao.getIdReparacao(), reparacao);
+	}
+
+	/**
+	 * adiciona uma reparacao a lista de reparacoes
+	 * @param descricao - Descrição da reparação
+	 * @return A reparação criada
+	 */
+	public Reparacao adicionaReparacoes(String descricao) {
+		String id;
+		do {
+			id = UUID.randomUUID().toString().substring(0, 8);
+		} while (this.reparacoes.containsKey(id));
+		Reparacao reparacao = new Reparacao(id, descricao);
+		reparacoes.put(reparacao.getIdReparacao(), reparacao);
+		return reparacao;
 	}
 
 	/**
@@ -95,7 +111,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 	 * @param idReparacao
 	 * @param peca
 	 */
-	public void adicionarPecaReparacao(String idReparacao, Pecas peca) {
+	public void adicionarPecaReparacao(String idReparacao, Peca peca) {
 		if(pecas.containsKey(peca.getIdPeca()) && reparacoes.containsKey(idReparacao))
 			reparacoes.get(idReparacao).adicionaPeca(peca);
 	}
@@ -105,7 +121,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 	 * @param idReparacao
 	 * @param peca
 	 */
-	public void removePecaReparacao(String idReparacao, Pecas peca) {
+	public void removePecaReparacao(String idReparacao, Peca peca) {
 		if(pecas.containsKey(peca.getIdPeca()) && reparacoes.containsKey(idReparacao))
 			reparacoes.get(idReparacao).removePeca(peca);
 	}
@@ -114,7 +130,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 	 * adiciona peca a lista de pecas da loja
 	 * @param peca
 	 */
-	public void adicionarPeca(Pecas peca) {
+	public void adicionarPeca(Peca peca) {
 		pecas.put(peca.getIdPeca(), peca);
 	}
 
@@ -122,7 +138,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 	 * remove peca da lista de pecas da loja
 	 * @param peca
 	 */
-	public void removerPeca(Pecas peca) {
+	public void removerPeca(Peca peca) {
 		if(pecas.containsKey(peca.getIdPeca()))
 			pecas.remove(peca.getIdPeca());
 	}
@@ -136,6 +152,10 @@ public class GestReparacaoFacade implements IGestReparacao {
 		return reparacoes.get(idReparacao).verificaConclusao();
 	}
 
+	public Map<String,Peca> getAllPecas(){
+		return this.pecas;
+	}
+
 	/**
 	 * 
 	 * @param idReparacao
@@ -147,11 +167,28 @@ public class GestReparacaoFacade implements IGestReparacao {
 
 	/**
 	 * 
+	 * 
+	 * @return 
+	 */
+	public Map<String,Reparacao> getAllReparacoes() {
+		return this.reparacoes;
+	}
+
+	/**
+	 * 
 	 * @param idServico
 	 * @return serviço expresso
 	 */
 	public ServicoExpresso getServicoExpresso(String idServico) {
 		return servicos.get(idServico);
+	}
+
+	/**
+	 * 
+	 * @return 
+	 */
+	public Map<String,ServicoExpresso> getAllServicoExpresso() {
+		return this.servicos;
 	}
 
 	/**
@@ -171,7 +208,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 	 * @param idPeca
 	 * @return peca
 	 */
-	public Pecas getPeca(String idPeca) {
+	public Peca getPeca(String idPeca) {
 		if(pecas.containsKey(idPeca))
 			return pecas.get(idPeca);
 		else return null;
@@ -254,11 +291,36 @@ public class GestReparacaoFacade implements IGestReparacao {
 
 	/**
 	 * 
-	 * @param idReparacao
-	 * @return
+	 * @param 
+	 * @return 
+	 */
+	public Peca criarPeca(String nome, Float valor,String descricao){
+		//Gerar um identificador aleatório
+		String id;
+		do {
+			id = UUID.randomUUID().toString().substring(0, 8);
+		} while (this.servicos.containsKey(id));
+		Peca peca = new Peca(id,nome,descricao,valor);
+		return peca;
+	}
+
+	/**
+	 * Verifica se um reparação existe no sistema
+	 * @param idReparacao - O identificador da reparação
+	 * @return {@code true} caso exista, {@code false} caso contrário
 	 */
 	public boolean existeReparacao(String idReparacao){
 		if(this.reparacoes.containsKey(idReparacao)) return true;
+		else return false;
+	}
+
+	/**
+	 * Verifica se um serviço expresso existe no sistema
+	 * @param idServico - O identificador do serviço
+	 * @return {@code true} caso exista, {@code false} caso contrário
+	 */
+	public boolean existeServico(String idServico){
+		if(this.servicos.containsKey(idServico)) return true;
 		else return false;
 	}
 
@@ -277,7 +339,23 @@ public class GestReparacaoFacade implements IGestReparacao {
 	 * @param idPeca - Identificador da peça
 	 * @return a peça com o identificador especificado
 	 */
-	public Pecas getPecaById(String idPeca){
+	public Peca getPecaById(String idPeca){
 		return pecas.get(idPeca);
+	}
+
+	/**
+	 * Devolve a reparação que tem a data mais antiga
+	 * @return A reparação mais antiga
+	 */
+	public Reparacao getReparacaoMaisAntiga(){
+		LocalDateTime date = LocalDateTime.now();
+		String id = null;
+		for (Map.Entry<String,Reparacao> entry : this.reparacoes.entrySet()) {
+			if(entry.getValue().getDate().isBefore(date)){
+				id = entry.getKey();
+				date = entry.getValue().getDate();
+			}
+		}
+		return this.reparacoes.get(id);
 	}
 }
