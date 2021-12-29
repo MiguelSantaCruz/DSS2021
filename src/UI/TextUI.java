@@ -372,11 +372,9 @@ public class TextUI implements Serializable{
         menu.setHandler(4, () -> adicionarPassos());
         menu.setHandler(5, () -> adicionaSubpassos());
         menu.setHandler(6, () -> adicionaHorasGastasPassos());
-
-
-        //TODO remoção
-
-
+        menu.setHandler(7, () -> removerPeca());
+        menu.setHandler(8, () -> removerPasso());
+        menu.setHandler(9, () -> removerSubPasso());
         menu.setHandler(10, () -> executaReparacao());
         menu.setHandler(11, () -> executaPasso());
         menu.run();
@@ -482,6 +480,51 @@ public class TextUI implements Serializable{
         if(this.gestReparacoes.getReparacao(this.reparacaoAtual.getIdReparacao()).getPassoOrSubpassoByID(idPasso) == null) System.out.println("Passo inexistente");
         else this.gestReparacoes.getReparacao(this.reparacaoAtual.getIdReparacao()).getPassoOrSubpassoByID(idPasso).setHorasGastas(horasGastas);
         System.out.println(this.reparacaoAtual.toString());
+    }
+
+    public void removerPeca(){
+        System.out.println("Insira o ID do Peça a remover:");
+        System.out.print("> ");
+        String id= scin.nextLine();
+       
+        if(!this.gestReparacoes.existePeca(id)){
+            System.out.println("Peça inexistente");
+            return;
+        } 
+        this.reparacaoAtual.removePeca(this.gestReparacoes.getPeca(id));
+        this.gestReparacoes.removerPeca(id);
+    }
+
+    public void removerPasso(){
+        System.out.println("Insira o ID do passo a remover:");
+        System.out.print("> ");
+        String id= scin.nextLine();
+       
+        if(!this.reparacaoAtual.existePassoOrSubpasso(id)){
+            System.out.println("passo inexistente");
+            return;
+        } 
+        this.reparacaoAtual.removePassoById(id);
+    }
+
+    public void removerSubPasso(){
+        System.out.println("Insira o ID do passo:");
+        System.out.print("> ");
+        String id= scin.nextLine();
+       
+        if(!this.reparacaoAtual.existePassoOrSubpasso(id)){
+            System.out.println("passo inexistente");
+            return;
+        } 
+        System.out.println("Insira o ID do subpasso:");
+        System.out.print("> ");
+        String idSubpasso= scin.nextLine();
+        if(!this.reparacaoAtual.existePassoOrSubpasso(idSubpasso)){
+            System.out.println("passo inexistente");
+            return;
+        } 
+       
+        this.reparacaoAtual.getPassoOrSubpassoByID(id).removeSubpasso(idSubpasso);
     }
 
     public void executaReparacao(){
@@ -653,6 +696,9 @@ public class TextUI implements Serializable{
                 "Adicionar Técnico",
                 "Adicionar Funcionário",
                 "Adicionar Gestor",
+                "Consultar os detalhes das intervenções feitas por determinado Técnico",
+                "Consultar estatisticas das reparacoes",
+                "Consultar levantamentos e recebimentos para um determindado funcionário",
                 "Procurar Equipamento",
                 "Procurar Ficha de Equipamento",
                 "Procurar Peça",
@@ -663,11 +709,14 @@ public class TextUI implements Serializable{
         menu.setHandler(1, () -> adicionarFuncionario(TiposFuncionarios.TECNICO));
         menu.setHandler(2, () -> adicionarFuncionario(TiposFuncionarios.FUNCIONARIO));
         menu.setHandler(3, () -> adicionarFuncionario(TiposFuncionarios.GESTOR));
-        menu.setHandler(4, () -> procurarEquipamentoPorId());
-        menu.setHandler(5, () -> procurarFichaEquipamentoPorId());
-        menu.setHandler(6, () -> procurarPecaPorId());       
-        menu.setHandler(7, () -> procurarOrcamentoPorId());
-        menu.setHandler(8, () -> procurarReparacaoPorId());
+        menu.setHandler(4, () -> consultarDetalhesTecnico());
+        menu.setHandler(5, () -> this.gestUtilizadores.consultaEstatisticasReparacoes(this.gestReparacoes));
+        menu.setHandler(6, () -> consultaListaEntregasFuncionario());
+        menu.setHandler(7, () -> procurarEquipamentoPorId());
+        menu.setHandler(8, () -> procurarFichaEquipamentoPorId());
+        menu.setHandler(9, () -> procurarPecaPorId());       
+        menu.setHandler(10, () -> procurarOrcamentoPorId());
+        menu.setHandler(11, () -> procurarReparacaoPorId());
         menu.run();
     }
 
@@ -696,6 +745,28 @@ public class TextUI implements Serializable{
                 break;
         }
         System.out.println(id+"");
+    }
+
+    public void consultarDetalhesTecnico(){
+        System.out.println("Insira identificador do técnico:");
+        System.out.print("> ");
+        String id = scin.nextLine();
+        if(!this.gestUtilizadores.getAllNamesAndIdsTecnicos().containsKey(id)){
+            System.out.println("Técnico inexistente");
+            return;
+        }
+        this.gestUtilizadores.consultaDetalhesIntervencoesTecnico(id, this.gestReparacoes);       
+    }
+
+    public void consultaListaEntregasFuncionario(){
+        System.out.println("Insira identificador do funcionário:");
+        System.out.print("> ");
+        String id = scin.nextLine();
+        if(!this.gestUtilizadores.getAllNamesAndIdsFuncionarios().containsKey(id)){
+            System.out.println("Funcionário inexistente");
+            return;
+        }
+        this.gestUtilizadores.consultaListaEntregasFuncionario(id);
     }
 
     public void procurarOrcamentoPorId(){

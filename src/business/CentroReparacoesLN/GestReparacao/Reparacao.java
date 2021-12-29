@@ -122,7 +122,7 @@ public class Reparacao implements Serializable{
 	}
 
 	/**
-	 * remove um subpasso de um passo
+	 * remove um passo
 	 * @param passo
 	 */
 	public void removePasso(Passo passo){
@@ -130,13 +130,13 @@ public class Reparacao implements Serializable{
 	}
 
 	/**
-	 * remove um subpasso de um passo
+	 * remove um passo
 	 * @param passo
 	 */
 	public void removePassoById(String idPasso){
 		this.passos.remove(idPasso);
 	}
-
+	
 	/**
 	 * 
 	 * @return lista de pecas da reparacao

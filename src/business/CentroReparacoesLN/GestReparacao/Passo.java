@@ -121,10 +121,10 @@ public class Passo implements Serializable{
 
 	/**
 	 * remove um subpasso de um passo
-	 * @param passo
+	 * @param idSubpasso
 	 */
-	public void removeSubpasso(Passo passo){
-		this.subpassos.remove(passo.getIdPasso());
+	public void removeSubpasso(String idSubpasso){
+		this.subpassos.remove(idSubpasso);
 	}
 
 	/**

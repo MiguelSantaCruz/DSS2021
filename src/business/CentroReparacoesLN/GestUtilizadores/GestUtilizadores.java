@@ -193,6 +193,8 @@ public class GestUtilizadores implements IGestUtilizadores{
 		int numeroReparacoes = 0;
 		int horasGastas = 0;
 		int horasPrevistas = 0;
+		int numeroDesvios = 0;
+		int somaDesvios = 0;
 		for(Map.Entry<String, Tecnico> entry : this.tecnicos.entrySet()) {
 			Tecnico tecnico = entry.getValue();
 			System.out.println("Técnico: " + tecnico.getNome() + " ID: " + tecnico.getId());
@@ -201,8 +203,11 @@ public class GestUtilizadores implements IGestUtilizadores{
 			for (String idReparacao : tecnico.getListaIdsReparacao()) {
 				horasGastas = gestReparacao.calcularHorasGastasTotais(idReparacao);
 				horasPrevistas = gestReparacao.calcularHorasPrevistasTotais(idReparacao);
-				System.out.println("Horas gastas: " + horasGastas);
-				System.out.println("Horas previstas: " + horasPrevistas);
+				if(horasGastas != 0 && horasPrevistas != 0){
+					somaDesvios += Math.abs(horasGastas-horasPrevistas);
+					numeroDesvios += 1;
+				}
+				System.out.println("Média dos desvios(em horas) face ao previsto: " + (double)(somaDesvios/numeroDesvios));
 			}
 		}
 		

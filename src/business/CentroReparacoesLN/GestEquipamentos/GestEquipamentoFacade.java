@@ -256,8 +256,6 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 		return orcamentos.get(id);
 	}
 
-	
-
 	/**
 	 * Verifica se determinado identificador já está associado a uma ficha
 	 * @param id - O identificador da ficha
