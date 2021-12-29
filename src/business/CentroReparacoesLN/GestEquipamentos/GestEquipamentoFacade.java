@@ -14,17 +14,28 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 	private Map<String, Cliente> clientes = new HashMap<>();
 	private Map<String, Orcamento> orcamentos = new HashMap<>();
 
+	
+	
+	/**
+	 * Devolve a lista de equipamentos
+	 * @return lista de quipamentos
+	 */
 	public Map<String,Equipamento> getEquipamentos(){
 		return this.equipamentos;
 	}
+
+	/**
+	 * Devolve a lista de equipamentos
+	 * @return lista de quipamentos
+	 */
 	public Map<String,FichaEquipamento> getFichaEquipamentos(){
 		return this.fichaEquipamentos;
 	}
 
 
 	/**
-	 * 
-	 * @param cliente
+	 * Adiciona um cliente a lista de clientes
+	 * @param cliente - cliente a adicionar
 	 */
 	public void adicionarCliente(Cliente cliente) {
 		String key = cliente.getNif();
