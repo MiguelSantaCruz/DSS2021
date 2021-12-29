@@ -295,8 +295,9 @@ public class Reparacao implements Serializable{
 		+ "Descrição: " + descricao + "\n" 
 		+ "Horas gastas: " + horasGastas + "\n"
 		+ "Horas previstas: " + horasPrevistas + "\n"
-		+ "Peças: " + this.pecas.toString() + "\n"
-		+ "Subpassos: " + this.passos.toString();
+		+ "Concluida: " + concluido + "\n"
+		+ "Peças: \n" + this.pecas.toString() + "\n"
+		+ "Passos: \n" + this.passos.toString() + "\n";
 	}
 
 }

@@ -19,6 +19,14 @@ public class Orcamento implements Serializable{
 		this.date = LocalDateTime.now();
 	}
 
+	public Orcamento(String idOrcamento) {
+		this.idOrcamento = idOrcamento;
+		this.valor = 0;
+		this.aprovado = false;
+		this.descricao = "Aguarda descrição do técnico ";
+		this.date = LocalDateTime.now();
+	}
+
 	/* Getters and Setters*/
 
 	/**
@@ -55,14 +63,6 @@ public class Orcamento implements Serializable{
 
 	/**
 	 * 
-	 * @return {@code true} se o orcamento for aprovado ou {@code false} se nao for
-	 */
-	public boolean isAprovado() {
-		return aprovado;
-	}
-
-	/**
-	 * 
 	 * @param aprovado
 	 */
 	public void setAprovado(boolean aprovado) {
@@ -85,16 +85,26 @@ public class Orcamento implements Serializable{
 		this.date = date;
 	}
 
-
+	/**
+	 * 
+	 * @return {@code true} se o orcamento estiver aprovado, {@code false} caso contrario
+	 */
 	public boolean getAprovado() {
 		return this.aprovado;
 	}
 
-
+	/**
+	 * 
+	 * @return descricao do orcamento
+	 */
 	public String getDescricao() {
 		return this.descricao;
 	}
 
+	/**
+	 * 
+	 * @param descricao
+	 */
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
@@ -102,11 +112,12 @@ public class Orcamento implements Serializable{
 
 	@Override
 	public String toString() {
-		return " Identificador: " + getIdOrcamento() + "\n" +
-			"Data: " + getDate() + "\n" +
-			"Valor: " + getValor() + "\n"  +
-			"Aprovado pelo cliente" + isAprovado() + "\n"  +
-			"Descrição:\n" + getDescricao() + "\n";
+		return ("ID: "+getIdOrcamento() +"\n"
+				+ "Data: " + getDate() + "\n"
+				+ "Descrição: " + getDescricao() + "\n" 
+				+ "Valor: " +getValor()+ "\n"
+				+ "Aprovado: " + getAprovado()+"\n");
+
 	}
 
 

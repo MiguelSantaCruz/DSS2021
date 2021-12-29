@@ -158,9 +158,11 @@ public class Menu implements Serializable{
              op = readOption();
             //testar pré-condição
              if (op>0 && !this.disponivel.get(op-1).validate()) {
+                System.out.println("----------------------------------------------");
                 System.out.println("Opção indisponível! Tente novamente.");
              } else if (op>0) {
                 //executar handler
+                System.out.println("----------------------------------------------");
                 this.handlers.get(op-1).execute();
              }
          } while (op != 0);

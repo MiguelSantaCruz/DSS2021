@@ -82,4 +82,13 @@ public class Equipamento implements Serializable{
 	public void setFichaDeEquimento(FichaEquipamento fichaDeEquimento) {
 		this.fichaDeEquimento = fichaDeEquimento;
 	}
+
+
+	@Override
+	public String toString() {
+		return ("ID: "+getId() + "\n" +
+				"Descrição: " +getDescricao() + "\n" + 
+				"Nome: " +getNome() + "\n");
+	}
+
 }

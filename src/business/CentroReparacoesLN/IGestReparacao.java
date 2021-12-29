@@ -88,7 +88,7 @@ public interface IGestReparacao extends Serializable {
 	 * remove peca da lista de pecas da loja
 	 * @param peca
 	 */
-	public void removerPeca(Peca peca);
+	public void removerPeca(String idPeca);
 
 	/**
 	 * verifica se uma reparacao esta concluida, ou seja se todos os passos estao concluidos
@@ -175,12 +175,6 @@ public interface IGestReparacao extends Serializable {
 	 */
     public String servicoToString(ServicoExpresso servicoExpresso);
 
-	/**
-	 * 
-	 * @param descricao
-	 * @return reparacao criada
-	 */
-	public Reparacao criarReparacao(String descricao);
 
 	/**
 	 * 

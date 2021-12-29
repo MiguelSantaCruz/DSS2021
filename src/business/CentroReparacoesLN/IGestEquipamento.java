@@ -51,13 +51,14 @@ public interface IGestEquipamento extends Serializable {
 
 
 	/**
-	 * Regista um equipamento criando a sua ficha de equipamento em simultaneo
+	 * Regista um equipamento criando a sua ficha de equipamento em simultaneo, 
+	 * adicionando às listas respetivas de cada um
 	 * @param idCliente - O identificador do cliente
 	 * @param nomeEquip - O nome do equipamento
 	 * @param descricaoEquip - A descricao do equipamento
 	 * @param nomeFicha - O nome da ficha de equipamento
 	 * @param descricaoFicha - A descricao da ficha de equipamento
-	 * @return 
+	 * @return A ficha de equipamento criada
 	 */
 	public FichaEquipamento registarEquipamento(String idCliente,String nomeEquip,String descricaoEquip,String nomeFicha,String descricaoFicha);
 
@@ -106,6 +107,13 @@ public interface IGestEquipamento extends Serializable {
 	public Orcamento getOrcamento(String idOrcamento);
 
 	public Map<String,Orcamento> getAllOrcamentos();
+
+
+	/**
+	 * 
+	 * @return a lista de todos os clientes
+	 */
+	public Map<String,Cliente> getAllClientes();
 
 	public Orcamento getPedidoOrcamentoMaisAntigo();
 

@@ -15,14 +15,14 @@ public class GestReparacaoFacade implements IGestReparacao {
 
 	/**
 	 * adiciona uma reparacao a lista de reparacoes
-	 * @param reparacao
+	 * @param reparacao - reparacao a adicionar
 	 */
 	public void adicionaReparacoes(Reparacao reparacao) {
 		reparacoes.put(reparacao.getIdReparacao(), reparacao);
 	}
 
 	/**
-	 * adiciona uma reparacao a lista de reparacoes
+	 * regista e adiciona uma reparacao a lista de reparacoes
 	 * @param descricao - Descrição da reparação
 	 * @return A reparação criada
 	 */
@@ -32,13 +32,14 @@ public class GestReparacaoFacade implements IGestReparacao {
 			id = UUID.randomUUID().toString().substring(0, 8);
 		} while (this.reparacoes.containsKey(id));
 		Reparacao reparacao = new Reparacao(id, descricao);
-		reparacoes.put(reparacao.getIdReparacao(), reparacao);
+		//reparacoes.put(reparacao.getIdReparacao(), reparacao);
+		this.adicionaReparacoes(reparacao);
 		return reparacao;
 	}
 
 	/**
 	 * remove uma reparacao da lista de reparacoes
-	 * @param idReparacoes
+	 * @param idReparacoes - id da reparacao a remover
 	 */
 	public void removeReparacoes(String idReparacoes) {
 		if(reparacoes.containsKey(idReparacoes))
@@ -47,7 +48,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 
 	/**
 	 * marca a reparacao como concluida, bem como a sua lista de passos e respetivos subpassos
-	 * @param idReparacao
+	 * @param idReparacao - id da reparacao a marcar como concluida
 	 */
 	public void marcarReparacoesComoConcluidas(String idReparacao) {
 		reparacoes.get(idReparacao).marcaReparacaoComoConcluida();
@@ -55,8 +56,8 @@ public class GestReparacaoFacade implements IGestReparacao {
 
 	/**
 	 * adiciona um passo de uma lista de passos de uma reparacao
-	 * @param idReparacao
-	 * @param passo
+	 * @param idReparacao - id da reparacao
+	 * @param passo - passo a adicionar a lista de passos da reparacao
 	 */
 	public void adicionarPasso(String idReparacao, Passo passo) {
 		if(reparacoes.containsKey(idReparacao)){
@@ -66,8 +67,8 @@ public class GestReparacaoFacade implements IGestReparacao {
 
 	/**
 	 * remove um passo de uma lista de passos de uma reparacao
-	 * @param idReparacao
-	 * @param idPasso
+	 * @param idReparacao - id da reparacao
+	 * @param idPasso - passo a remover da lista de passos da reparacao
 	 */
 	public void removePasso(String idReparacao, String idPasso) {
 		if(reparacoes.containsKey(idReparacao) && reparacoes.get(idReparacao).getPasso().containsKey(idPasso)){ 
@@ -78,8 +79,8 @@ public class GestReparacaoFacade implements IGestReparacao {
 
 	/**
 	 * marca um passo de uma reparaçao como concluido 
-	 * @param idPasso
-	 * @param idReparacao
+	 * @param idPasso - passo a marcar como concluido
+	 * @param idReparacao - id da reparacao
 	 */
 	public void marcarPassoComoConcluido(String idPasso, String idReparacao) {
 		if(reparacoes.containsKey(idReparacao) && reparacoes.get(idReparacao).getPasso().containsKey(idPasso)){ 
@@ -89,7 +90,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 
 	/**
 	 * adiciona um serviço da lista de serviços expresso
-	 * @param servico
+	 * @param servico - serviço a adicionar
 	 */
 	public void adicionaServicoExpresso(ServicoExpresso servico) {
 		servicos.put(servico.getIdServico(), servico);
@@ -97,7 +98,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 
 	/**
 	 * remove um serviço da lista de serviços expresso, se este existir
-	 * @param servico
+	 * @param servico - serviço a remover
 	 */
 	public void removeServicoExpresso(ServicoExpresso servico) {
 		if(servicos.containsKey(servico.getIdServico())){
@@ -108,8 +109,8 @@ public class GestReparacaoFacade implements IGestReparacao {
 
 	/**
 	 * adiciona uma peca a lista de pecas de uma reparacao
-	 * @param idReparacao
-	 * @param peca
+	 * @param idReparacao - id da reparacao
+	 * @param peca - peca a adicionar a lista de pecas da reparacao
 	 */
 	public void adicionarPecaReparacao(String idReparacao, Peca peca) {
 		if(pecas.containsKey(peca.getIdPeca()) && reparacoes.containsKey(idReparacao))
@@ -118,8 +119,8 @@ public class GestReparacaoFacade implements IGestReparacao {
 
 	/**
 	 * remove uma peca da lista de pecas de uma reparacao, se estas existirem
-	 * @param idReparacao
-	 * @param peca
+	 * @param idReparacao - id da reparacao
+	 * @param peca - peca a remover da lista de pecas da reparacao
 	 */
 	public void removePecaReparacao(String idReparacao, Peca peca) {
 		if(pecas.containsKey(peca.getIdPeca()) && reparacoes.containsKey(idReparacao))
@@ -128,7 +129,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 
 	/**
 	 * adiciona peca a lista de pecas da loja
-	 * @param peca
+	 * @param peca - peca a adicionar
 	 */
 	public void adicionarPeca(Peca peca) {
 		pecas.put(peca.getIdPeca(), peca);
@@ -136,29 +137,33 @@ public class GestReparacaoFacade implements IGestReparacao {
 
 	/**
 	 * remove peca da lista de pecas da loja
-	 * @param peca
+	 * @param idPeca - id da peca a remover
 	 */
-	public void removerPeca(Peca peca) {
-		if(pecas.containsKey(peca.getIdPeca()))
-			pecas.remove(peca.getIdPeca());
+	public void removerPeca(String idPeca) {
+		if(pecas.containsKey(idPeca))
+			pecas.remove(idPeca);
 	}
 
 	/**
 	 * verifica se uma reparacao esta concluida, ou seja se todos os passos estao concluidos
-	 * @param idReparacao
+	 * @param idReparacao - id da reparacao a verificar
 	 * @return {@code true} se a reparacao está concluida, {@code false} caso contrário
 	 */
 	public boolean verificarConclusao(String idReparacao) {
 		return reparacoes.get(idReparacao).verificaConclusao();
 	}
 
+	/**
+	 * devolve a lista de todos as pecas registados
+	 * @return lista de pecas
+	 */
 	public Map<String,Peca> getAllPecas(){
 		return this.pecas;
 	}
 
 	/**
-	 * 
-	 * @param idReparacao
+	 * procura um serviço expresso na lista pelo seu id
+	 * @param idReparacao - id da reparacao
 	 * @return reparacao
 	 */
 	public Reparacao getReparacao(String idReparacao) {
@@ -166,17 +171,16 @@ public class GestReparacaoFacade implements IGestReparacao {
 	}
 
 	/**
-	 * 
-	 * 
-	 * @return 
+	 * devolve a lista de todos os reparacoes registadas
+	 * @return lista de todas as reparacoes
 	 */
 	public Map<String,Reparacao> getAllReparacoes() {
 		return this.reparacoes;
 	}
 
 	/**
-	 * 
-	 * @param idServico
+	 * procura um serviço expresso na lista pelo seu id
+	 * @param idServico - id do serviço
 	 * @return serviço expresso
 	 */
 	public ServicoExpresso getServicoExpresso(String idServico) {
@@ -184,18 +188,18 @@ public class GestReparacaoFacade implements IGestReparacao {
 	}
 
 	/**
-	 * 
-	 * @return 
+	 * devolve a lista de todos os serviços expresso registados
+	 * @return lista de serviços expresso
 	 */
 	public Map<String,ServicoExpresso> getAllServicoExpresso() {
 		return this.servicos;
 	}
 
 	/**
-	 * 
-	 * @param idReparacao
-	 * @param idPasso
-	 * @return passo
+	 * procura um passo na lista de passos de uma reparacao
+	 * @param idReparacao - id da reparacao
+	 * @param idPasso - id do passo a encontrar
+	 * @return passo se encontrar, null se nao existir nenhum passo associado ao id fornecido
 	 */
 	public Passo getPasso(String idReparacao, String idPasso) {
 		if(reparacoes.get(idReparacao).getPasso().containsKey(idPasso))
@@ -204,9 +208,9 @@ public class GestReparacaoFacade implements IGestReparacao {
 	}
 
 	/**
-	 * 
-	 * @param idPeca
-	 * @return peca
+	 * procura uma peca na lista pelo seu id
+	 * @param idPeca - id da peca
+	 * @return peca encontrada ou null se nao encontrar nenhuma peca associada ao id
 	 */
 	public Peca getPeca(String idPeca) {
 		if(pecas.containsKey(idPeca))
@@ -216,7 +220,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 
 	/**
 	 * 
-	 * @param reparacao
+	 * @param reparacao - reparacao
 	 * @return string
 	 */
 	public String reparacaoToString(Reparacao reparacao) {
@@ -225,8 +229,8 @@ public class GestReparacaoFacade implements IGestReparacao {
 
 	/**
 	 * calcula o custo da reparacao, que corresponde ao custo das pecas utilizadas
-	 * @param idReparacao
-	 * @return custo total
+	 * @param idReparacao - reparacao a calcular
+	 * @return custo total calculado
 	 */
 	public float calcularCustoTotal(String idReparacao){
 		return reparacoes.get(idReparacao).calcularCustoTotal();
@@ -234,7 +238,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 
 	/**
 	 *  calcula o número de horas gastas da reparacao
-	 * @param idReparacao
+	 * @param idReparacao - reparacao a calcular
 	 * @return horas gastas totais
 	 */
 	public int calcularHorasGastasTotais(String idReparacao){
@@ -242,9 +246,9 @@ public class GestReparacaoFacade implements IGestReparacao {
 	}
 
 	/**
-	 * calcula o número de horas previstas para a conclusao da reparacao
-	 * @param idReparacao
-	 * @return horas previstas totais
+	 * calcula o número de horas previstas para a conclusao de uma reparacao
+	 * @param idReparacao - id da reparacao a calcular
+	 * @return horas previstas totais 
 	 */
 	public int calcularHorasPrevistasTotais(String idReparacao){
 		return reparacoes.get(idReparacao).calcularHorasPrevistasTotais();
@@ -259,23 +263,9 @@ public class GestReparacaoFacade implements IGestReparacao {
 		return servicoExpresso.toString();
     }
 
-	/**
-	 * 
-	 * @param descricao
-	 * @return reparacao criada
-	 */
-	public Reparacao criarReparacao(String descricao){
-		//Gerar um identificador aleatório
-		String id;
-		do {
-			id = UUID.randomUUID().toString().substring(0, 8);
-		} while (this.reparacoes.containsKey(id));
-		Reparacao reparacao = new Reparacao(id,descricao);
-		return reparacao;
-	}
 
 	/**
-	 * 
+	 * cria e adiciona um serviço expresso a lista
 	 * @param descricao
 	 * @return serviço criado
 	 */
@@ -286,13 +276,16 @@ public class GestReparacaoFacade implements IGestReparacao {
 			id = UUID.randomUUID().toString().substring(0, 8);
 		} while (this.servicos.containsKey(id));
 		ServicoExpresso servico = new ServicoExpresso(id,descricao);
+		this.adicionaServicoExpresso(servico);
 		return servico;
 	}
 
 	/**
-	 * 
-	 * @param 
-	 * @return 
+	 * cria e adiciona uma peca a lista de pecas da loja
+	 * @param nome da peca
+	 * @param valor da peça
+	 * @param descricao da peca
+	 * @return peca criada
 	 */
 	public Peca criarPeca(String nome, Float valor,String descricao){
 		//Gerar um identificador aleatório
@@ -301,6 +294,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 			id = UUID.randomUUID().toString().substring(0, 8);
 		} while (this.servicos.containsKey(id));
 		Peca peca = new Peca(id,nome,descricao,valor);
+		this.adicionarPeca(peca);
 		return peca;
 	}
 
@@ -310,8 +304,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 	 * @return {@code true} caso exista, {@code false} caso contrário
 	 */
 	public boolean existeReparacao(String idReparacao){
-		if(this.reparacoes.containsKey(idReparacao)) return true;
-		else return false;
+		return this.reparacoes.containsKey(idReparacao);
 	}
 
 	/**
@@ -320,8 +313,7 @@ public class GestReparacaoFacade implements IGestReparacao {
 	 * @return {@code true} caso exista, {@code false} caso contrário
 	 */
 	public boolean existeServico(String idServico){
-		if(this.servicos.containsKey(idServico)) return true;
-		else return false;
+		return this.servicos.containsKey(idServico);
 	}
 
 

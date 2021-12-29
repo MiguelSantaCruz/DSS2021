@@ -137,11 +137,13 @@ public class Funcionario implements Serializable{
 	 */
 	public void contactarClienteEmail(String mensagem, String nifCliente,IGestEquipamento gestEquipamentos) {
 		Cliente c = gestEquipamentos.getClienteByNIF(nifCliente);
+		System.out.println("-------------------------------------------");
 		System.out.println(LocalDateTime.now().toString());
 		System.out.println("From: Centro de reparações");
 		System.out.println("To: " + c.getEmail());
 		System.out.println("Message: ");
 		System.out.println(mensagem);
+		System.out.println("-------------------------------------------");
 	}
 
 	/**
@@ -152,11 +154,13 @@ public class Funcionario implements Serializable{
 	 */
 	public void contactarClienteSMS(String mensagem, String nifCliente,IGestEquipamento gestEquipamentos) {
 		Cliente c = gestEquipamentos.getClienteByNIF(nifCliente);
+		System.out.println("-------------------------------------------");
 		System.out.println(LocalDateTime.now().toString());
 		System.out.println("From: +351 253000001");
 		System.out.println("To: " + c.getTelemovel());
 		System.out.println("Message: ");
 		System.out.println(mensagem);
+		System.out.println("-------------------------------------------");
 	}
 
 	/**

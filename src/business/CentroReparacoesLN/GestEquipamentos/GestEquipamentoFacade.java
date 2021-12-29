@@ -32,7 +32,7 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 	}
 
 	/**
-	 * Adiciona um cliente
+	 * Adiciona um cliente à lista de clientes
 	 * @param nome - O nome do cliente
 	 * @param nif - O NIF do cliente
 	 * @param tlmv - O número de telemóvel do cliente
@@ -47,8 +47,8 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 
 
 	/**
-	 * 
-	 * @param nif
+	 * Remove um cliente da lista de clientes
+	 * @param nif - o NIF do cliente a remover
 	 */
 	public void removerCliente(String nif) {
 		if(clientes.containsKey(nif))
@@ -56,17 +56,17 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 	}
 
 	/**
-	 * 
-	 * @param equipamento
+	 * adiciona uma ficha de equipamento à lista de fichas
+	 * @param fichaEquipamento - a ficha de um equipamento
 	 */
 	public void adicionarFichaEquipamento(FichaEquipamento fichaEquipamento) {
 		String key = fichaEquipamento.getIdFicha();
-		fichaEquipamentos.put(key, fichaEquipamento);
+		this.fichaEquipamentos.put(key, fichaEquipamento);
 	}
 
 	/**
-	 * 
-	 * @param id
+	 * remove uma ficha de equipamento da lista de fichas
+	 * @param id - id da ficha de equipamento
 	 */
 	public void removerFichaEquipamento(String id) {
 		if(fichaEquipamentos.containsKey(id))
@@ -74,8 +74,8 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 	}
 
 	/**
-	 * 
-	 * @param equipamento
+	 * adiciona um equipamento à lista de equipamentos
+	 * @param equipamento - o equipamento a adicionar
 	 */
 	public void adicionarEquipamento(Equipamento equipamento) {
 		String key = equipamento.getId();
@@ -83,26 +83,31 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 	}
 
 	/**
-	 * Regista um equipamento criando a sua ficha de equipamento em simultaneo
+	 * Regista um equipamento criando a sua ficha de equipamento e o seu pedido de orçamento em simultaneo, 
+	 * adicionando às listas respetivas de cada um
 	 * @param idCliente - O identificador do cliente
 	 * @param nomeEquip - O nome do equipamento
 	 * @param descricaoEquip - A descricao do equipamento
 	 * @param nomeFicha - O nome da ficha de equipamento
 	 * @param descricaoFicha - A descricao da ficha de equipamento
+	 * @return A ficha de equipamento criada
 	 */
 	public FichaEquipamento registarEquipamento(String idCliente,String nomeEquip,String descricaoEquip,String nomeFicha,String descricaoFicha) {
 		String idEquip = geraIdentificadorUnico(this.equipamentos);
 		String idFicha = geraIdentificadorUnico(this.fichaEquipamentos);
-		FichaEquipamento fichaDeEquimento = new FichaEquipamento(idFicha, nomeFicha, descricaoFicha, idCliente);
-		Equipamento equipamento = new Equipamento(idEquip, fichaDeEquimento, descricaoEquip, nomeEquip);
-		this.fichaEquipamentos.put(fichaDeEquimento.getIdFicha(), fichaDeEquimento);
-		this.equipamentos.put(equipamento.getId(), equipamento);
-		return fichaDeEquimento;
+		String idOrcamento = geraIdentificadorUnico(this.orcamentos);
+		Orcamento orcamento = new Orcamento(idOrcamento);
+		FichaEquipamento fichaDeEquipamento = new FichaEquipamento(idFicha, nomeFicha, descricaoFicha, idCliente);
+		Equipamento equipamento = new Equipamento(idEquip, fichaDeEquipamento, descricaoEquip, nomeEquip);
+		this.adicionarEquipamento(equipamento);
+		this.adicionarFichaEquipamento(fichaDeEquipamento);
+		this.adicionarOrcamento(orcamento);
+		return fichaDeEquipamento;
 	}
 
 	/**
-	 * 
-	 * @param id
+	 * remove um equipamento da lista de equipamentos
+	 * @param id - id do equipamento a remover
 	 */
 	public void removerEquipamento(String id) {
 		if(equipamentos.containsKey(id))
@@ -111,7 +116,7 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 
 	/**
 	 * adiciona orcamento à lista de orcamentos
-	 * @param orcamento
+	 * @param orcamento - orçamento a adicionar
 	 */
 	public void adicionarOrcamento(Orcamento orcamento) {
 		String key = orcamento.getIdOrcamento();
@@ -119,21 +124,23 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 	}
 
 	/**
-	 * adiciona um orcamento à lista de orcamentos
+	 * regista um orcamento, gerando um id unico
+	 * e adiciona-o à lista de orcamentos
 	 * @param valor - o valor orçamentado
 	 * @param descricao - Descricao do orçamento
-	 * @return O orcamento que foi adicionado
+	 * @return O orcamento que foi registado e adicionado
 	 */
 	public Orcamento adicionarOrcamento(Float valor,String descricao) {
 		String id = geraIdentificadorUnico(this.orcamentos);
 		Orcamento orcamento = new Orcamento(id, valor,descricao);
-		this.orcamentos.put(id, orcamento);
+		//this.orcamentos.put(id, orcamento);
+		this.adicionarOrcamento(orcamento);
 		return orcamento;
 	}
 
 	/**
-	 * 
-	 * @param idOrcamento
+	 * remove um orcamento da lista de orcamento
+	 * @param idOrcamento - id do orcamento a remover
 	 */
 	public void removerOrcamento(String idOrcamento) {
 		if(orcamentos.containsKey(idOrcamento))
@@ -142,8 +149,10 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 	}
 
 	/**
-	 * 
-	 * @param id
+	 * procura uma ficha de equipamento da lista pelo id
+	 * @param id - id da ficha de equipamento
+	 * @return ficha de equipamento se for encontrada, null se nao existir
+	 * nenhuma ficha de equipamento associada ao id dado
 	 */
 	public FichaEquipamento getFichaEquipamento(String id) {
 		if(fichaEquipamentos.containsKey(id))
@@ -152,8 +161,10 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 	}
 
 	/**
-	 * 
-	 * @param id
+	 * procura um equipamento da lista pelo id
+	 * @param id - id do equipamento
+	 * @return equipamento se for encontrado, null se nao existir
+	 * nenhum equipamento associado ao id dado
 	 */
 	public Equipamento getEquipamento(String id) {
 		if(equipamentos.containsKey(id))
@@ -162,8 +173,10 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 	}
 
 	/**
-	 * 
-	 * @param idEquipamento
+	 * procura um cliente pelo equipamento registado
+	 * @param idEquipamento - id do equipamento associado ao cliente
+	 * @return cliente se for encontrado, null se nao existir
+	 * nenhum cliente associado ao id de equipamento dado
 	 */
 	public Cliente getCliente(String idEquipamento) {
 		String c = equipamentos.get(idEquipamento).getFichaDeEquimento().getIdCliente();
@@ -173,8 +186,10 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 	}
 
 	/**
-	 * 
-	 * @param nif
+	 * procura um cliente da lista de clientes pelo NIF
+	 * @param nif - NIF do cliente a encontrar
+	 * @return equipamento se for encontrado, null se nao existir
+	 * nenhum equipamento associado ao id dado
 	 */
 	public Cliente getClienteByNIF(String nif) {
 		if(clientes.containsKey(nif))
@@ -184,8 +199,10 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 
 
 	/**
-	 * 
-	 * @param idOrcamento
+	 * procura um orcamento da lista de orcamentos
+	 * @param idOrcamento - id do orcamento a encontrar
+	 * @return orcamento se for encontrado, null se nao existir
+	 * nenhum orcamento associado ao id dado
 	 */
 	public Orcamento getOrcamento(String idOrcamento) {
 		if(orcamentos.containsKey(idOrcamento))
@@ -196,10 +213,18 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 
 	/**
 	 * 
-	 * 
+	 * @return a lista de todos os orcamentos
 	 */
 	public Map<String,Orcamento> getAllOrcamentos() {
 		return this.orcamentos;
+	}
+
+	/**
+	 * 
+	 * @return a lista de todos os clientes
+	 */
+	public Map<String,Cliente> getAllClientes() {
+		return this.clientes;
 	}
 
 	/**
@@ -210,7 +235,7 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 		LocalDateTime data = LocalDateTime.now();
 		String id = null;
 		for(Map.Entry<String, Orcamento> entry : orcamentos.entrySet()) {
-			if(entry.getValue().isAprovado()){
+			if(!entry.getValue().getAprovado()){
 				if(data.isAfter(entry.getValue().getDate())){
 					data = entry.getValue().getDate();
 					id = entry.getValue().getIdOrcamento();
@@ -262,8 +287,11 @@ public class GestEquipamentoFacade implements IGestEquipamento {
 		else return false;
 	}
 
+
 	/**
 	 * Gera um identificador de 8 caracteres único
+	 * @param m - Map onde se pretende criar um id unico
+	 * @return id gerado
 	 */
 	public String geraIdentificadorUnico(Map m){
 		//Gerar um identificador aleatório

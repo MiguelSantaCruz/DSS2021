@@ -79,7 +79,7 @@ public class FichaEquipamento implements Serializable{
 
 	/**
 	 * 
-	 * @return id do equipamento
+	 * @return id da ficha
 	 */
 	public String getIdFicha() {
 		return idFicha;
@@ -185,8 +185,30 @@ public class FichaEquipamento implements Serializable{
 		this.idCliente = idCliente;
 	}
 
-
-
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("ID: "+getIdFicha()+ "\n" +
+				  "Nome: " +getNome() + "\n" +
+				  "Descrição: " +getDescricao() + "\n" +
+				  "Data: " + date + "\n" +
+				  "NIF do Cliente: " + getIdCliente() + "\n" +
+				  "Valor Pago: " +valorPago + "\n" );
+		if(this.getOrcamento()!= null){
+			sb.append("Valor do Orçamento: " +this.getOrcamento().getValor() + "\n" +
+					"ID do Orçamento: " +this.getOrcamento().getIdOrcamento() + "\n");
+		}
+		if(this.getReparacao()!=null){
+			sb.append("ID da Reparação: " + getReparacao() + "\n");
+		}
+		if(this.getEquipamento()!=null){
+			sb.append("ID do Equipamento: " + this.equipamento.getId() + "\n" +
+					"Nome do Equipamento: " + this.equipamento.getNome() + "\n");
+		}
+		return sb.toString();
+	}             
 }
+
 
 

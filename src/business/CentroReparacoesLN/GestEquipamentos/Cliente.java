@@ -82,4 +82,15 @@ public class Cliente implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
+
+	@Override
+	public String toString() {
+		return ("Nome: " + this.nome + "\n"
+				+ "NIF: " + this.nif + "\n"
+				+ "Nº telemóvel: " + this.telemovel + "\n"
+				+ "E-mail: " + this.email + "\n");
+
+	}
+
 }

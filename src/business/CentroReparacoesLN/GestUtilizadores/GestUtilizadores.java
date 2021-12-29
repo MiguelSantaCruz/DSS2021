@@ -185,9 +185,9 @@ public class GestUtilizadores implements IGestUtilizadores{
 	}
 
 	/**
-	 * Consultar uma listagem em que para cada técnico de reparações são indicadas estatíticas como por exemplo 
+	 * Consultar uma listagem em que para cada técnico de reparações são indicadas estatísticas como por exemplo 
 	 * o número de intervenções e horas gastas.
-	 *
+	 * @param gestReparacao - interface da classe que gere reparacoes
 	 */
 	public void consultaEstatisticasReparacoes(IGestReparacao gestReparacao) {
 		int numeroReparacoes = 0;
@@ -263,7 +263,7 @@ public class GestUtilizadores implements IGestUtilizadores{
 		return idsAndNames;
 	}
 	
-		/**
+	/**
 	 * Devolve um HashMap com os identificadores dos gestores e os seus nomes
 	 * @return O HashMap com a informação
 	 */
@@ -277,6 +277,8 @@ public class GestUtilizadores implements IGestUtilizadores{
 
 	/**
 	 * Gera um identificador de 8 caracteres único
+	 * @param m - Map onde se pretende criar um id unico
+	 * @return id gerado
 	 */
 	public String geraIdentificadorUnico(Map m){
 		//Gerar um identificador aleatório

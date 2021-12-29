@@ -81,6 +81,13 @@ public class ServicoExpresso implements Serializable{
 		return this.concluido;
 	}
 
+
+	@Override
+	public String toString() {
+		return ("ID: "+ getIdServico() +"\n"
+				+ "Data: " + getDate() + "\n"
+				+ "Descrição: " + getDescricao()+ "\n");
+	}
 	
 
 }

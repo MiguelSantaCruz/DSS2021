@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -60,13 +59,13 @@ public class TextUI implements Serializable{
     * Cria os menus e a camada de negócio.
     */
     public TextUI() {
-        scin = new Scanner(System.in);
     }
 
     /**
      * Executa o menu principal e invoca o método correspondente à opção seleccionada.
     */
     public void run() {
+        scin = new Scanner(System.in);
         this.gestUtilizadores.adicionarGestor("Admin","12345");
         System.out.println("Palavra chave padrão do gestor: 12345\n");
         System.out.println("Centro de Reparações");
@@ -110,9 +109,14 @@ public class TextUI implements Serializable{
         });
         menu.setHandler(8,() -> {
             try {
-                readBin();
+                TextUI m = readBin();
+
+                m.run();
+                System.exit(0);;
+                
+
             } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+                System.out.println("Erro ao ler do ficheiro");
             }
         });
 
@@ -223,13 +227,14 @@ public class TextUI implements Serializable{
         System.out.println("Insira a descrição do equipamento:");
         System.out.print("> ");
         String descricaoEquip = scin.nextLine();
-        System.out.println("Insira o nome da ficha do equipamento:");
+        System.out.println("Insira o título da ficha do equipamento:");
         System.out.print("> ");
         String nomeFicha = scin.nextLine();
-        System.out.println("Insira a descrição da ficha do equipamento:");
+        System.out.println("Insira a descrição do problema do equipamento:");
         System.out.print("> ");
         String descricaoFicha = scin.nextLine();
         FichaEquipamento fichaEquipamento = this.gestEquipamentos.registarEquipamento(nif, nomeEquip, descricaoEquip, nomeFicha, descricaoFicha);
+        System.out.println(fichaEquipamento.toString());
         this.funcionarioAutenticado.adicionaFichaEquipamentoRecebida(fichaEquipamento.getIdFicha());
     }
 
@@ -237,6 +242,10 @@ public class TextUI implements Serializable{
         System.out.println("Insira o ID da ficha do equipamento:");
         System.out.print("> ");
         String id = scin.nextLine();
+        if(!this.gestEquipamentos.fichaExiste(id)){
+            System.out.println("Ficha Inexistente");
+            return;
+        }
         System.out.println("Insira o valor pago:");
         System.out.print("> ");
         float valor = Float.valueOf(scin.nextLine());
@@ -304,7 +313,7 @@ public class TextUI implements Serializable{
         });
 
         menu.setHandler(1, ()-> operacoesSobreReparacoes());
-        menu.setHandler(2, ()-> operacoesSobreOrcamento());
+        menu.setHandler(2, ()-> menuOrcamento());
         menu.setHandler(3, ()-> operacoesSobreServicos());
         menu.setHandler(4, ()-> VerReparacaoUrgente());
         menu.setHandler(5, ()-> menuListagens());
@@ -324,17 +333,7 @@ public class TextUI implements Serializable{
         menuReparacao();
     }
 
-    private void operacoesSobreOrcamento(){
-        System.out.println("Insira o ID do orçamento: ");
-        System.out.print("> ");
-        String id = scin.nextLine();
-        if(!this.gestEquipamentos.equipamentoExiste(id)) {
-            System.out.println("Orçamento não existente");
-            return;
-        }
-        this.orcamentoAtual = this.gestEquipamentos.getOrcamento(id);
-        menuOrcamento();
-    }
+
 
     private void operacoesSobreServicos(){
         System.out.println("Insira o ID do serviço expresso: ");
@@ -349,8 +348,9 @@ public class TextUI implements Serializable{
     }
     
     private void menuReparacao(){
+        if(this.reparacaoAtual == null) return;
         System.out.println("Reparação atual:");
-        this.gestReparacoes.reparacaoToString(this.reparacaoAtual);
+        System.out.println(this.reparacaoAtual.toString());
         Menu menu = new Menu(new String[]{                        
         "Adicionar peça à reparação",
         "Adicionar horas previstas à reparação",
@@ -358,19 +358,27 @@ public class TextUI implements Serializable{
         "Adicionar passos à reparação",
         "Adicionar subpassos à reparação",
         "Adicionar horas gastas aos passos",
+        "Remover peça da reparação",
+        "Remover passos da reparação",
+        "Remover subpassos da reparação",
         "Executar Reparação",
         "Executar Passo",
 
         });
-        menu.setTitulo("Operações sobre reparações - Área autenticada");  
+        menu.setTitulo("Reparação: " + this.reparacaoAtual.getIdReparacao() + " - Área autenticada");  
         menu.setHandler(1, () -> adicionarPeca());
         menu.setHandler(2, () -> adicionarHorasPrevistas());
         menu.setHandler(3, () -> adicionarHorasGastas());
         menu.setHandler(4, () -> adicionarPassos());
         menu.setHandler(5, () -> adicionaSubpassos());
         menu.setHandler(6, () -> adicionaHorasGastasPassos());
-        menu.setHandler(7, () -> executaReparacao());
-        menu.setHandler(8, () -> executaPasso());
+
+
+        //TODO remoção
+
+
+        menu.setHandler(10, () -> executaReparacao());
+        menu.setHandler(11, () -> executaPasso());
         menu.run();
         
     }
@@ -381,6 +389,10 @@ public class TextUI implements Serializable{
      * 
      */
     public void adicionarPeca(){
+        if(this.reparacaoAtual == null){
+            System.out.println("Reparação já não dispovível");
+            return;
+        }
         System.out.println("Insira o nome da peça:");
         System.out.print("> ");
         String nome = scin.nextLine();
@@ -392,23 +404,38 @@ public class TextUI implements Serializable{
         String descricao = scin.nextLine();
         Peca peca = this.gestReparacoes.criarPeca(nome, valor, descricao);
         this.gestReparacoes.adicionarPecaReparacao(this.reparacaoAtual.getIdReparacao(), peca);
+        System.out.println(this.reparacaoAtual.toString());
     }
 
     public void adicionarHorasPrevistas(){
+        if(this.reparacaoAtual == null){
+            System.out.println("Reparação já não dispovível");
+            return;
+        }
         System.out.println("Insira as horas necessárias: ");
         System.out.print("> ");
         int horas = Integer.valueOf(scin.nextLine());
         this.gestReparacoes.getReparacao(this.reparacaoAtual.getIdReparacao()).setHorasPrevistas(horas);
+        System.out.println(this.reparacaoAtual.toString());
     }
 
-    public void adicionarHorasGastas(){   
+    public void adicionarHorasGastas(){
+        if(this.reparacaoAtual == null){
+            System.out.println("Reparação já não dispovível");
+            return;
+        } 
         System.out.println("Insira o número de horas gastas: ");
         System.out.print("> ");
         int horasGastas = Integer.valueOf(scin.nextLine());
         this.gestReparacoes.getReparacao(this.reparacaoAtual.getIdReparacao()).setHorasGastas(horasGastas);
+        System.out.println(this.reparacaoAtual.toString());
     }
 
     public void adicionarPassos(){
+        if(this.reparacaoAtual == null){
+            System.out.println("Reparação já não dispovível");
+            return;
+        }
         System.out.println("Insira a Descrição do Passo: ");
         System.out.print("> ");
         String descricao = scin.nextLine();
@@ -416,9 +443,14 @@ public class TextUI implements Serializable{
         System.out.print("> ");
         int horasPrevistas = Integer.valueOf(scin.nextLine());
         this.gestReparacoes.getReparacao(this.reparacaoAtual.getIdReparacao()).adicionaPasso(descricao, horasPrevistas);
+        System.out.println(this.reparacaoAtual.toString());
     }
 
     public void adicionaSubpassos(){
+        if(this.reparacaoAtual == null){
+            System.out.println("Reparação já não dispovível");
+            return;
+        }
         System.out.println("Insira o ID do Passo:");
         System.out.print("> ");
         String id = scin.nextLine();
@@ -433,9 +465,14 @@ public class TextUI implements Serializable{
         System.out.print("> ");
         int horasPrevistas = Integer.valueOf(scin.nextLine());
         this.gestReparacoes.getReparacao(this.reparacaoAtual.getIdReparacao()).adicionaSubPasso(id, descricao, horasPrevistas);
+        System.out.println(this.reparacaoAtual.toString());
     }
 
     public void adicionaHorasGastasPassos(){
+        if(this.reparacaoAtual == null){
+            System.out.println("Reparação já não dispovível");
+            return;
+        }
         System.out.println("Insira o ID do Passo:");
         System.out.print("> ");
         String idPasso= scin.nextLine();
@@ -444,33 +481,84 @@ public class TextUI implements Serializable{
         int horasGastas = Integer.valueOf(scin.nextLine());
         if(this.gestReparacoes.getReparacao(this.reparacaoAtual.getIdReparacao()).getPassoOrSubpassoByID(idPasso) == null) System.out.println("Passo inexistente");
         else this.gestReparacoes.getReparacao(this.reparacaoAtual.getIdReparacao()).getPassoOrSubpassoByID(idPasso).setHorasGastas(horasGastas);
+        System.out.println(this.reparacaoAtual.toString());
     }
 
     public void executaReparacao(){
+        if(this.reparacaoAtual == null){
+            System.out.println("Reparação já não dispovível");
+            return;
+        }
+        System.out.println("Reparacão marcada como concluída");
         this.gestReparacoes.getReparacao(this.reparacaoAtual.getIdReparacao()).setConcluido(true);
+        System.out.println(this.reparacaoAtual.toString());
+        this.gestReparacoes.removeReparacoes(this.reparacaoAtual.getIdReparacao());
+        this.reparacaoAtual = null;
+        
     }
 
     public void executaPasso(){
+        if(this.reparacaoAtual == null){
+            System.out.println("Reparação já não dispovível");
+            return;
+        }
         System.out.println("Insira o ID do Passo:");
         System.out.print("> ");
         String idPasso= scin.nextLine();
         if(this.gestReparacoes.getReparacao(this.reparacaoAtual.getIdReparacao()).getPassoOrSubpassoByID(idPasso) == null) System.out.println("Passo inexistente");
-        else this.gestReparacoes.getReparacao(this.reparacaoAtual.getIdReparacao()).getPassoOrSubpassoByID(idPasso).setConcluido(true);
+        else {
+            this.gestReparacoes.getReparacao(this.reparacaoAtual.getIdReparacao()).getPassoOrSubpassoByID(idPasso).setConcluido(true);
+            System.out.println("Passo marcado como concluído");
+        }
+        System.out.println(this.reparacaoAtual.toString());
     }
 
     public void VerReparacaoUrgente(){
-        System.out.println(this.gestReparacoes.getReparacaoMaisAntiga().toString());
+        System.out.println("Reparação mais urgente:");
+        if(this.gestReparacoes.getAllReparacoes().size() == 0){
+            System.out.println("Não há reparações");
+        } else {
+            System.out.println(this.gestReparacoes.getReparacaoMaisAntiga().toString());
+        }
 
     }
     
 
     private void menuOrcamento(){
         Menu menu = new Menu(new String[]{                        
-        "Criar pedido de orçamento",
+        "Acrescentar um valor e descrição a um pedido de orçamento",
         "Ver pedido de orçamento mais antigo",
         });
         menu.setTitulo(" Menu orçamento - Área autenticada");
+        menu.setHandler(1, () -> acrescentarValorPedidoOrcamento());
+        menu.setHandler(2, () -> verPedidoOrcamentoMaisAntigo());
+        menu.run();
+    }
 
+    public void acrescentarValorPedidoOrcamento(){
+            System.out.println("Insira o ID do orçamento: ");
+            System.out.print("> ");
+            String id = scin.nextLine();
+            if(!this.gestEquipamentos.orcamentoExiste(id)) {
+                System.out.println("Orçamento não existente");
+                return;
+            }
+            this.orcamentoAtual = this.gestEquipamentos.getOrcamento(id);
+            this.orcamentoAtual.toString();
+            System.out.println("Insira descrição da reparação: ");
+            System.out.print("> ");
+            String descricao = scin.nextLine();
+            System.out.println("Insira o valor estimado do orçamento: ");
+            System.out.print("> ");
+            float valor = Float.valueOf(scin.nextLine());
+            this.gestEquipamentos.getOrcamento(id).setValor(valor);
+            this.gestEquipamentos.getOrcamento(id).setDescricao(descricao);;
+    }
+
+    public void verPedidoOrcamentoMaisAntigo(){
+        Orcamento orcamento = this.gestEquipamentos.getPedidoOrcamentoMaisAntigo();
+        if(orcamento == null) System.out.println("Sem orçamentos");
+        else System.out.println(orcamento.toString());
     }
 
     private void menuServico(){
@@ -494,6 +582,7 @@ public class TextUI implements Serializable{
         "Ver lista de todos os orcamentos",                
         "Ver lista de todas as reparações",
         "Ver lista de todos os serviços expressos",
+        "Ver lista de todos os clientes"
         });
         menu.setTitulo("Menu Listagens - Área autenticada");
         menu.setHandler(1, () -> listarEquipamentos());
@@ -502,6 +591,7 @@ public class TextUI implements Serializable{
         menu.setHandler(4, () -> listarOrcamentos());
         menu.setHandler(5, () -> listarReparacoes());
         menu.setHandler(6, () -> listarServicos());
+        menu.setHandler(7, () -> listarClientes());
         menu.run();
     }
 
@@ -509,96 +599,52 @@ public class TextUI implements Serializable{
     public void listarEquipamentos(){
         
         for(Map.Entry<String, Equipamento> entry : this.gestEquipamentos.getEquipamentos().entrySet()) {
-			String idEquipamento = entry.getKey();
-            String descricao = entry.getValue().getDescricao();
-            String nome = entry.getValue().getNome();
-            System.out.println("ID: "+idEquipamento + "\n" + " Descrição: " +descricao + "\n" + " Nome: " +nome);
+		    System.out.println("Equipamento ------------------");
+            System.out.println(entry.getValue().toString());
 		}
     }
 
     public void listarFichasEquipamentos(){
         
         for(Map.Entry<String,FichaEquipamento> entry : this.gestEquipamentos.getFichaEquipamentos().entrySet()) {
-			String idFicha = entry.getKey();
-            String descricaoFicha = entry.getValue().getDescricao();
-            String nome = entry.getValue().getNome();
-            float valorOrcamento = entry.getValue().getOrcamento().getValor();
-            String idOrcamento = entry.getValue().getOrcamento().getIdOrcamento();
-            String idEquipamento = entry.getValue().getEquipamento().getId();
-            String nomeEquipamento = entry.getValue().getEquipamento().getNome();
-            String idReparação = entry.getValue().getReparacao().getIdReparacao();
-            LocalDateTime date = entry.getValue().getDate();
-	        String idCliente = entry.getValue().getIdCliente();
-	        float valorPago = entry.getValue().getValorPago();
-            System.out.println("---------------------------------------------------------");
-            System.out.println("ID: "+idFicha+ "\n" +
-                               "Descrição: " +descricaoFicha + "\n" +
-                               "Nome: " +nome + "\n" +
-                               "Valor do Orçamento: " +valorOrcamento + "\n" +
-                               "ID do Orçamento: " +idOrcamento + "\n" +
-                               "ID do Equipamento: " +idEquipamento + "\n" +
-                               "Nome do Equipamento: " +nomeEquipamento + "\n" +
-                               "ID da Reparação: " +idReparação + "\n" +
-                               "Data: " + date + "\n" +
-                               "ID do Cliente: " +idCliente + "\n" +
-                               "Valor: " +valorPago + "\n" 
-                               );                 
-		}
+            System.out.println("Ficha de Equipamento ---------");
+            System.out.println(entry.getValue().toString());
+        }
+
     }
 
     public void listarPecas(){
         for(Map.Entry<String,Peca> entry : this.gestReparacoes.getAllPecas().entrySet()){
-			String id = entry.getKey();
-            String descricao = entry.getValue().getDescricao();
-            String nome = entry.getValue().getNome();
-            float valor = Float.valueOf(entry.getValue().getValor());
-            System.out.println("----------------------------------------");
-            System.out.println("ID: "+id +" Descrição: " +descricao +" Nome: " +nome +" Valor: " +valor);
+			System.out.println("Peça -------------------------");
+            System.out.println(entry.getValue().toString());
 		}
     }
 
     public void listarOrcamentos(){
         for(Map.Entry<String,Orcamento> entry : this.gestEquipamentos.getAllOrcamentos().entrySet()){
-			String id = entry.getKey();
-            LocalDateTime date = entry.getValue().getDate();
-            String descricao = entry.getValue().getDescricao();
-            float valor = Float.valueOf(entry.getValue().getValor());
-            System.out.println("--------------------------------------");
-            System.out.println("ID: "+id +"\n"
-                                + "Data: " + date.toString() + "\n"
-                                + "Descrição: " + descricao + "\n" 
-                                + "Valor: " +valor);
+            System.out.println("Orçamento --------------------");
+            System.out.println(entry.getValue().toString());
 		}
     }
 
     public void listarReparacoes(){
         for(Map.Entry<String,Reparacao> entry : this.gestReparacoes.getAllReparacoes().entrySet()){
-			String id = entry.getKey();
-            LocalDateTime date = entry.getValue().getDate();
-            String descricao = entry.getValue().getDescricao();
-            int horasGastas = Integer.valueOf(entry.getValue().getHorasGastas());
-            int horasPrevistas = Integer.valueOf(entry.getValue().getHorasPrevistas());
-
-            System.out.println("--------------------------------------");
-            System.out.println("ID: "+id +"\n"
-                                + "Data: " + date.toString() + "\n"
-                                + "Descrição: " + descricao + "\n" 
-                                + "Horas gastas: " + horasGastas + "\n"
-                                + "Horas previstas: " + horasPrevistas + "\n"
-                                + "Peças: " + entry.getValue().getPecas().toString() + "\n"
-                                + "Subpassos: " + entry.getValue().getPasso().toString());
+            System.out.println("Reparação --------------------");
+            System.out.println(entry.getValue().toString());
 		}
     }
 
     public void listarServicos(){
         for(Map.Entry<String,ServicoExpresso> entry : this.gestReparacoes.getAllServicoExpresso().entrySet()){
-			String id = entry.getKey();
-            LocalDateTime date = entry.getValue().getDate();
-            String descricao = entry.getValue().getDescricao();
-            System.out.println("--------------------------------------");
-            System.out.println("ID: "+id +"\n"
-                                + "Data: " + date.toString() + "\n"
-                                + "Descrição: " + descricao);
+			System.out.println("Serviço expresso -------------");
+            System.out.println(entry.getValue().toString());
+		}
+    }
+
+    public void listarClientes(){
+        for(Map.Entry<String,Cliente> entry : this.gestEquipamentos.getAllClientes().entrySet()){
+			System.out.println("Clientes ---------------------");
+            System.out.println(entry.getValue().toString());
 		}
     }
 
@@ -658,7 +704,7 @@ public class TextUI implements Serializable{
         String id = scin.nextLine();
         if(this.gestEquipamentos.orcamentoExiste(id)){
             Orcamento orcamento = this.gestEquipamentos.getOrcamento(id);
-            orcamento.toString();
+            System.out.println(orcamento.toString());
         }else System.out.println("Orçamento não encontrado");
     }
 
@@ -668,7 +714,7 @@ public class TextUI implements Serializable{
         String id = scin.nextLine();
         if(this.gestEquipamentos.fichaExiste(id)){
            FichaEquipamento fichaEquipamento = this.gestEquipamentos.getFichaEquipamento(id);
-            fichaEquipamento.toString();
+           System.out.println(fichaEquipamento.toString());
         }else System.out.println("ficha de equipamento não encontrada");
     }
 
@@ -678,7 +724,7 @@ public class TextUI implements Serializable{
         String id = scin.nextLine();
         if(this.gestEquipamentos.equipamentoExiste(id)){
             Equipamento equipamento = this.gestEquipamentos.getEquipamento(id);
-            equipamento.toString();
+            System.out.println(equipamento.toString());
         }else System.out.println("Equipamento não encontrada");
     }
 
@@ -688,7 +734,7 @@ public class TextUI implements Serializable{
         String id = scin.nextLine();
         if(this.gestReparacoes.existePeca(id)){
             Peca pecas = this.gestReparacoes.getPecaById(id);
-            pecas.toString();
+            System.out.println(pecas.toString());
         }else System.out.println("Peça não encontrada");
     }
 
@@ -698,7 +744,7 @@ public class TextUI implements Serializable{
         String id = scin.nextLine();
         if(this.gestReparacoes.existeReparacao(id)){
             Reparacao reparacao = this.gestReparacoes.getReparacao(id);
-            reparacao.toString();
+            System.out.println(reparacao.toString());
         }else System.out.println("Reparação não encontrada");
     }
 
@@ -708,7 +754,7 @@ public class TextUI implements Serializable{
         String nif = scin.nextLine();
         if(this.gestEquipamentos.clienteExiste(nif)){
             Cliente cliente = this.gestEquipamentos.getClienteByNIF(nif);
-            cliente.toString();
+            System.out.println(cliente.toString());
         }else System.out.println("Cliente não encontrado");
     }
 
@@ -759,21 +805,30 @@ public class TextUI implements Serializable{
  
 
     public void guardaBin(TextUI model) throws FileNotFoundException, IOException {
-        FileOutputStream bf = new FileOutputStream("estado");
+        System.out.println("Insira o nome do ficheiro a guardar:");
+        System.out.print("> ");
+        String filename = scin.nextLine();
+        FileOutputStream bf = new FileOutputStream(filename);
         ObjectOutputStream oos = new ObjectOutputStream(bf);
         oos.writeObject(model);
         oos.flush();
         oos.close();
+        System.out.println("Guardado no ficheiro: " + filename);
     }
 
     /**
      * Função que permite ler um ficheiro binário com um estado da aplicação 
      */
     public TextUI readBin() throws IOException, ClassNotFoundException{
-        FileInputStream bf = new FileInputStream("estado");
+        System.out.println("Insira o nome do ficheiro a ler:");
+        System.out.print("> ");
+        String filename = scin.nextLine();
+        FileInputStream bf = new FileInputStream(filename);
         ObjectInputStream ois = new ObjectInputStream(bf);
         TextUI m = (TextUI) ois.readObject();
         ois.close();
+        System.out.println("\033[H\033[2J");
+        System.out.println("Lido do ficheiro: " + filename);
         return m;
     }
 

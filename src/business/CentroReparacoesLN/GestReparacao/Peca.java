@@ -72,12 +72,10 @@ public class Peca implements Serializable{
 
 	@Override
 	public String toString() {
-		return "{" +
-			" idPeca='" + getIdPeca() + "'" +
-			", nome='" + getNome() + "'" +
-			", descricao='" + getDescricao() + "'" +
-			", valor='" + getValor() + "'" +
-			"}";
+		return ("ID: "+getIdPeca() + "\n" +
+                "Descrição: " +getDescricao() +"\n" +
+                "Nome: " +getNome() +"\n" +
+                "Valor: " +getValor() + "\n");
 	}
 
 }
