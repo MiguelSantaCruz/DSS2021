@@ -396,7 +396,7 @@ public class TextUI implements Serializable{
     }
 
     public void adicionarHorasPrevistas(){
-        System.out.println("Insira as horas necessesárias: ");
+        System.out.println("Insira as horas necessárias: ");
         System.out.print("> ");
         int horas = Integer.valueOf(scin.nextLine());
         this.gestReparacoes.getReparacao(this.reparacaoAtual.getIdReparacao()).setHorasPrevistas(horas);
@@ -496,7 +496,7 @@ public class TextUI implements Serializable{
         "Ver lista de todas as reparações",
         "Ver lista de todos os serviços expressos",
         });
-        menu.setTitulo("Menu Equipamentos - Área autenticada");
+        menu.setTitulo("Menu Listagens - Área autenticada");
         menu.setHandler(1, () -> listarEquipamentos());
         menu.setHandler(2, () -> listarFichasEquipamentos());
         menu.setHandler(3, () -> listarPecas());
@@ -533,16 +533,16 @@ public class TextUI implements Serializable{
 	        float valorPago = entry.getValue().getValorPago();
             System.out.println("---------------------------------------------------------");
             System.out.println("ID: "+idFicha+ "\n" +
-                               " Descrição: " +descricaoFicha + "\n" +
-                               " Nome: " +nome + "\n" +
-                               " Valor do Orçamento: " +valorOrcamento + "\n" +
-                               " ID do Orçamento: " +idOrcamento + "\n" +
-                               " ID do Equipamento: " +idEquipamento + "\n" +
-                               " Nome do Equipamento: " +nomeEquipamento + "\n" +
-                               " ID da Reparação: " +idReparação + "\n" +
-                               " Data: " + date + "\n" +
-                               " ID do Cliente: " +idCliente + "\n" +
-                               " Valor: " +valorPago + "\n" 
+                               "Descrição: " +descricaoFicha + "\n" +
+                               "Nome: " +nome + "\n" +
+                               "Valor do Orçamento: " +valorOrcamento + "\n" +
+                               "ID do Orçamento: " +idOrcamento + "\n" +
+                               "ID do Equipamento: " +idEquipamento + "\n" +
+                               "Nome do Equipamento: " +nomeEquipamento + "\n" +
+                               "ID da Reparação: " +idReparação + "\n" +
+                               "Data: " + date + "\n" +
+                               "ID do Cliente: " +idCliente + "\n" +
+                               "Valor: " +valorPago + "\n" 
                                );                 
 		}
     }
