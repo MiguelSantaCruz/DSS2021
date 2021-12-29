@@ -67,9 +67,8 @@ public class TextUI implements Serializable{
      * Executa o menu principal e invoca o método correspondente à opção seleccionada.
     */
     public void run() {
-        String id = this.gestUtilizadores.adicionarGestor("Admin","12345");
-        System.out.println("O identificador do gestor: " + id);
-        System.out.println("Palavra chave do gestor: 12345");
+        this.gestUtilizadores.adicionarGestor("Admin","12345");
+        System.out.println("Palavra chave padrão do gestor: 12345\n");
         System.out.println("Centro de Reparações");
         this.menuPrincipal();
         System.out.println("Até breve...");
