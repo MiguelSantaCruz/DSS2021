@@ -59,6 +59,8 @@ public class TextUI implements Serializable{
     * Cria os menus e a camada de negócio.
     */
     public TextUI() {
+        this.gestReparacoes.adicionaReparacoes("Reparação random");
+        this.gestReparacoes.criarServicoExpresso("Serviço random");
     }
 
     /**
@@ -343,7 +345,7 @@ public class TextUI implements Serializable{
             System.out.println("Serviço expresso não existente");
             return;
         }
-        this.servicoExpressoAtual = this.gestReparacoes.getServicoExpresso(id);
+        this.servicoExpressoAtual = this.gestReparacoes.getServicoExpresso(id);        
         menuServico();
     }
     
@@ -377,6 +379,7 @@ public class TextUI implements Serializable{
         menu.setHandler(9, () -> removerSubPasso());
         menu.setHandler(10, () -> executaReparacao());
         menu.setHandler(11, () -> executaPasso());
+        this.tecnicoAutenticado.adicionarReparacaoAssociada(this.reparacaoAtual.getIdReparacao());
         menu.run();
         
     }
@@ -529,15 +532,12 @@ public class TextUI implements Serializable{
 
     public void executaReparacao(){
         if(this.reparacaoAtual == null){
-            System.out.println("Reparação já não dispovível");
+            System.out.println("Reparação já não disponível");
             return;
         }
         System.out.println("Reparacão marcada como concluída");
         this.gestReparacoes.getReparacao(this.reparacaoAtual.getIdReparacao()).setConcluido(true);
-        System.out.println(this.reparacaoAtual.toString());
-        this.gestReparacoes.removeReparacoes(this.reparacaoAtual.getIdReparacao());
-        this.reparacaoAtual = null;
-        
+        System.out.println(this.reparacaoAtual.toString());        
     }
 
     public void executaPasso(){
@@ -605,6 +605,11 @@ public class TextUI implements Serializable{
     }
 
     private void menuServico(){
+        if(this.servicoExpressoAtual == null){
+            System.out.println("Serviço indisponível");
+            return;
+        }
+        System.out.println(servicoExpressoAtual.toString());
         Menu menu = new Menu(new String[]{                        
             "Executar Serviço",
         });
@@ -614,6 +619,7 @@ public class TextUI implements Serializable{
     }
     
     public void executaServico(){
+        this.tecnicoAutenticado.adicionarServicoAssociado(this.servicoExpressoAtual.getIdServico());
         this.gestReparacoes.getServicoExpresso(this.servicoExpressoAtual.getIdServico()).setConcluido(true);
     }
 
@@ -704,6 +710,7 @@ public class TextUI implements Serializable{
                 "Procurar Peça",
                 "Procurar Orçamento",
                 "Procurar Reparação",
+                "Consultar Listagens"
         });
         menu.setTitulo("Gestor - Área autenticada");
         menu.setHandler(1, () -> adicionarFuncionario(TiposFuncionarios.TECNICO));
@@ -717,6 +724,7 @@ public class TextUI implements Serializable{
         menu.setHandler(9, () -> procurarPecaPorId());       
         menu.setHandler(10, () -> procurarOrcamentoPorId());
         menu.setHandler(11, () -> procurarReparacaoPorId());
+        menu.setHandler(12, () -> menuListagens());
         menu.run();
     }
 

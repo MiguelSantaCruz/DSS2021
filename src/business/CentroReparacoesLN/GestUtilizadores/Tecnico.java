@@ -148,4 +148,21 @@ public class Tecnico implements Serializable{
 		return orcamento;
 	}
 
+	/**
+	 * Adiciona uma reparação associada
+	 * @param id - O identificador da reparação
+	 */
+	public void adicionarReparacaoAssociada(String id){
+		this.listaIdsReparacao.add(id);
+	}
+
+
+	/**
+	 * Adiciona um serviço associado
+	 * @param id - O identificador do serviço
+	 */
+	public void adicionarServicoAssociado(String id){
+		this.ListaIdsServico.add(id);
+	}
+
 }

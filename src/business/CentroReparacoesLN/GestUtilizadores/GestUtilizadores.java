@@ -207,7 +207,7 @@ public class GestUtilizadores implements IGestUtilizadores{
 					somaDesvios += Math.abs(horasGastas-horasPrevistas);
 					numeroDesvios += 1;
 				}
-				System.out.println("Média dos desvios(em horas) face ao previsto: " + (double)(somaDesvios/numeroDesvios));
+				if(numeroDesvios!=0) System.out.println("Média dos desvios(em horas) face ao previsto: " + (double)(somaDesvios/numeroDesvios));
 			}
 		}
 		

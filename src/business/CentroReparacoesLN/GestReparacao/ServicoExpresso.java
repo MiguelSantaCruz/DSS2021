@@ -86,7 +86,8 @@ public class ServicoExpresso implements Serializable{
 	public String toString() {
 		return ("ID: "+ getIdServico() +"\n"
 				+ "Data: " + getDate() + "\n"
-				+ "Descrição: " + getDescricao()+ "\n");
+				+ "Descrição: " + getDescricao()+ "\n"
+				+ "Concluido: " + getConcluido() +"\n");
 	}
 	
 
