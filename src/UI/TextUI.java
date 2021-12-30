@@ -59,8 +59,6 @@ public class TextUI implements Serializable{
     * Cria os menus e a camada de negócio.
     */
     public TextUI() {
-        this.gestReparacoes.adicionaReparacoes("Reparação random");
-        this.gestReparacoes.criarServicoExpresso("Serviço random");
     }
 
     /**
