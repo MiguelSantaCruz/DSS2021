@@ -1,4 +1,4 @@
-import business.CentroReparacoesLN.GestEquipamentos.FichaEquipamento;
+import CentroReparacoesLN.GestEquipamentos.FichaEquipamento;
 
 public class Test {
     public static void main(String[] args) {

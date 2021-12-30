@@ -11,22 +11,22 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.Scanner;
 
-import business.CentroReparacoesLN.IGestEquipamento;
-import business.CentroReparacoesLN.IGestReparacao;
-import business.CentroReparacoesLN.IGestUtilizadores;
-import business.CentroReparacoesLN.GestEquipamentos.Cliente;
-import business.CentroReparacoesLN.GestEquipamentos.Equipamento;
-import business.CentroReparacoesLN.GestEquipamentos.FichaEquipamento;
-import business.CentroReparacoesLN.GestEquipamentos.GestEquipamentoFacade;
-import business.CentroReparacoesLN.GestEquipamentos.Orcamento;
-import business.CentroReparacoesLN.GestReparacao.GestReparacaoFacade;
-import business.CentroReparacoesLN.GestReparacao.Peca;
-import business.CentroReparacoesLN.GestReparacao.Reparacao;
-import business.CentroReparacoesLN.GestReparacao.ServicoExpresso;
-import business.CentroReparacoesLN.GestUtilizadores.Funcionario;
-import business.CentroReparacoesLN.GestUtilizadores.GestUtilizadores;
-import business.CentroReparacoesLN.GestUtilizadores.Gestor;
-import business.CentroReparacoesLN.GestUtilizadores.Tecnico;
+import CentroReparacoesLN.IGestEquipamento;
+import CentroReparacoesLN.IGestReparacao;
+import CentroReparacoesLN.IGestUtilizadores;
+import CentroReparacoesLN.GestEquipamentos.Cliente;
+import CentroReparacoesLN.GestEquipamentos.Equipamento;
+import CentroReparacoesLN.GestEquipamentos.FichaEquipamento;
+import CentroReparacoesLN.GestEquipamentos.GestEquipamentoFacade;
+import CentroReparacoesLN.GestEquipamentos.Orcamento;
+import CentroReparacoesLN.GestReparacao.GestReparacaoFacade;
+import CentroReparacoesLN.GestReparacao.Peca;
+import CentroReparacoesLN.GestReparacao.Reparacao;
+import CentroReparacoesLN.GestReparacao.ServicoExpresso;
+import CentroReparacoesLN.GestUtilizadores.Funcionario;
+import CentroReparacoesLN.GestUtilizadores.GestUtilizadores;
+import CentroReparacoesLN.GestUtilizadores.Gestor;
+import CentroReparacoesLN.GestUtilizadores.Tecnico;
 
 /**
  * Interface em modo texto.
